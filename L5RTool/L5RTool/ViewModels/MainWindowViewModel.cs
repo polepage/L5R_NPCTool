@@ -1,4 +1,5 @@
 ﻿using Prism.Commands;
+using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
 using System.Windows.Input;
 
@@ -6,6 +7,9 @@ namespace L5RTool.ViewModels
 {
     class MainWindowViewModel: BindableBase
     {
+        private InteractionRequest<INotification> _exitRequest;
+        public IInteractionRequest ExitRequest => _exitRequest ?? (_exitRequest = new InteractionRequest<INotification>());
+
         private DelegateCommand _newCommand;
         public ICommand NewCommand => _newCommand ?? (_newCommand = new DelegateCommand(New));
 
@@ -85,7 +89,12 @@ namespace L5RTool.ViewModels
 
         private void Exit()
         {
-            
+            if (IsDirty)
+            {
+                // Pop Dirty Dialog
+            }
+
+            _exitRequest.Raise(new Notification());
         }
     }
 }

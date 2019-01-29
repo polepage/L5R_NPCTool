@@ -3,12 +3,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:L5RTool"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:actions="clr-namespace:L5RTool.Actions"
         xmlns:prism="http://prismlibrary.com/"
         mc:Ignorable="d"
         Title="L5R NPC Creation Tool"
         Height="450" Width="800"
         prism:ViewModelLocator.AutoWireViewModel="True">
+
+    <i:Interaction.Triggers>
+        <prism:InteractionRequestTrigger SourceObject="{Binding ExitRequest, Mode=OneWay}">
+            <actions:CloseWindowAction/>
+        </prism:InteractionRequestTrigger>
+    </i:Interaction.Triggers>
     
     <Window.InputBindings>
         <KeyBinding Gesture="Ctrl+N" Command="{Binding NewCommand}"/>
