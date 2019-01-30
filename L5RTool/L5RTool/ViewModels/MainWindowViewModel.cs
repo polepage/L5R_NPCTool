@@ -7,6 +7,9 @@ namespace L5RTool.ViewModels
 {
     class MainWindowViewModel: BindableBase
     {
+        private InteractionRequest<IConfirmation> _newRequest;
+        public IInteractionRequest NewRequest => _newRequest ?? (_newRequest = new InteractionRequest<IConfirmation>());
+
         private InteractionRequest<INotification> _exitRequest;
         public IInteractionRequest ExitRequest => _exitRequest ?? (_exitRequest = new InteractionRequest<INotification>());
 
@@ -44,7 +47,16 @@ namespace L5RTool.ViewModels
 
         private void New()
         {
+            var confirmation = new Confirmation
+            {
+                Title = "Create New Element"
+            };
 
+            _newRequest.Raise(confirmation);
+            if (confirmation.Confirmed)
+            {
+                // Create new data
+            }
         }
 
         private void Open()

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:actions="clr-namespace:L5RTool.Actions"
+        xmlns:views="clr-namespace:L5RTool.Views"
         xmlns:prism="http://prismlibrary.com/"
         mc:Ignorable="d"
         Title="L5R NPC Creation Tool"
@@ -12,6 +13,13 @@
         prism:ViewModelLocator.AutoWireViewModel="True">
 
     <i:Interaction.Triggers>
+        <prism:InteractionRequestTrigger SourceObject="{Binding NewRequest, Mode=OneWay}">
+            <prism:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True">
+                <prism:PopupWindowAction.WindowContent>
+                    <views:NewDialog/>
+                </prism:PopupWindowAction.WindowContent>
+            </prism:PopupWindowAction>
+        </prism:InteractionRequestTrigger>
         <prism:InteractionRequestTrigger SourceObject="{Binding ExitRequest, Mode=OneWay}">
             <actions:CloseWindowAction/>
         </prism:InteractionRequestTrigger>
@@ -40,12 +48,18 @@
                 <MenuItem Header="Save" InputGestureText="Ctrl+S" Command="{Binding SaveCommand}"/>
                 <MenuItem Header="Save All" InputGestureText="Ctrl+Shift+S" Command="{Binding SaveAllCommand}"/>
                 <Separator/>
-                <MenuItem Header="Import" Command="{Binding ImportCommand}"/>
-                <MenuItem Header="Export" Command="{Binding ExportCommand}"/>
-                <Separator/>
                 <MenuItem Header="Print" InputGestureText="Ctrl+P" Command="{Binding PrintCommand}"/>
                 <Separator/>
                 <MenuItem Header="Exit" InputGestureText="Alt+F4" Command="{Binding ExitCommand}"/>
+            </MenuItem>
+            <MenuItem Header="Edit">
+                <MenuItem Header="Duplicate" InputGestureText="Ctrl+D"/>
+                <Separator/>
+                <MenuItem Header="Delete" InputGestureText="Del"/>
+            </MenuItem>
+            <MenuItem Header="Tools">
+                <MenuItem Header="Import" Command="{Binding ImportCommand}"/>
+                <MenuItem Header="Export" Command="{Binding ExportCommand}"/>
             </MenuItem>
         </Menu>
         <TabControl/>
