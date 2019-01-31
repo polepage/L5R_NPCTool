@@ -15,6 +15,13 @@
     <i:Interaction.Triggers>
         <prism:InteractionRequestTrigger SourceObject="{Binding NewRequest, Mode=OneWay}">
             <prism:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True">
+                <prism:PopupWindowAction.WindowStyle>
+                    <Style TargetType="{x:Type Window}">
+                        <Setter Property="ResizeMode" Value="NoResize"/>
+                        <Setter Property="MaxWidth" Value="400"/>
+                        <Setter Property="SizeToContent" Value="Height"/>
+                    </Style>
+                </prism:PopupWindowAction.WindowStyle>
                 <prism:PopupWindowAction.WindowContent>
                     <views:NewDialog/>
                 </prism:PopupWindowAction.WindowContent>

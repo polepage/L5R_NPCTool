@@ -86,6 +86,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\ElementTypeNameConverter.cs" />
+    <Compile Include="Converters\ElementTypeToImageConverter.cs" />
+    <Compile Include="Elements\ElementType.cs" />
     <Compile Include="ViewModels\NewDialogViewModel.cs" />
     <Compile Include="Views\NewDialog.xaml.cs">
       <DependentUpon>NewDialog.xaml</DependentUpon>
@@ -150,6 +153,27 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Character.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Encounter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Equipment.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Template.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Ability.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Demeanor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Advantage_Disadvantage.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
