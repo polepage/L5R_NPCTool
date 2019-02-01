@@ -92,7 +92,6 @@
     <Compile Include="Behaviors\PropagateInputBindings.cs" />
     <Compile Include="Converters\ElementTypeNameConverter.cs" />
     <Compile Include="Converters\ElementTypeToImageConverter.cs" />
-    <Compile Include="Elements\ElementType.cs" />
     <Compile Include="Interaction\InteractionRequests.cs" />
     <Compile Include="Interaction\Notifications\ValueConfirmation.cs" />
     <Compile Include="Model\Database\Entry.cs" />
@@ -199,6 +198,11 @@
   <ItemGroup>
     <Resource Include="Icons\Advantage_Disadvantage.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\NPC\NPC.csproj">
+      <Project>{8F878A3E-0451-4BF5-8A45-774BCDA16B06}</Project>
+      <Name>NPC</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

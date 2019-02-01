@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Windows.Input;
-using L5RTool.Elements;
 using L5RTool.Interaction.Notifications;
+using NPC.Model;
 using Prism.Commands;
 using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;

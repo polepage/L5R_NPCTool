@@ -1,5 +1,4 @@
-﻿using L5RTool.Elements;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Windows.Data;
 

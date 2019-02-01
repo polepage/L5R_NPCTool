@@ -1,6 +1,6 @@
-﻿namespace L5RTool.Elements
+﻿namespace NPC.Model
 {
-    enum ElementType
+    public enum ElementType
     {
         Encounter,
         Character,

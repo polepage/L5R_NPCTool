@@ -1,4 +1,4 @@
-﻿using L5RTool.Elements;
+﻿using NPC.Model;
 using Prism.Mvvm;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

@@ -1,6 +1,6 @@
-﻿using L5RTool.Elements;
-using L5RTool.Interaction;
+﻿using L5RTool.Interaction;
 using L5RTool.Interaction.Notifications;
+using NPC.Model;
 using Prism.Commands;
 using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;

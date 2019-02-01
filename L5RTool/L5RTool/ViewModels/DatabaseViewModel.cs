@@ -1,5 +1,5 @@
-﻿using L5RTool.Elements;
-using L5RTool.Model.Database;
+﻿using L5RTool.Model.Database;
+using NPC.Model;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
