@@ -2,7 +2,7 @@
 
 namespace NPC
 {
-    public interface INPC
+    public interface IElementFactory
     {
         IElement CreateElement(ElementType type);
     }

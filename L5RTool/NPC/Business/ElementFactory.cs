@@ -2,9 +2,9 @@
 
 namespace NPC.Business
 {
-    static class ElementFactory
+    class ElementFactory: IElementFactory
     {
-        public static IElement Create(ElementType type)
+        public IElement CreateElement(ElementType type)
         {
             switch (type)
             {

@@ -1,7 +1,9 @@
 ﻿using L5RUI.ViewModels;
 using L5RUI.Views;
+using NPC.Registration;
 using Prism.Mvvm;
 using System.Windows;
+using Unity;
 
 namespace L5RTool
 {
@@ -10,12 +12,20 @@ namespace L5RTool
     /// </summary>
     public partial class App : Application
     {
+        private IUnityContainer _container;
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
-
+            RegisterUnity();
             RegisterViews();
+        }
+
+        private void RegisterUnity()
+        {
+            _container = new UnityContainer();
+            RegistrationService.Register(new UnityRegistrationDelegate(_container));
         }
 
         private void RegisterViews()

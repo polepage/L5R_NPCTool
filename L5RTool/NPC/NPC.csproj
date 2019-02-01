@@ -42,13 +42,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Business\ElementFactory.cs" />
-    <Compile Include="Business\NPCBusiness.cs" />
     <Compile Include="IElement.cs" />
-    <Compile Include="INPC.cs" />
+    <Compile Include="IElementFactory.cs" />
+    <Compile Include="Registration\IRegistrationDelegate.cs" />
     <Compile Include="Model\Demeanor.cs" />
     <Compile Include="Model\ElementType.cs" />
     <Compile Include="Model\Ring.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Registration\RegistrationService.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
