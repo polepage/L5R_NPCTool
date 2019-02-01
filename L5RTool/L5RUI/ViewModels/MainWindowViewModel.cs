@@ -2,7 +2,7 @@
 
 namespace L5RUI.ViewModels
 {
-    class MainWindowViewModel: BindableBase
+    public class MainWindowViewModel : BindableBase
     {        
     }
 }

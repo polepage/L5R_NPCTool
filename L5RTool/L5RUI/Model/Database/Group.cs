@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 
 namespace L5RUI.Model.Database
 {
-    class Group: BindableBase
+    public class Group: BindableBase
     {
         public Group(ElementType type)
         {

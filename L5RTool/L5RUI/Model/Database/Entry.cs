@@ -2,7 +2,7 @@
 
 namespace L5RUI.Model.Database
 {
-    class Entry: BindableBase
+    public class Entry: BindableBase
     {
 
     }

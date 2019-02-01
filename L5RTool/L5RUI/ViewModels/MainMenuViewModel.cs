@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace L5RUI.ViewModels
 {
-    class MainMenuViewModel: BindableBase
+    public class MainMenuViewModel : BindableBase
     {
         private DelegateCommand _newCommand;
         public ICommand NewCommand => _newCommand ?? (_newCommand = new DelegateCommand(New));

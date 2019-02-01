@@ -9,7 +9,7 @@ using Prism.Mvvm;
 
 namespace L5RUI.ViewModels
 {
-    class NewDialogViewModel : BindableBase, IInteractionRequestAware
+    public class NewDialogViewModel : BindableBase, IInteractionRequestAware
     {
         private DelegateCommand _createCommand;
         public ICommand CreateCommand => _createCommand ?? (_createCommand = new DelegateCommand(Create));
