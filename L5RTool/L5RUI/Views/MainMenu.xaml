@@ -1,8 +1,8 @@
-﻿<Menu x:Class="L5RTool.Views.MainMenu"
+﻿<Menu x:Class="L5RUI.Views.MainMenu"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-      xmlns:b="clr-namespace:L5RTool.Behaviors"
+      xmlns:b="clr-namespace:L5RUI.Behaviors"
       xmlns:prism="http://prismlibrary.com/"
       prism:ViewModelLocator.AutoWireViewModel="True">
 

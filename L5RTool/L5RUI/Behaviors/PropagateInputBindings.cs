@@ -2,7 +2,7 @@
 using System.Windows.Input;
 using System.Windows.Interactivity;
 
-namespace L5RTool.Behaviors
+namespace L5RUI.Behaviors
 {
     class PropagateInputBindings: Behavior<FrameworkElement>
     {

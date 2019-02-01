@@ -53,24 +53,9 @@
     <ApplicationIcon>Favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
-      <HintPath>..\packages\CommonServiceLocator.2.0.4\lib\net46\CommonServiceLocator.dll</HintPath>
-    </Reference>
-    <Reference Include="MultiSelectTreeView, Version=1.0.9.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MultiSelectTreeView.1.0.9\lib\net40\MultiSelectTreeView.dll</HintPath>
-    </Reference>
-    <Reference Include="Prism, Version=7.1.0.431, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
-      <HintPath>..\packages\Prism.Core.7.1.0.431\lib\net45\Prism.dll</HintPath>
-    </Reference>
-    <Reference Include="Prism.Wpf, Version=7.1.0.431, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
-      <HintPath>..\packages\Prism.Wpf.7.1.0.431\lib\net45\Prism.Wpf.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Prism.Wpf.7.1.0.431\lib\net45\System.Windows.Interactivity.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -89,51 +74,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Behaviors\PropagateInputBindings.cs" />
-    <Compile Include="Converters\ElementTypeNameConverter.cs" />
-    <Compile Include="Converters\ElementTypeToImageConverter.cs" />
-    <Compile Include="Interaction\InteractionRequests.cs" />
-    <Compile Include="Interaction\Notifications\ValueConfirmation.cs" />
-    <Compile Include="Model\Database\Entry.cs" />
-    <Compile Include="Model\Database\Group.cs" />
-    <Compile Include="ViewModels\DatabaseViewModel.cs" />
-    <Compile Include="ViewModels\MainMenuViewModel.cs" />
-    <Compile Include="ViewModels\NewDialogViewModel.cs" />
-    <Compile Include="Views\Database.xaml.cs">
-      <DependentUpon>Database.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\MainMenu.xaml.cs">
-      <DependentUpon>MainMenu.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\NewDialog.xaml.cs">
-      <DependentUpon>NewDialog.xaml</DependentUpon>
-    </Compile>
-    <Page Include="Views\Database.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\MainMenu.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="Interaction\CloseWindowAction.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ViewModels\MainWindowViewModel.cs" />
-    <Compile Include="Views\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="Views\NewDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -153,7 +97,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -178,27 +121,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icons\Character.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Icons\Encounter.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Icons\Equipment.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Icons\Template.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Icons\Ability.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Icons\Demeanor.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Icons\Advantage_Disadvantage.png" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\L5RUI\L5RUI.csproj">
+      <Project>{edd997de-1f1b-4fc2-af45-ddd270084737}</Project>
+      <Name>L5RUI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NPC\NPC.csproj">
       <Project>{8F878A3E-0451-4BF5-8A45-774BCDA16B06}</Project>
       <Name>NPC</Name>

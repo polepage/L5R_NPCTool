@@ -1,6 +1,6 @@
 ﻿using Prism.Interactivity.InteractionRequest;
 
-namespace L5RTool.Interaction
+namespace L5RUI.Interaction
 {
     public static class InteractionRequests
     {

@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Interactivity;
 
-namespace L5RTool.Interaction
+namespace L5RUI.Interaction
 {
     class CloseWindowAction : TriggerAction<Window>
     {

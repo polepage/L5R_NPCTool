@@ -1,13 +1,13 @@
 ﻿using System.Windows.Controls;
 
-namespace L5RTool.Views
+namespace L5RUI.Views
 {
     /// <summary>
-    /// Interaction logic for MainMenu.xaml
+    /// Interaction logic for NewDialog.xaml
     /// </summary>
-    public partial class MainMenu : Menu
+    public partial class NewDialog : StackPanel
     {
-        public MainMenu()
+        public NewDialog()
         {
             InitializeComponent();
         }

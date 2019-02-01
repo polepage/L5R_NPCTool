@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Windows.Input;
-using L5RTool.Interaction.Notifications;
+using L5RUI.Interaction.Notifications;
 using NPC.Model;
 using Prism.Commands;
 using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
 
-namespace L5RTool.ViewModels
+namespace L5RUI.ViewModels
 {
     class NewDialogViewModel : BindableBase, IInteractionRequestAware
     {

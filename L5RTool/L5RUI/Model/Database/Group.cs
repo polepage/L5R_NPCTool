@@ -3,7 +3,7 @@ using Prism.Mvvm;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace L5RTool.Model.Database
+namespace L5RUI.Model.Database
 {
     class Group: BindableBase
     {

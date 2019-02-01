@@ -1,12 +1,12 @@
-﻿using L5RTool.Interaction;
-using L5RTool.Interaction.Notifications;
+﻿using L5RUI.Interaction;
+using L5RUI.Interaction.Notifications;
 using NPC.Model;
 using Prism.Commands;
 using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
 using System.Windows.Input;
 
-namespace L5RTool.ViewModels
+namespace L5RUI.ViewModels
 {
     class MainMenuViewModel: BindableBase
     {

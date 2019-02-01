@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace L5RTool.Views
+namespace L5RUI.Views
 {
     /// <summary>
     /// Interaction logic for DatabaseView.xaml

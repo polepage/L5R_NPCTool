@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace L5RTool.Views
+namespace L5RUI.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

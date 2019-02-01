@@ -1,11 +1,11 @@
-﻿using L5RTool.Model.Database;
+﻿using L5RUI.Model.Database;
 using NPC.Model;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace L5RTool.ViewModels
+namespace L5RUI.ViewModels
 {
     class DatabaseViewModel: BindableBase
     {

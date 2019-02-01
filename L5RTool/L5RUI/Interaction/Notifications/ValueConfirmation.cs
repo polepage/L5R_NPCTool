@@ -1,6 +1,6 @@
 ﻿using Prism.Interactivity.InteractionRequest;
 
-namespace L5RTool.Interaction.Notifications
+namespace L5RUI.Interaction.Notifications
 {
     class ValueConfirmation<T>: Confirmation
     {

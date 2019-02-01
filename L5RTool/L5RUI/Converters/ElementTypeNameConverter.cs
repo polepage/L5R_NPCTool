@@ -3,7 +3,7 @@ using System;
 using System.Globalization;
 using System.Windows.Data;
 
-namespace L5RTool.Converters
+namespace L5RUI.Converters
 {
     class ElementTypeNameConverter : IValueConverter
     {

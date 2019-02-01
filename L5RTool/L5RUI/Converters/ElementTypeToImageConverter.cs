@@ -2,13 +2,13 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace L5RTool.Converters
+namespace L5RUI.Converters
 {
     class ElementTypeToImageConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return "\\Icons\\" + value.ToString() + ".png";
+            return "pack://application:,,,/L5RUI;component/Icons/" + value.ToString() + ".png";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
