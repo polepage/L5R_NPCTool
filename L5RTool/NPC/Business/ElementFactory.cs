@@ -1,4 +1,4 @@
-﻿using NPC.Model;
+using NPC.Model;
 
 namespace NPC.Business
 {

@@ -42,7 +42,7 @@
                 <ColumnDefinition Width="Auto" MinWidth="50"/>
             </Grid.ColumnDefinitions>
 
-            <TabControl Grid.Column="0"/>
+            <views:ElementViewer Grid.Column="0"/>
             <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch"/>
             <views:Database Grid.Column="2"/>
         </Grid>

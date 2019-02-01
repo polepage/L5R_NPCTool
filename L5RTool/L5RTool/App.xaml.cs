@@ -37,6 +37,8 @@ namespace L5RTool
             ViewModelLocationProvider.Register<MainMenu>(() =>
                         new MainMenuViewModel(_container.Resolve<IEventAggregator>(),
                                               _container.Resolve<IElementFactory>()));
+            ViewModelLocationProvider.Register<ElementViewer>(() =>
+                        new ElementViewerViewModel(_container.Resolve<IEventAggregator>()));
         }
     }
 }

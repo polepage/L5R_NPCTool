@@ -72,11 +72,15 @@
     <Compile Include="Model\Database\Group.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\DatabaseViewModel.cs" />
+    <Compile Include="ViewModels\ElementViewerViewModel.cs" />
     <Compile Include="ViewModels\MainMenuViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\NewDialogViewModel.cs" />
     <Compile Include="Views\Database.xaml.cs">
       <DependentUpon>Database.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ElementViewer.xaml.cs">
+      <DependentUpon>ElementViewer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainMenu.xaml.cs">
       <DependentUpon>MainMenu.xaml</DependentUpon>
@@ -122,6 +126,10 @@
     <Page Include="Views\Database.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ElementViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MainMenu.xaml">
       <Generator>MSBuild:Compile</Generator>
