@@ -31,7 +31,7 @@
             <actions:CloseWindowAction/>
         </prism:InteractionRequestTrigger>
     </i:Interaction.Triggers>
-    
+
     <Window.InputBindings>
         <KeyBinding Gesture="Ctrl+N" Command="{Binding NewCommand}"/>
         <KeyBinding Gesture="Ctrl+O" Command="{Binding OpenCommand}"/>
@@ -69,6 +69,16 @@
                 <MenuItem Header="Export" Command="{Binding ExportCommand}"/>
             </MenuItem>
         </Menu>
-        <TabControl/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" MinWidth="50"/>
+                <ColumnDefinition Width="3"/>
+                <ColumnDefinition Width="Auto" MinWidth="50"/>
+            </Grid.ColumnDefinitions>
+
+            <TabControl Grid.Column="0"/>
+            <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch"/>
+            <views:Database Grid.Column="2"/>
+        </Grid>
     </DockPanel>
 </Window>
