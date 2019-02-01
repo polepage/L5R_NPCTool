@@ -1,4 +1,6 @@
-﻿using L5RTool.Interaction;
+﻿using L5RTool.Elements;
+using L5RTool.Interaction;
+using L5RTool.Interaction.Notifications;
 using Prism.Commands;
 using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
@@ -40,9 +42,10 @@ namespace L5RTool.ViewModels
 
         private void New()
         {
-            var confirmation = new Confirmation
+            var confirmation = new ValueConfirmation<ElementType>
             {
-                Title = "Create New Element"
+                Title = "Create New Element",
+                Value = 0
             };
 
             InteractionRequests.NewRequest.Raise(confirmation);

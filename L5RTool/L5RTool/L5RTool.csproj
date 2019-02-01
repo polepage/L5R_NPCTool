@@ -93,6 +93,7 @@
     <Compile Include="Converters\ElementTypeToImageConverter.cs" />
     <Compile Include="Elements\ElementType.cs" />
     <Compile Include="Interaction\InteractionRequests.cs" />
+    <Compile Include="Interaction\Notifications\ValueConfirmation.cs" />
     <Compile Include="Model\Database\Entry.cs" />
     <Compile Include="Model\Database\Group.cs" />
     <Compile Include="ViewModels\DatabaseViewModel.cs" />

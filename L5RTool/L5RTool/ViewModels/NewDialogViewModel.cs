@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Windows.Input;
 using L5RTool.Elements;
+using L5RTool.Interaction.Notifications;
 using Prism.Commands;
 using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
@@ -13,15 +14,15 @@ namespace L5RTool.ViewModels
         private DelegateCommand _createCommand;
         public ICommand CreateCommand => _createCommand ?? (_createCommand = new DelegateCommand(Create));
 
-        private Confirmation _confirmation;
+        private ValueConfirmation<ElementType> _confirmation;
         public INotification Notification
         {
             get => _confirmation;
             set
             {
-                if (SetProperty(ref _confirmation, value as Confirmation))
+                if (SetProperty(ref _confirmation, value as ValueConfirmation<ElementType>))
                 {
-                    Selection = 0;
+                    Selection = _confirmation.Value;
                 }
             }
         }
@@ -40,7 +41,7 @@ namespace L5RTool.ViewModels
         private void Create()
         {
             _confirmation.Confirmed = true;
-            _confirmation.Content = Selection;
+            _confirmation.Value = Selection;
             FinishInteraction?.Invoke();
         }
     }
