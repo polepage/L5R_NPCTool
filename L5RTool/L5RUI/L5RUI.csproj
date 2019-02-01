@@ -64,6 +64,7 @@
     <Compile Include="Behaviors\PropagateInputBindings.cs" />
     <Compile Include="Converters\ElementTypeNameConverter.cs" />
     <Compile Include="Converters\ElementTypeToImageConverter.cs" />
+    <Compile Include="Events.cs" />
     <Compile Include="Interaction\CloseWindowAction.cs" />
     <Compile Include="Interaction\InteractionRequests.cs" />
     <Compile Include="Interaction\Notifications\ValueConfirmation.cs" />
@@ -135,5 +136,6 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,7 +1,9 @@
 ﻿using L5RUI.Interaction;
 using L5RUI.Interaction.Notifications;
+using NPC;
 using NPC.Model;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
 using System.Windows.Input;
@@ -10,6 +12,15 @@ namespace L5RUI.ViewModels
 {
     public class MainMenuViewModel : BindableBase
     {
+        private IEventAggregator _eventAggegator;
+        private IElementFactory _elementFactory;
+
+        public MainMenuViewModel(IEventAggregator eventAggregator, IElementFactory elementFactory)
+        {
+            _eventAggegator = eventAggregator;
+            _elementFactory = elementFactory;
+        }
+
         private DelegateCommand _newCommand;
         public ICommand NewCommand => _newCommand ?? (_newCommand = new DelegateCommand(New));
 
@@ -51,7 +62,11 @@ namespace L5RUI.ViewModels
             InteractionRequests.NewRequest.Raise(confirmation);
             if (confirmation.Confirmed)
             {
-                // Create new data
+                IElement element = _elementFactory.CreateElement(confirmation.Value);
+                if (element != null)
+                {
+                    _eventAggegator.GetEvent<OpenElementEvent>().Publish(element);
+                }
             }
         }
 

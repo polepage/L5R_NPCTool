@@ -1,6 +1,8 @@
 ﻿using L5RUI.ViewModels;
 using L5RUI.Views;
+using NPC;
 using NPC.Registration;
+using Prism.Events;
 using Prism.Mvvm;
 using System.Windows;
 using Unity;
@@ -25,16 +27,16 @@ namespace L5RTool
         private void RegisterUnity()
         {
             _container = new UnityContainer();
+
+            _container.RegisterSingleton<IEventAggregator, EventAggregator>();
             RegistrationService.Register(new UnityRegistrationDelegate(_container));
         }
 
         private void RegisterViews()
         {
-            // Should remove those that are not injected anything (they can work via convention).
-            ViewModelLocationProvider.Register<MainWindow>(() => new MainWindowViewModel());
-            ViewModelLocationProvider.Register<MainMenu>(() => new MainMenuViewModel());
-            ViewModelLocationProvider.Register<Database>(() => new DatabaseViewModel());
-            ViewModelLocationProvider.Register<NewDialog>(() => new NewDialogViewModel());
+            ViewModelLocationProvider.Register<MainMenu>(() =>
+                        new MainMenuViewModel(_container.Resolve<IEventAggregator>(),
+                                              _container.Resolve<IElementFactory>()));
         }
     }
 }
