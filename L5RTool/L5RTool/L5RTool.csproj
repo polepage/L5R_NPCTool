@@ -89,6 +89,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Behaviors\PropagateInputBindings.cs" />
     <Compile Include="Converters\ElementTypeNameConverter.cs" />
     <Compile Include="Converters\ElementTypeToImageConverter.cs" />
     <Compile Include="Elements\ElementType.cs" />
