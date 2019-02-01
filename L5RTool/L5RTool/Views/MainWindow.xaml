@@ -4,8 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        xmlns:actions="clr-namespace:L5RTool.Actions"
         xmlns:views="clr-namespace:L5RTool.Views"
+        xmlns:interaction="clr-namespace:L5RTool.Interaction"
         xmlns:prism="http://prismlibrary.com/"
         mc:Ignorable="d"
         Title="L5R NPC Creation Tool"
@@ -13,7 +13,7 @@
         prism:ViewModelLocator.AutoWireViewModel="True">
 
     <i:Interaction.Triggers>
-        <prism:InteractionRequestTrigger SourceObject="{Binding NewRequest, Mode=OneWay}">
+        <prism:InteractionRequestTrigger SourceObject="{x:Static interaction:InteractionRequests.NewRequest}">
             <prism:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True">
                 <prism:PopupWindowAction.WindowStyle>
                     <Style TargetType="{x:Type Window}">
@@ -27,48 +27,14 @@
                 </prism:PopupWindowAction.WindowContent>
             </prism:PopupWindowAction>
         </prism:InteractionRequestTrigger>
-        <prism:InteractionRequestTrigger SourceObject="{Binding ExitRequest, Mode=OneWay}">
-            <actions:CloseWindowAction/>
+        
+        <prism:InteractionRequestTrigger SourceObject="{x:Static interaction:InteractionRequests.ExitRequest}">
+            <interaction:CloseWindowAction/>
         </prism:InteractionRequestTrigger>
     </i:Interaction.Triggers>
 
-    <Window.InputBindings>
-        <KeyBinding Gesture="Ctrl+N" Command="{Binding NewCommand}"/>
-        <KeyBinding Gesture="Ctrl+O" Command="{Binding OpenCommand}"/>
-        <KeyBinding Gesture="Ctrl+W" Command="{Binding CloseCommand}"/>
-        <KeyBinding Gesture="Ctrl+Shift+W" Command="{Binding CloseAllCommand}"/>
-        <KeyBinding Gesture="Ctrl+S" Command="{Binding SaveCommand}"/>
-        <KeyBinding Gesture="Ctrl+Shift+S" Command="{Binding SaveAllCommand}"/>
-        <KeyBinding Gesture="Ctrl+P" Command="{Binding PrintCommand}"/>
-        <KeyBinding Gesture="Alt+F4" Command="{Binding ExitCommand}"/>
-    </Window.InputBindings>
-    
     <DockPanel LastChildFill="True">
-        <Menu DockPanel.Dock="Top">
-            <MenuItem Header="File">
-                <MenuItem Header="New" InputGestureText="Ctrl+N" Command="{Binding NewCommand}"/>
-                <MenuItem Header="Open" InputGestureText="Ctrl+O" Command="{Binding OpenCommand}"/>
-                <Separator/>
-                <MenuItem Header="Close" InputGestureText="Ctrl+W" Command="{Binding CloseCommand}"/>
-                <MenuItem Header="Close All" InputGestureText="Ctrl+Shift+W" Command="{Binding CloseAllCommand}"/>
-                <Separator/>
-                <MenuItem Header="Save" InputGestureText="Ctrl+S" Command="{Binding SaveCommand}"/>
-                <MenuItem Header="Save All" InputGestureText="Ctrl+Shift+S" Command="{Binding SaveAllCommand}"/>
-                <Separator/>
-                <MenuItem Header="Print" InputGestureText="Ctrl+P" Command="{Binding PrintCommand}"/>
-                <Separator/>
-                <MenuItem Header="Exit" InputGestureText="Alt+F4" Command="{Binding ExitCommand}"/>
-            </MenuItem>
-            <MenuItem Header="Edit">
-                <MenuItem Header="Duplicate" InputGestureText="Ctrl+D"/>
-                <Separator/>
-                <MenuItem Header="Delete" InputGestureText="Del"/>
-            </MenuItem>
-            <MenuItem Header="Tools">
-                <MenuItem Header="Import" Command="{Binding ImportCommand}"/>
-                <MenuItem Header="Export" Command="{Binding ExportCommand}"/>
-            </MenuItem>
-        </Menu>
+        <views:MainMenu DockPanel.Dock="Top"/>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" MinWidth="50"/>

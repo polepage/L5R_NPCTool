@@ -92,12 +92,17 @@
     <Compile Include="Converters\ElementTypeNameConverter.cs" />
     <Compile Include="Converters\ElementTypeToImageConverter.cs" />
     <Compile Include="Elements\ElementType.cs" />
+    <Compile Include="Interaction\InteractionRequests.cs" />
     <Compile Include="Model\Database\Entry.cs" />
     <Compile Include="Model\Database\Group.cs" />
     <Compile Include="ViewModels\DatabaseViewModel.cs" />
+    <Compile Include="ViewModels\MainMenuViewModel.cs" />
     <Compile Include="ViewModels\NewDialogViewModel.cs" />
     <Compile Include="Views\Database.xaml.cs">
       <DependentUpon>Database.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainMenu.xaml.cs">
+      <DependentUpon>MainMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\NewDialog.xaml.cs">
       <DependentUpon>NewDialog.xaml</DependentUpon>
@@ -106,11 +111,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\MainMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="Actions\CloseWindowAction.cs" />
+    <Compile Include="Interaction\CloseWindowAction.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
