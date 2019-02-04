@@ -102,25 +102,25 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icons\Ability.png" />
+    <Resource Include="Icons\Elements\Ability.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icons\Advantage_Disadvantage.png" />
+    <Resource Include="Icons\Elements\Advantage_Disadvantage.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icons\Character.png" />
+    <Resource Include="Icons\Elements\Character.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icons\Demeanor.png" />
+    <Resource Include="Icons\Elements\Demeanor.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icons\Encounter.png" />
+    <Resource Include="Icons\Elements\Encounter.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icons\Equipment.png" />
+    <Resource Include="Icons\Elements\Equipment.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icons\Template.png" />
+    <Resource Include="Icons\Elements\Template.png" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\Database.xaml">
