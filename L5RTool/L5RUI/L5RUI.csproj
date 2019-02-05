@@ -80,8 +80,8 @@
     <Compile Include="ViewModels\MainMenuViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\NewDialogViewModel.cs" />
-    <Compile Include="Views\Database.xaml.cs">
-      <DependentUpon>Database.xaml</DependentUpon>
+    <Compile Include="Views\ElementTree.xaml.cs">
+      <DependentUpon>ElementTree.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ElementViewer.xaml.cs">
       <DependentUpon>ElementViewer.xaml</DependentUpon>
@@ -131,7 +131,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Database.xaml">
+    <Page Include="Views\ElementTree.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

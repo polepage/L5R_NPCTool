@@ -5,9 +5,9 @@ namespace L5RUI.Views
     /// <summary>
     /// Interaction logic for DatabaseView.xaml
     /// </summary>
-    public partial class Database : MultiSelectTreeView
+    public partial class ElementTree : MultiSelectTreeView
     {
-        public Database()
+        public ElementTree()
         {
             InitializeComponent();
         }

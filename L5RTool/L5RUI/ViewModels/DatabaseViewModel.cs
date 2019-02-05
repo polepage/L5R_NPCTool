@@ -7,9 +7,9 @@ using System.Linq;
 
 namespace L5RUI.ViewModels
 {
-    public class DatabaseViewModel: BindableBase
+    public class ElementTreeViewModel : BindableBase
     {
-        public DatabaseViewModel()
+        public ElementTreeViewModel()
         {
             Content = Init();
         }
