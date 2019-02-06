@@ -1,4 +1,6 @@
-﻿using NPC;
+﻿using L5RUI.Extensions;
+using L5RUI.ViewModels.Elements;
+using NPC;
 using Prism.Events;
 using Prism.Mvvm;
 using System.Collections.Generic;
@@ -16,13 +18,13 @@ namespace L5RUI.ViewModels
             _eventAggregator = eventAggregator;
             _eventAggregator.GetEvent<OpenElementEvent>().Subscribe(ElementOppened);
 
-            Elements = new ObservableCollection<IElement>();
+            Elements = new ObservableCollection<IElementViewModel>();
         }
         
-        public IList<IElement> Elements { get; }
+        public IList<IElementViewModel> Elements { get; }
 
-        private IElement _selectedElement;
-        public IElement SelectedElement
+        private IElementViewModel _selectedElement;
+        public IElementViewModel SelectedElement
         {
             get => _selectedElement;
             set => SetProperty(ref _selectedElement, value);
@@ -30,10 +32,10 @@ namespace L5RUI.ViewModels
 
         private void ElementOppened(IElement element)
         {
-            IElement toShow = Elements.FirstOrDefault(e => e.Equals(element));
+            IElementViewModel toShow = Elements.FirstOrDefault(e => e.Element.Equals(element));
             if (toShow == null)
             {
-                toShow = element;
+                toShow = element.CreateViewModel();
                 Elements.Add(toShow);
             }
 

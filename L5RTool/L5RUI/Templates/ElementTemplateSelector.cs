@@ -1,4 +1,4 @@
-﻿using NPC;
+﻿using L5RUI.ViewModels.Elements;
 using NPC.Model;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,7 +12,7 @@ namespace L5RUI.Templates
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
-            var element = item as IElement;
+            var element = item as IElementViewModel;
             if (element != null)
             {
                 switch (element.Type)

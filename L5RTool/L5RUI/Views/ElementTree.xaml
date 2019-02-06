@@ -12,12 +12,12 @@
                         ItemsSource="{Binding Content}">
 
     <tv:MultiSelectTreeView.Resources>
-        <conv:ElementTypeToImageConverter x:Key="imageConverter"/>
+        <conv:NameToImageConverter x:Key="imageConverter"/>
         <conv:ElementTypeNameConverter x:Key="nameConverter"/>
         
         <HierarchicalDataTemplate DataType="{x:Type db:Group}" ItemsSource="{Binding Entries}">
             <StackPanel Margin="2 2 10 2" Orientation="Horizontal">
-                <Image Source="{Binding Path=Type, Converter={StaticResource imageConverter}}" MaxWidth="16" MaxHeight="16" Margin="0 0 3 0"/>
+                <Image Source="{Binding Path=Type, Converter={StaticResource imageConverter}, ConverterParameter=Elements}" MaxWidth="16" MaxHeight="16" Margin="0 0 3 0"/>
                 <TextBlock Text="{Binding Path=Type, Converter={StaticResource nameConverter}}" VerticalAlignment="Center"/>
             </StackPanel>
         </HierarchicalDataTemplate>
