@@ -10,7 +10,7 @@ namespace L5RUI.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var type = (ElementType)value;
-            if (type == ElementType.Advantage_Disadvantage)
+            if (type == ElementType.Trait)
             {
                 return "Advantage / Disadvantage";
             }

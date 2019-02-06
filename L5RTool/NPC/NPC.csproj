@@ -44,6 +44,10 @@
     <Compile Include="Business\ElementFactory.cs" />
     <Compile Include="IElement.cs" />
     <Compile Include="IElementFactory.cs" />
+    <Compile Include="Model\SkillGroup.cs" />
+    <Compile Include="Model\Trait.cs" />
+    <Compile Include="Model\TraitSphere.cs" />
+    <Compile Include="Model\TraitType.cs" />
     <Compile Include="Registration\IRegistrationDelegate.cs" />
     <Compile Include="Model\Demeanor.cs" />
     <Compile Include="Model\ElementType.cs" />

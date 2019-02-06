@@ -5,7 +5,7 @@
         Encounter,
         Character,
         Demeanor,
-        Advantage_Disadvantage,
+        Trait,
         Ability,
         Equipment,
         Template

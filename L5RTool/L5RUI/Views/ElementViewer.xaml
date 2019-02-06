@@ -31,7 +31,8 @@
                 <Setter Property="ContentTemplateSelector">
                     <Setter.Value>
                         <templates:ElementTemplateSelector DefaultTemplate="{StaticResource defaultEditTemplate}"
-                                                           DemeanorTemplate="{StaticResource demeanorEditTemplate}"/>
+                                                           DemeanorTemplate="{StaticResource demeanorEditTemplate}"
+                                                           TraitTemplate="{StaticResource traitEditTemplate}"/>
                     </Setter.Value>
                 </Setter>
             </Style>

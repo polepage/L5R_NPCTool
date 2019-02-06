@@ -12,6 +12,8 @@ namespace L5RUI.Extensions
             {
                 case ElementType.Demeanor:
                     return new DemeanorElement(element as Demeanor);
+                case ElementType.Trait:
+                    return new TraitElement(element as Trait);
                 default:
                     return null;
             }

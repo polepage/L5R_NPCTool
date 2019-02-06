@@ -9,6 +9,7 @@ namespace L5RUI.Templates
     {
         public DataTemplate DefaultTemplate { get; set; }
         public DataTemplate DemeanorTemplate { get; set; }
+        public DataTemplate TraitTemplate { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
@@ -19,6 +20,8 @@ namespace L5RUI.Templates
                 {
                     case ElementType.Demeanor:
                         return DemeanorTemplate;
+                    case ElementType.Trait:
+                        return TraitTemplate;
                     default:
                         break;
                 }

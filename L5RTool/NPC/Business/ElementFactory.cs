@@ -10,6 +10,8 @@ namespace NPC.Business
             {
                 case ElementType.Demeanor:
                     return new Demeanor();
+                case ElementType.Trait:
+                    return new Trait();
                 default:
                     return null;
             }
