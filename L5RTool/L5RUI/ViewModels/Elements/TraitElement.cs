@@ -1,4 +1,5 @@
-﻿using NPC.Model;
+﻿using L5RUI.Utils;
+using NPC.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +40,8 @@ namespace L5RUI.ViewModels.Elements
             set => SetProperty(v => _element.TraitType = v, () => _element.TraitType, value);
         }
 
-        public IEnumerable<Ring> RingList => Enum.GetValues(typeof(Ring)).Cast<Ring>();
-        public IEnumerable<TraitType> TraitTypeList => Enum.GetValues(typeof(TraitType)).Cast<TraitType>();
+        public IEnumerable<Ring> RingList => EnumHelpers.GetValues<Ring>();
+        public IEnumerable<TraitType> TraitTypeList => EnumHelpers.GetValues<TraitType>();
+        public IEnumerable<SkillGroup> SkillGroupList => EnumHelpers.GetValues<SkillGroup>();
     }
 }

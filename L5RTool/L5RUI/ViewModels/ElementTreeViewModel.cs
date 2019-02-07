@@ -1,4 +1,5 @@
 ﻿using L5RUI.Model.Database;
+using L5RUI.Utils;
 using NPC.Model;
 using Prism.Mvvm;
 using System;
@@ -18,7 +19,7 @@ namespace L5RUI.ViewModels
 
         private IList<Group> Init()
         {
-            IList<Group> groups = Enum.GetValues(typeof(ElementType)).Cast<ElementType>().Select(t => new Group(t)).ToList();
+            IList<Group> groups = EnumHelpers.GetValues<ElementType>().Select(t => new Group(t)).ToList();
 
             // Dummy
             foreach (Group group in groups)
