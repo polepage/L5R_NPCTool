@@ -81,6 +81,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behaviors\BindMultiSelection.cs" />
     <Compile Include="Behaviors\PropagateInputBindings.cs" />
     <Compile Include="Controls\DemeanorModifiers.xaml.cs">
       <DependentUpon>DemeanorModifiers.xaml</DependentUpon>

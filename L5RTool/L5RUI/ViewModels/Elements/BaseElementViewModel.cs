@@ -6,17 +6,19 @@ using System.Runtime.CompilerServices;
 
 namespace L5RUI.ViewModels.Elements
 {
-    class BaseElementViewModel : BindableBase, IElementViewModel
+    class BaseElementViewModel<T> : BindableBase, IElementViewModel where T: IElement
     {
-        public BaseElementViewModel(IElement element)
+        public BaseElementViewModel(T element)
         {
-            Element = element;
+            TypedElement = element;
         }
 
         public ElementType Type => Element.Type;
-        public IElement Element { get; }
+        public IElement Element => TypedElement;
 
-        protected bool SetProperty<T>(Action<T> setter, Func<T> getter, T value, [CallerMemberName] string propertyName = null)
+        protected T TypedElement { get; }
+
+        protected bool SetProperty<TParam>(Action<TParam> setter, Func<TParam> getter, TParam value, [CallerMemberName] string propertyName = null)
         {
             if ((getter() != null && !getter().Equals(value)) || (getter() == null && value != null))
             {
