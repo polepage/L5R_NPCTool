@@ -89,14 +89,16 @@
 
             <TextBlock Grid.Column="0" Grid.Row="4"
                        Text="Spheres" VerticalAlignment="Center"/>
+            <c:TagSelector Grid.Column="1" Grid.Row="4" Margin="5 3"
+                           Prompt="Add Sphere"
+                           ItemsSource="{Binding SpheresList}"
+                           BindableSelectedItems="{Binding Spheres}"/>
 
             <TextBlock Grid.Column="0" Grid.Row="5"
-                       Text="Name" VerticalAlignment="Center"/>
+                       Text="Description" VerticalAlignment="Center"/>
             <TextBox Grid.Column="1" Grid.Row="5" Margin="5 3"
                      MinLines="3" AcceptsReturn="True" TextWrapping="Wrap"
                      Text="{Binding Description}"/>
-
-            
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

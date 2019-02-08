@@ -9,12 +9,16 @@ namespace L5RUI.ViewModels.Elements
     class TraitElement : BaseElementViewModel<Trait>
     {
         private ObservableCollection<SkillGroup> _skillGroups;
+        private ObservableCollection<TraitSphere> _spheres;
 
         public TraitElement(Trait element)
             :base(element)
         {
             _skillGroups = new ObservableCollection<SkillGroup>();
             _skillGroups.CollectionChanged += SkillGroupsChanged;
+
+            _spheres = new ObservableCollection<TraitSphere>();
+            _spheres.CollectionChanged += SpheresChanged;
         }
 
         public string Name
@@ -42,14 +46,21 @@ namespace L5RUI.ViewModels.Elements
         }
 
         public IList<SkillGroup> SkillGroups => _skillGroups;
+        public IList<TraitSphere> Spheres => _spheres;
 
         public IEnumerable<Ring> RingList => EnumHelpers.GetValues<Ring>();
         public IEnumerable<TraitType> TraitTypeList => EnumHelpers.GetValues<TraitType>();
         public IEnumerable<SkillGroup> SkillGroupList => EnumHelpers.GetValues<SkillGroup>();
+        public IEnumerable<TraitSphere> SpheresList => EnumHelpers.GetValues<TraitSphere>();
 
         private void SkillGroupsChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             SetChanged(TypedElement.SkillGroups, e);
+        }
+
+        private void SpheresChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            SetChanged(TypedElement.Spheres, e);
         }
 
         private void SetChanged<TElement>(ISet<TElement> target, NotifyCollectionChangedEventArgs e)
