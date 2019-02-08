@@ -156,8 +156,6 @@ namespace L5RUI.Controls
 
         private Selector _selectorPart;
 
-        private bool _externalSelectionUpdate;
-
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
