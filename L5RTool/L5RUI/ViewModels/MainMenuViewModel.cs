@@ -1,4 +1,5 @@
-﻿using L5RUI.Interaction;
+﻿using L5RUI.Events;
+using L5RUI.Interaction;
 using L5RUI.Interaction.Notifications;
 using NPC;
 using NPC.Model;
@@ -65,7 +66,7 @@ namespace L5RUI.ViewModels
                 IElement element = _elementFactory.CreateElement(confirmation.Value);
                 if (element != null)
                 {
-                    _eventAggegator.GetEvent<OpenElementEvent>().Publish(element);
+                    _eventAggegator.GetEvent<OpenNewElementEvent>().Publish(element);
                 }
             }
         }
@@ -87,12 +88,12 @@ namespace L5RUI.ViewModels
 
         private void Save()
         {
-
+            _eventAggegator.GetEvent<SaveCurrentElementEvent>().Publish();
         }
 
         private void SaveAll()
         {
-
+            _eventAggegator.GetEvent<SaveAllElementsEvent>().Publish();
         }
 
         private void Import()

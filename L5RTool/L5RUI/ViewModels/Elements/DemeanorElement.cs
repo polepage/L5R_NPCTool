@@ -61,7 +61,9 @@ namespace L5RUI.ViewModels.Elements
         }
 
         public IReadOnlyList<DemeanorModifier> Modifiers => _modifiers;
-        
+
+        public bool IsDirty { get; set; }
+
         private void InitModifiers()
         {
             foreach (Ring ring in _element.Modifiers.Keys)

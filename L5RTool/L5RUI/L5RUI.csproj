@@ -89,7 +89,8 @@
     <Compile Include="Controls\TagSelector.cs" />
     <Compile Include="Converters\ElementTypeNameConverter.cs" />
     <Compile Include="Converters\NameToImageConverter.cs" />
-    <Compile Include="Events.cs" />
+    <Compile Include="Events\Events.cs" />
+    <Compile Include="Events\SingleSubEvent.cs" />
     <Compile Include="Extensions\ElementExtension.cs" />
     <Compile Include="Interaction\CloseWindowAction.cs" />
     <Compile Include="Interaction\InteractionRequests.cs" />

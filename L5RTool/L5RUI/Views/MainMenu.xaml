@@ -20,7 +20,7 @@
         <KeyBinding Gesture="Ctrl+P" Command="{Binding PrintCommand}"/>
         <KeyBinding Gesture="Alt+F4" Command="{Binding ExitCommand}"/>
     </Menu.InputBindings>
-    
+
     <MenuItem Header="File">
         <MenuItem Header="New" InputGestureText="Ctrl+N" Command="{Binding NewCommand}"/>
         <MenuItem Header="Open" InputGestureText="Ctrl+O" Command="{Binding OpenCommand}"/>
@@ -34,11 +34,6 @@
         <MenuItem Header="Print" InputGestureText="Ctrl+P" Command="{Binding PrintCommand}"/>
         <Separator/>
         <MenuItem Header="Exit" InputGestureText="Alt+F4" Command="{Binding ExitCommand}"/>
-    </MenuItem>
-    <MenuItem Header="Edit">
-        <MenuItem Header="Duplicate" InputGestureText="Ctrl+D"/>
-        <Separator/>
-        <MenuItem Header="Delete" InputGestureText="Del"/>
     </MenuItem>
     <MenuItem Header="Tools">
         <MenuItem Header="Import" Command="{Binding ImportCommand}"/>

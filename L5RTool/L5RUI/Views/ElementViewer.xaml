@@ -13,6 +13,7 @@
                 <ResourceDictionary Source="ElementViews.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
+            <BooleanToVisibilityConverter x:Key="visibilityConverter"/>
             <conv:NameToImageConverter x:Key="imageConverter"/>
             <conv:ElementTypeNameConverter x:Key="nameConverter"/>
 
@@ -23,6 +24,8 @@
                             <StackPanel Margin="2 2 10 2" Orientation="Horizontal">
                                 <Image Source="{Binding Path=Type, Converter={StaticResource imageConverter}, ConverterParameter=Elements}" MaxWidth="16" MaxHeight="16" Margin="0 0 3 0"/>
                                 <TextBlock Text="{Binding Path=Type, Converter={StaticResource nameConverter}}" VerticalAlignment="Center"/>
+                                <TextBlock Text="*" VerticalAlignment="Center"
+                                           Visibility="{Binding IsDirty, Converter={StaticResource visibilityConverter}}"/>
                             </StackPanel>
                         </DataTemplate>
                     </Setter.Value>
@@ -33,6 +36,18 @@
                         <templates:ElementTemplateSelector DefaultTemplate="{StaticResource defaultEditTemplate}"
                                                            DemeanorTemplate="{StaticResource demeanorEditTemplate}"
                                                            TraitTemplate="{StaticResource traitEditTemplate}"/>
+                    </Setter.Value>
+                </Setter>
+
+                <Setter Property="ContextMenu">
+                    <Setter.Value>
+                        <ContextMenu>
+                            <MenuItem Header="Save" InputGestureText="Ctrl+S" Command="{Binding SaveCommand}"/>
+                            <Separator/>
+                            <MenuItem Header="Close" InputGestureText="Ctrl+W" Command="{Binding CloseCommand}"/>
+                            <MenuItem Header="Close All" InputGestureText="Ctrl+Shift+W" Command="{Binding CloseAllCommand}"/>
+                            <MenuItem Header="Close Others" Command="{Binding CloseOthersCommand}"/>
+                        </ContextMenu>
                     </Setter.Value>
                 </Setter>
             </Style>

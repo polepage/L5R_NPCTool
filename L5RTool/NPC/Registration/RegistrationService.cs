@@ -7,6 +7,7 @@ namespace NPC.Registration
         public static void Register(IRegistrationDelegate container)
         {
             container.Register<IElementFactory, ElementFactory>();
+            container.Register<IElementStorage, ElementStorage>();
         }
     }
 }

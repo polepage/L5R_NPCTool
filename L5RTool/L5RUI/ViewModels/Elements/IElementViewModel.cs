@@ -7,5 +7,6 @@ namespace L5RUI.ViewModels.Elements
     {
         ElementType Type { get; }
         IElement Element { get; }
+        bool IsDirty { get; set; }
     }
 }

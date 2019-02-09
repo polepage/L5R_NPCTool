@@ -1,4 +1,6 @@
-﻿namespace NPC.Registration
+﻿using System;
+
+namespace NPC.Registration
 {
     public interface IRegistrationDelegate
     {

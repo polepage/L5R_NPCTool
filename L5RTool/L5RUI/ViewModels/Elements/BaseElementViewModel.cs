@@ -6,11 +6,18 @@ using System.Runtime.CompilerServices;
 
 namespace L5RUI.ViewModels.Elements
 {
-    class BaseElementViewModel<T> : BindableBase, IElementViewModel where T: IElement
+    abstract class BaseElementViewModel<T> : BindableBase, IElementViewModel where T: IElement
     {
         public BaseElementViewModel(T element)
         {
             TypedElement = element;
+        }
+
+        private bool _isDirty;
+        public bool IsDirty
+        {
+            get => _isDirty;
+            set => SetProperty(ref _isDirty, value);
         }
 
         public ElementType Type => Element.Type;

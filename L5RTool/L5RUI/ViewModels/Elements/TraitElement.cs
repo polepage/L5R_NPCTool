@@ -24,25 +24,25 @@ namespace L5RUI.ViewModels.Elements
         public string Name
         {
             get => TypedElement.Name;
-            set => SetProperty(v => TypedElement.Name = v, () => TypedElement.Name, value);
+            set => IsDirty |= SetProperty(v => TypedElement.Name = v, () => TypedElement.Name, value);
         }
 
         public string Description
         {
             get => TypedElement.Description;
-            set => SetProperty(v => TypedElement.Description = v, () => TypedElement.Description, value);
+            set => IsDirty |= SetProperty(v => TypedElement.Description = v, () => TypedElement.Description, value);
         }
 
         public Ring Ring
         {
             get => TypedElement.Ring;
-            set => SetProperty(v => TypedElement.Ring = v, () => TypedElement.Ring, value);
+            set => IsDirty |= SetProperty(v => TypedElement.Ring = v, () => TypedElement.Ring, value);
         }
 
         public TraitType TraitType
         {
             get => TypedElement.TraitType;
-            set => SetProperty(v => TypedElement.TraitType = v, () => TypedElement.TraitType, value);
+            set => IsDirty |= SetProperty(v => TypedElement.TraitType = v, () => TypedElement.TraitType, value);
         }
 
         public IList<SkillGroup> SkillGroups => _skillGroups;
@@ -55,18 +55,21 @@ namespace L5RUI.ViewModels.Elements
 
         private void SkillGroupsChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            SetChanged(TypedElement.SkillGroups, e);
+            IsDirty |= SetChanged(TypedElement.SkillGroups, e);
         }
 
         private void SpheresChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            SetChanged(TypedElement.Spheres, e);
+            IsDirty |= SetChanged(TypedElement.Spheres, e);
         }
 
-        private void SetChanged<TElement>(ISet<TElement> target, NotifyCollectionChangedEventArgs e)
+        private bool SetChanged<TElement>(ISet<TElement> target, NotifyCollectionChangedEventArgs e)
         {
+            bool hasChanged = false;
+
             if (e.Action == NotifyCollectionChangedAction.Reset)
             {
+                hasChanged |= target.Count > 0;
                 target.Clear();
             }
             else
@@ -75,7 +78,7 @@ namespace L5RUI.ViewModels.Elements
                 {
                     foreach (TElement item in e.OldItems)
                     {
-                        target.Remove(item);
+                        hasChanged |= target.Remove(item);
                     }
                 }
 
@@ -83,10 +86,12 @@ namespace L5RUI.ViewModels.Elements
                 {
                     foreach (TElement item in e.NewItems)
                     {
-                        target.Add(item);
+                        hasChanged |= target.Add(item);
                     }
                 }
             }
+
+            return hasChanged;
         }
     }
 }

@@ -43,8 +43,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Business\ElementFactory.cs" />
+    <Compile Include="Business\ElementStorage.cs" />
     <Compile Include="IElement.cs" />
     <Compile Include="IElementFactory.cs" />
+    <Compile Include="IElementStorage.cs" />
     <Compile Include="Model\SkillGroup.cs" />
     <Compile Include="Model\Trait.cs" />
     <Compile Include="Model\TraitSphere.cs" />
