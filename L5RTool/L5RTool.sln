@@ -15,8 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NPC.Business.Interface", "N
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NPC.Business", "NPC.Business\NPC.Business.csproj", "{BDA5EDC0-7A1A-48ED-898D-CEC15085B174}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CS.Utils.Prism", "CS.Utils.Prism\CS.Utils.Prism.csproj", "{FC18F4F4-5127-4876-9248-04B7BB988831}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NPC.Presenter.Interface", "NPC.Presenter.Interface\NPC.Presenter.Interface.csproj", "{A3C0B167-E241-4444-A44F-816539E44AD1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NPC.Presenter.Windows", "NPC.Presenter.Windows\NPC.Presenter.Windows.csproj", "{D39CCDB5-22E9-4899-A310-0F80434520DC}"
@@ -53,10 +51,6 @@ Global
 		{BDA5EDC0-7A1A-48ED-898D-CEC15085B174}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BDA5EDC0-7A1A-48ED-898D-CEC15085B174}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BDA5EDC0-7A1A-48ED-898D-CEC15085B174}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FC18F4F4-5127-4876-9248-04B7BB988831}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FC18F4F4-5127-4876-9248-04B7BB988831}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FC18F4F4-5127-4876-9248-04B7BB988831}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FC18F4F4-5127-4876-9248-04B7BB988831}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A3C0B167-E241-4444-A44F-816539E44AD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A3C0B167-E241-4444-A44F-816539E44AD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3C0B167-E241-4444-A44F-816539E44AD1}.Release|Any CPU.ActiveCfg = Release|Any CPU

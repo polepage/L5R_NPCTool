@@ -95,10 +95,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CS.Utils.Prism\CS.Utils.Prism.csproj">
-      <Project>{FC18F4F4-5127-4876-9248-04B7BB988831}</Project>
-      <Name>CS.Utils.Prism</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CS.Utils\CS.Utils.csproj">
       <Project>{F23AE9C3-9B2C-4CBD-8DB1-55984B48EFC8}</Project>
       <Name>CS.Utils</Name>

@@ -18,7 +18,6 @@
     <PackageReference Include="Prism.Core" Version="7.1.0.431" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CS.Utils.Prism\CS.Utils.Prism.csproj" />
     <ProjectReference Include="..\CS.Utils\CS.Utils.csproj" />
     <ProjectReference Include="..\NPC.Business.Interface\NPC.Business.Interface.csproj" />
     <ProjectReference Include="..\NPC.Common\NPC.Common.csproj" />
