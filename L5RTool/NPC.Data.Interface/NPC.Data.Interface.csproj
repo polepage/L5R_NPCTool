@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>NPC.Data</RootNamespace>
+    <Authors>Pierre Olivier LePage</Authors>
+    <Company />
+    <Product>L5R NPC Tool</Product>
+    <Description>Data layer interfaces for L5R NPC Tool</Description>
+    <Copyright>Copyright © Pierre Olivier LePage 2019</Copyright>
+    <PackageProjectUrl></PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/polepage/L5R_NPCTool/blob/master/LICENSE</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/polepage/L5R_NPCTool</RepositoryUrl>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NPC.Common\NPC.Common.csproj" />
+  </ItemGroup>
+</Project>

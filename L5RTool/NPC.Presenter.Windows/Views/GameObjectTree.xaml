@@ -1,0 +1,28 @@
+﻿<tv:MultiSelectTreeView x:Class="NPC.Presenter.Windows.Views.GameObjectTree"
+                        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                        xmlns:prism="http://prismlibrary.com/"
+                        xmlns:conv="clr-namespace:NPC.Presenter.Windows.Converters"
+                        xmlns:tv="clr-namespace:System.Windows.Controls;assembly=MultiSelectTreeView"
+                        mc:Ignorable="d"
+                        prism:ViewModelLocator.AutoWireViewModel="True"
+                        ItemsSource="{Binding Content}">
+
+    <!--<tv:MultiSelectTreeView.Resources>
+        <conv:NameToImageConverter x:Key="imageConverter"/>
+
+        <HierarchicalDataTemplate DataType="{x:Type db:Group}" ItemsSource="{Binding Entries}">
+            <StackPanel Margin="2 2 10 2" Orientation="Horizontal">
+                <Image Source="{Binding Path=Type, Converter={StaticResource imageConverter}, ConverterParameter=Elements}" MaxWidth="16" MaxHeight="16" Margin="0 0 3 0"/>
+                <TextBlock Text="{Binding Path=Type, Converter={StaticResource nameConverter}}" VerticalAlignment="Center"/>
+            </StackPanel>
+        </HierarchicalDataTemplate>
+        <DataTemplate DataType="{x:Type db:Entry}">
+            <StackPanel Margin="2 2 10 2" Orientation="Horizontal">
+                <TextBlock Text="Dummy" VerticalAlignment="Center"/>
+            </StackPanel>
+        </DataTemplate>
+    </tv:MultiSelectTreeView.Resources>-->
+</tv:MultiSelectTreeView>

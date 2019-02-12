@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Pierre Olivier LePage</Authors>
+    <Company />
+    <Product>CSharp Utils</Product>
+    <Description>Tools using the Prism library</Description>
+    <Copyright>Copyright © Pierre Olivier LePage 2019</Copyright>
+    <PackageLicenseUrl>https://github.com/polepage/L5R_NPCTool/blob/master/LICENSE</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/polepage/L5R_NPCTool</RepositoryUrl>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Prism.Core" Version="7.1.0.431" />
+  </ItemGroup>
+
+</Project>

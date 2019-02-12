@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Pierre Olivier LePage</Authors>
+    <Company />
+    <Product>L5R NPC Tool</Product>
+    <Description>Default Data layer implementation for L5R NPC Tool.</Description>
+    <Copyright>Copyright © Pierre Olivier LePage 2019</Copyright>
+    <PackageLicenseUrl>https://github.com/polepage/L5R_NPCTool/blob/master/LICENSE</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/polepage/L5R_NPCTool</RepositoryUrl>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Prism.Core" Version="7.1.0.431" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CS.Utils\CS.Utils.csproj" />
+    <ProjectReference Include="..\NPC.Common\NPC.Common.csproj" />
+    <ProjectReference Include="..\NPC.Data.Interface\NPC.Data.Interface.csproj" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D39CCDB5-22E9-4899-A310-0F80434520DC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NPC.Presenter.Windows</RootNamespace>
+    <AssemblyName>NPC.Presenter.Windows</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="PresentationFramework.Aero2" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Behaviors\BindMultiSelection.cs" />
+    <Compile Include="Behaviors\PropagateInputBindings.cs" />
+    <Compile Include="Controls\TagSelector.cs" />
+    <Compile Include="Converters\NameToImageConverter.cs" />
+    <Compile Include="Events\Events.cs" />
+    <Compile Include="Events\SingleSubEvent.cs" />
+    <Compile Include="GameObjects\Advantage.cs" />
+    <Compile Include="GameObjects\BaseGameObject.cs" />
+    <Compile Include="GameObjects\Disadvantage.cs" />
+    <Compile Include="GameObjects\InternalFactory.cs" />
+    <Compile Include="GameObjects\Trait.cs" />
+    <Compile Include="InitializationService.cs" />
+    <Compile Include="Interaction\CloseWindowAction.cs" />
+    <Compile Include="Interaction\InteractionRequests.cs" />
+    <Compile Include="Interaction\Notifications\ValueConfirmation.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Templates\ElementTemplateSelector.cs" />
+    <Compile Include="ViewModels\GameObjectTreeViewModel.cs" />
+    <Compile Include="ViewModels\GameObjectEditorViewModel.cs" />
+    <Compile Include="ViewModels\MainMenuViewModel.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\NewDialogViewModel.cs" />
+    <Compile Include="Views\GameObjectTree.xaml.cs">
+      <DependentUpon>GameObjectTree.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GameObjectEditor.xaml.cs">
+      <DependentUpon>GameObjectEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainMenu.xaml.cs">
+      <DependentUpon>MainMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NewDialog.xaml.cs">
+      <DependentUpon>NewDialog.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MultiSelectTreeView">
+      <Version>1.0.9</Version>
+    </PackageReference>
+    <PackageReference Include="Prism.Wpf">
+      <Version>7.1.0.431</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CS.Utils.Prism\CS.Utils.Prism.csproj">
+      <Project>{FC18F4F4-5127-4876-9248-04B7BB988831}</Project>
+      <Name>CS.Utils.Prism</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CS.Utils\CS.Utils.csproj">
+      <Project>{F23AE9C3-9B2C-4CBD-8DB1-55984B48EFC8}</Project>
+      <Name>CS.Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NPC.Business.Interface\NPC.Business.Interface.csproj">
+      <Project>{94A781D8-D813-4947-9F32-34D18576A8EA}</Project>
+      <Name>NPC.Business.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NPC.Common\NPC.Common.csproj">
+      <Project>{00D97EDC-DB08-4EB3-86CA-B0EE48EAC84E}</Project>
+      <Name>NPC.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NPC.Presenter.Interface\NPC.Presenter.Interface.csproj">
+      <Project>{A3C0B167-E241-4444-A44F-816539E44AD1}</Project>
+      <Name>NPC.Presenter.Interface</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\GameObjects\Ability.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\GameObjects\Character.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\GameObjects\Demeanor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\GameObjects\Encounter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\GameObjects\Equipment.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\GameObjects\Template.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Rings\Air.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Rings\Earth.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Rings\Fire.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Rings\Void.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Rings\Water.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Theme\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\GameObjectTree.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\GameObjectEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\GameObjectViews.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MainMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\NewDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Icons\GameObjects\Advantage.png" />
+    <Resource Include="Icons\GameObjects\Disadvantage.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
