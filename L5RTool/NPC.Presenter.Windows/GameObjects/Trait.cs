@@ -1,21 +1,21 @@
 ﻿using CS.Utils;
 using NPC.Common;
 using NPC.Presenter.GameObjects;
+using NPC.Presenter.Windows.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace NPC.Presenter.Windows.GameObjects
 {
     abstract class Trait<T>: BaseGameObject<T>, ITrait where T: Business.GameObjects.ITrait
     {
-        private ObservableCollection<SkillGroup> _skillGroups;
-        private ObservableCollection<TraitSphere> _spheres;
+        private SetWrapper<SkillGroup> _skillGroups;
+        private SetWrapper<TraitSphere> _spheres;
 
         public Trait(T trait)
             : base(trait)
         {
-            _skillGroups = new ObservableCollection<SkillGroup>();
-            _spheres = new ObservableCollection<TraitSphere>();
+            _skillGroups = new SetWrapper<SkillGroup>(trait.SkillGroups);
+            _spheres = new SetWrapper<TraitSphere>(trait.Spheres);
         }
 
         public string Name
@@ -36,8 +36,8 @@ namespace NPC.Presenter.Windows.GameObjects
             set => GameObject.Ring = value;
         }
 
-        public IList<SkillGroup> SkillGroups => _skillGroups;
-        public IList<TraitSphere> Spheres => _spheres;
+        public ISet<SkillGroup> SkillGroups => _skillGroups;
+        public ISet<TraitSphere> Spheres => _spheres;
 
         public IEnumerable<Ring> RingList => EnumHelpers.GetValues<Ring>();
         public IEnumerable<SkillGroup> SkillGroupList => EnumHelpers.GetValues<SkillGroup>();

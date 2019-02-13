@@ -8,7 +8,11 @@ namespace NPC.Presenter.GameObjects
         string Name { get; set; }
         string Description { get; set; }
         Ring Ring { get; set; }
-        IList<SkillGroup> SkillGroups { get; }
-        IList<TraitSphere> Spheres { get; }
+        ISet<SkillGroup> SkillGroups { get; }
+        ISet<TraitSphere> Spheres { get; }
+
+        IEnumerable<Ring> RingList { get; }
+        IEnumerable<SkillGroup> SkillGroupList { get; }
+        IEnumerable<TraitSphere> SpheresList { get; }
     }
 }

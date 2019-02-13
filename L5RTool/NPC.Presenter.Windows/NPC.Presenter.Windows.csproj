@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Behaviors\BindMultiSelection.cs" />
     <Compile Include="Behaviors\PropagateInputBindings.cs" />
+    <Compile Include="Collections\SetWrapper.cs" />
     <Compile Include="Controls\TagSelector.cs" />
     <Compile Include="Converters\NameToImageConverter.cs" />
     <Compile Include="Events\Events.cs" />
