@@ -1,4 +1,5 @@
-﻿using NPC.Common;
+﻿using CS.Utils.Collections;
+using NPC.Common;
 using System.Collections.Generic;
 
 namespace NPC.Data.GameObjects
@@ -7,8 +8,8 @@ namespace NPC.Data.GameObjects
     {
         public Trait()
         {
-            SkillGroups = new HashSet<SkillGroup>();
-            Spheres = new HashSet<TraitSphere>();
+            SkillGroups = new ObservableHashSet<SkillGroup>();
+            Spheres = new ObservableHashSet<TraitSphere>();
         }
 
         private string _name;
