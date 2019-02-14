@@ -3,7 +3,7 @@ using NPC.Common;
 
 namespace NPC.Business.GameObjects
 {
-    abstract class BaseGameObject<T>: RelayBindableBase, IGameObject where T: Data.GameObjects.IGameObject 
+    abstract class BaseGameObject<T>: RelayBindableBase, IGameObject, IGameObjectSource where T: Data.GameObjects.IGameObject 
     {
         public BaseGameObject(T gameObject)
             : base(gameObject)
@@ -13,6 +13,8 @@ namespace NPC.Business.GameObjects
 
         public ObjectType Type => GameObject.Type;
         public bool IsDirty => GameObject.IsDirty;
+
+        public Data.GameObjects.IGameObject SourceObject => GameObject;
 
         protected T GameObject { get; }
 

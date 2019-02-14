@@ -94,12 +94,12 @@ namespace NPC.Presenter.Windows.ViewModels
 
         private void Save()
         {
-            //_eventAggegator.GetEvent<SaveCurrentElementEvent>().Publish();
+            _eventAggegator.GetEvent<SaveCurrentGameObjectEvent>().Publish();
         }
 
         private void SaveAll()
         {
-            //_eventAggegator.GetEvent<SaveAllElementsEvent>().Publish();
+            _eventAggegator.GetEvent<SaveAllGameObjectsEvent>().Publish();
         }
 
         private void Import()

@@ -58,6 +58,7 @@
     <Compile Include="GameObjects\Advantage.cs" />
     <Compile Include="GameObjects\BaseGameObject.cs" />
     <Compile Include="GameObjects\Disadvantage.cs" />
+    <Compile Include="GameObjects\IGameObjectSource.cs" />
     <Compile Include="GameObjects\InternalFactory.cs" />
     <Compile Include="GameObjects\Trait.cs" />
     <Compile Include="InitializationService.cs" />

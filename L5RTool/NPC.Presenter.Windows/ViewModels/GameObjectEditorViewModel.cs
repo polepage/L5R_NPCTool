@@ -1,5 +1,6 @@
 ﻿using NPC.Presenter.GameObjects;
 using NPC.Presenter.Windows.Events;
+using NPC.Presenter.Windows.GameObjects;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -13,13 +14,16 @@ namespace NPC.Presenter.Windows.ViewModels
     class GameObjectEditorViewModel: BindableBase
     {
         IEventAggregator _eventAggregator;
+        Business.IStorage _storage;
 
-        public GameObjectEditorViewModel(IEventAggregator eventAggregator)
+        public GameObjectEditorViewModel(IEventAggregator eventAggregator, Business.IStorage storage)
         {
             _eventAggregator = eventAggregator;
             _eventAggregator.GetEvent<OpenGameObjectEvent>().Subscribe(GameObjectOpened);
             _eventAggregator.GetEvent<SaveCurrentGameObjectEvent>().Subscribe(Save);
             _eventAggregator.GetEvent<SaveAllGameObjectsEvent>().Subscribe(SaveAll);
+
+            _storage = storage;
 
             GameObjects = new ObservableCollection<IGameObject>();
         }
@@ -74,17 +78,21 @@ namespace NPC.Presenter.Windows.ViewModels
 
         private void Save()
         {
-            //if (SelectedAttribute.IsDirty)
+            if (SelectedObject.IsDirty)
             {
-                
+                var goSource = SelectedObject as IGameObjectSource;
+                if (goSource != null)
+                {
+                    _storage.Save(goSource.SourceObject);
+                }
             }
         }
 
         private void SaveAll()
         {
-            //if (Attributes.Any(e => e.IsDirty))
+            if (GameObjects.Any(e => e.IsDirty))
             {
-                
+                _storage.Save(GameObjects.Where(o => o.IsDirty).OfType<IGameObjectSource>().Select(s => s.SourceObject));
             }
         }
     }

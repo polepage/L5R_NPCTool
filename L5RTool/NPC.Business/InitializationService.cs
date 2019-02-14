@@ -8,6 +8,7 @@ namespace NPC.Business
         {
             container.RegisterSingleton<InternalFactory>();
             container.RegisterSingleton<IGameObjectFactory, GameObjectFactory>();
+            container.RegisterSingleton<IStorage, Storage>();
         }
     }
 }

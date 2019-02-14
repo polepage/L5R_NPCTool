@@ -4,7 +4,7 @@ using NPC.Presenter.GameObjects;
 
 namespace NPC.Presenter.Windows.GameObjects
 {
-    abstract class BaseGameObject<T> : RelayBindableBase, IGameObject where T : Business.GameObjects.IGameObject
+    abstract class BaseGameObject<T> : RelayBindableBase, IGameObject, IGameObjectSource where T : Business.GameObjects.IGameObject
     {
         public BaseGameObject(T gameObject)
             : base(gameObject)
@@ -14,6 +14,8 @@ namespace NPC.Presenter.Windows.GameObjects
 
         public ObjectType Type => GameObject.Type;
         public bool IsDirty => GameObject.IsDirty;
+
+        public Business.GameObjects.IGameObject SourceObject => GameObject;
 
         protected T GameObject { get; }
 
