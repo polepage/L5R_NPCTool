@@ -4,6 +4,7 @@
             xmlns:prism="http://prismlibrary.com/"
             xmlns:conv="clr-namespace:NPC.Presenter.Windows.Converters"
             xmlns:templates="clr-namespace:NPC.Presenter.Windows.Templates"
+            xmlns:controls="clr-namespace:NPC.Presenter.Windows.Controls"
             prism:ViewModelLocator.AutoWireViewModel="True"
             ItemsSource="{Binding GameObjects}"
             SelectedValue="{Binding SelectedObject}">
@@ -13,8 +14,11 @@
                 <ResourceDictionary Source="GameObjectViews.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
+            <controls:BindingProxy x:Key="proxy" Data="{Binding}"/>
+
             <BooleanToVisibilityConverter x:Key="visibilityConverter"/>
             <conv:NameToImageConverter x:Key="imageConverter"/>
+            <conv:NameFallbackConverter x:Key="nameFallbackConverter"/>
 
             <Style TargetType="{x:Type TabItem}">
                 <Setter Property="HeaderTemplate">
@@ -22,7 +26,14 @@
                         <DataTemplate>
                             <StackPanel Margin="2 2 10 2" Orientation="Horizontal">
                                 <Image Source="{Binding Path=Type, Converter={StaticResource imageConverter}, ConverterParameter=GameObjects}" MaxWidth="16" MaxHeight="16" Margin="0 0 3 0"/>
-                                <TextBlock Text="{Binding Type}" VerticalAlignment="Center"/>
+                                <TextBlock VerticalAlignment="Center">
+                                    <TextBlock.Text>
+                                        <MultiBinding Converter="{StaticResource nameFallbackConverter}">
+                                            <Binding Path="Name"/>
+                                            <Binding Path="Type"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
                                 <TextBlock Text="*" VerticalAlignment="Center"
                                            Visibility="{Binding IsDirty, Converter={StaticResource visibilityConverter}}"/>
                             </StackPanel>
@@ -40,7 +51,7 @@
 
                 <Setter Property="ContextMenu">
                     <Setter.Value>
-                        <ContextMenu>
+                        <ContextMenu DataContext="{Binding Source={StaticResource proxy}, Path=Data}">
                             <MenuItem Header="Save" InputGestureText="Ctrl+S" Command="{Binding SaveCommand}"/>
                             <Separator/>
                             <MenuItem Header="Close" InputGestureText="Ctrl+W" Command="{Binding CloseCommand}"/>

@@ -54,16 +54,21 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Column="0" Grid.Row="0"
-                       Text="Name" VerticalAlignment="Center"/>
-            <TextBox Grid.Column="1" Grid.Row="0" Margin="5 3"
-                     MaxLength="256" Text="{Binding Name}"/>
+            <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0"
+                       Text="{Binding Type}" VerticalAlignment="Center"
+                       Margin="0 0 0 5"/>
 
             <TextBlock Grid.Column="0" Grid.Row="1"
+                       Text="Name" VerticalAlignment="Center"/>
+            <TextBox Grid.Column="1" Grid.Row="1" Margin="5 3"
+                     MaxLength="256" Text="{Binding Name}"/>
+
+            <TextBlock Grid.Column="0" Grid.Row="2"
                        Text="Ring" VerticalAlignment="Center"/>
-            <ComboBox Grid.Column="1" Grid.Row="1" Margin="5 3" MaxWidth="64" HorizontalAlignment="Left"
+            <ComboBox Grid.Column="1" Grid.Row="2" Margin="5 3" MaxWidth="64" HorizontalAlignment="Left"
                       ItemsSource="{Binding RingList}" SelectedValue="{Binding Ring}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
@@ -73,23 +78,23 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
 
-            <TextBlock Grid.Column="0" Grid.Row="2"
+            <TextBlock Grid.Column="0" Grid.Row="3"
                        Text="Skills" VerticalAlignment="Center"/>
-            <c:TagSelector Grid.Column="1" Grid.Row="2" Margin="5 3"
+            <c:TagSelector Grid.Column="1" Grid.Row="3" Margin="5 3"
                            Prompt="Add Skill Group"
                            ItemsSource="{Binding SkillGroupList}"
                            BindableSelectedItems="{Binding SkillGroups}"/>
 
-            <TextBlock Grid.Column="0" Grid.Row="3"
+            <TextBlock Grid.Column="0" Grid.Row="4"
                        Text="Spheres" VerticalAlignment="Center"/>
-            <c:TagSelector Grid.Column="1" Grid.Row="3" Margin="5 3"
+            <c:TagSelector Grid.Column="1" Grid.Row="4" Margin="5 3"
                            Prompt="Add Sphere"
                            ItemsSource="{Binding SpheresList}"
                            BindableSelectedItems="{Binding Spheres}"/>
 
-            <TextBlock Grid.Column="0" Grid.Row="4"
+            <TextBlock Grid.Column="0" Grid.Row="5"
                        Text="Description" VerticalAlignment="Center"/>
-            <TextBox Grid.Column="1" Grid.Row="4" Margin="5 3"
+            <TextBox Grid.Column="1" Grid.Row="5" Margin="5 3"
                      MinLines="3" AcceptsReturn="True" TextWrapping="Wrap"
                      Text="{Binding Description}"/>
         </Grid>

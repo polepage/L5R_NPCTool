@@ -62,7 +62,7 @@ namespace NPC.Data.GameObjects
         {
             return new ObjectReference(Id, Type)
             {
-                Name = Name
+                Name = string.IsNullOrEmpty(Name) ? Type.ToString() : Name
             };
         }
     }

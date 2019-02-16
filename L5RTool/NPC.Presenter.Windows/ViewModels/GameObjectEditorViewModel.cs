@@ -79,8 +79,7 @@ namespace NPC.Presenter.Windows.ViewModels
         {
             if (SelectedObject.IsDirty)
             {
-                var goSource = SelectedObject as IGameObjectSource;
-                if (goSource != null)
+                if (SelectedObject is IGameObjectSource goSource)
                 {
                     _storage.Save(goSource.SourceObject);
                 }
