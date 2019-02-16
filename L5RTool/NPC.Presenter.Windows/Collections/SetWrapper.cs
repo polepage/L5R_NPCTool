@@ -21,19 +21,17 @@ namespace NPC.Presenter.Windows.Collections
         {
             add
             {
-                var collectionChanged = _source as INotifyCollectionChanged;
-                if (collectionChanged != null)
+                if (_source is INotifyCollectionChanged ncc)
                 {
-                    collectionChanged.CollectionChanged += value;
+                    ncc.CollectionChanged += value;
                     _syncCount++;
                 }
             }
             remove
             {
-                var collectionChanged = _source as INotifyCollectionChanged;
-                if (collectionChanged != null)
+                if (_source is INotifyCollectionChanged ncc)
                 {
-                    collectionChanged.CollectionChanged -= value;
+                    ncc.CollectionChanged -= value;
                     _syncCount--;
                 }
             }

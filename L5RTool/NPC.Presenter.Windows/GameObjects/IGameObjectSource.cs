@@ -1,4 +1,4 @@
-﻿namespace NPC.Presenter.Windows.GameObjects
+﻿namespace NPC.Presenter.GameObjects
 {
     interface IGameObjectSource
     {

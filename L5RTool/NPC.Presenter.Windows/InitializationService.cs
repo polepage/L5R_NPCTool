@@ -1,4 +1,4 @@
-﻿using NPC.Presenter.Windows.GameObjects;
+﻿using NPC.Presenter.GameObjects;
 using NPC.Presenter.Windows.ViewModels;
 using NPC.Presenter.Windows.Views;
 using Prism.Ioc;

@@ -60,6 +60,8 @@
     <Compile Include="GameObjects\Disadvantage.cs" />
     <Compile Include="GameObjects\IGameObjectSource.cs" />
     <Compile Include="GameObjects\InternalFactory.cs" />
+    <Compile Include="GameObjects\ObjectReference.cs" />
+    <Compile Include="GameObjects\ObjectReferenceGroup.cs" />
     <Compile Include="GameObjects\Trait.cs" />
     <Compile Include="InitializationService.cs" />
     <Compile Include="Interaction\CloseWindowAction.cs" />

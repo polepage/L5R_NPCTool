@@ -1,6 +1,5 @@
 ﻿using NPC.Presenter.GameObjects;
 using NPC.Presenter.Windows.Events;
-using NPC.Presenter.Windows.GameObjects;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;

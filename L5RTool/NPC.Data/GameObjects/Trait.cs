@@ -57,5 +57,13 @@ namespace NPC.Data.GameObjects
                                 new XElement("Spheres",
                                              Spheres.Select(s => new XElement("Item", s))));
         }
+
+        public override ObjectReference CreateReference()
+        {
+            return new ObjectReference(Id, Type)
+            {
+                Name = Name
+            };
+        }
     }
 }

@@ -25,7 +25,7 @@ namespace NPC.Presenter.Windows.Behaviors
             var window = Window.GetWindow(AssociatedObject);
             for (int i = AssociatedObject.InputBindings.Count - 1; i >= 0; i--)
             {
-                var inputBinding = (InputBinding)AssociatedObject.InputBindings[i];
+                var inputBinding = AssociatedObject.InputBindings[i];
                 window.InputBindings.Add(inputBinding);
                 AssociatedObject.InputBindings.Remove(inputBinding);
             }

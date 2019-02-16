@@ -1,10 +1,9 @@
 ﻿using CS.Utils;
 using NPC.Common;
-using NPC.Presenter.GameObjects;
 using NPC.Presenter.Windows.Collections;
 using System.Collections.Generic;
 
-namespace NPC.Presenter.Windows.GameObjects
+namespace NPC.Presenter.GameObjects
 {
     abstract class Trait<T>: BaseGameObject<T>, ITrait where T: Business.GameObjects.ITrait
     {

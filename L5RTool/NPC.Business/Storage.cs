@@ -11,7 +11,10 @@ namespace NPC.Business
         public Storage(Data.IStorage storage)
         {
             _storage = storage;
+            Database = new ReferenceDatabase(storage.Database);
         }
+
+        public IReferenceDatabase Database { get; }
 
         public void Save(IGameObject gameObject)
         {

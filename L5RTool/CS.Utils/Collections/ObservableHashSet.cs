@@ -135,7 +135,7 @@ namespace CS.Utils.Collections
                 throw new ArgumentNullException("ObservableHashSet.UnionWith: collection is null.");
             }
 
-            IList<T> itemsToAdd = other.Where(t => !_set.Contains(t)).ToList();
+            var itemsToAdd = other.Where(t => !_set.Contains(t)).ToList();
             _set.UnionWith(other);
             if (itemsToAdd.Count > 0)
             {

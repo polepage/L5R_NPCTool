@@ -5,6 +5,8 @@ namespace NPC.Data
 {
     public interface IStorage
     {
+        IReferenceDatabase Database { get; }
+
         void Save(IGameObject gameObject);
         void Save(IEnumerable<IGameObject> gameObjects);
     }

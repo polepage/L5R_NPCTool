@@ -2,7 +2,6 @@
 using NPC.Common;
 using NPC.Presenter.GameObjects;
 using NPC.Presenter.Windows.Events;
-using NPC.Presenter.Windows.GameObjects;
 using NPC.Presenter.Windows.Interaction;
 using NPC.Presenter.Windows.Interaction.Notifications;
 using Prism.Commands;

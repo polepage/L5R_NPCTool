@@ -13,8 +13,7 @@ namespace NPC.Presenter.Windows.Templates
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
-            var gameObject = item as IGameObject;
-            if (gameObject != null)
+            if (item is IGameObject gameObject)
             {
                 switch (gameObject.Type)
                 {

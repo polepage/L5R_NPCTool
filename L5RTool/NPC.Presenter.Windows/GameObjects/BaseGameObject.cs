@@ -1,8 +1,7 @@
 ﻿using CS.Utils.Prism.Mvvm;
 using NPC.Common;
-using NPC.Presenter.GameObjects;
 
-namespace NPC.Presenter.Windows.GameObjects
+namespace NPC.Presenter.GameObjects
 {
     abstract class BaseGameObject<T> : RelayBindableBase, IGameObject, IGameObjectSource where T : Business.GameObjects.IGameObject
     {
@@ -18,6 +17,21 @@ namespace NPC.Presenter.Windows.GameObjects
         public Business.GameObjects.IGameObject SourceObject => GameObject;
 
         protected T GameObject { get; }
+
+        public override int GetHashCode()
+        {
+            return GameObject.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is BaseGameObject<T> bgo)
+            {
+                return GameObject.Equals(bgo.GameObject);
+            }
+
+            return false;
+        }
 
         protected override void RegisterBindings()
         {

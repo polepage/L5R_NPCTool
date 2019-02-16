@@ -1,26 +1,21 @@
-﻿using NPC.Common;
-using NPC.Presenter.GameObjects;
-using System;
+﻿using System;
 
-namespace NPC.Presenter.Windows.GameObjects
+namespace NPC.Presenter.GameObjects
 {
     class InternalFactory
     {
         public IGameObject Create(Business.GameObjects.IGameObject source)
         {
-            if (source == null)
+            switch (source)
             {
-                throw new ArgumentNullException("NPC.Presenter: Data object is null.");
-            }
-
-            switch (source.Type)
-            {
-                case ObjectType.Advantage:
-                    return new Advantage(source as Business.GameObjects.IAdvantage);
-                case ObjectType.Disadvantage:
-                    return new Disadvantage(source as Business.GameObjects.IDisadvantage);
+                case Business.GameObjects.IAdvantage s:
+                    return new Advantage(s);
+                case Business.GameObjects.IDisadvantage s:
+                    return new Disadvantage(s);
                 default:
                     throw new ArgumentOutOfRangeException("NPC.Presenter: Unknown type.");
+                case null:
+                    throw new ArgumentNullException("NPC.Presenter: Data object is null.");
             }
         }
     }

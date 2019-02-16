@@ -1,6 +1,4 @@
-﻿using NPC.Presenter.GameObjects;
-
-namespace NPC.Presenter.Windows.GameObjects
+﻿namespace NPC.Presenter.GameObjects
 {
     class Disadvantage : Trait<Business.GameObjects.IDisadvantage>, IDisadvantage
     {

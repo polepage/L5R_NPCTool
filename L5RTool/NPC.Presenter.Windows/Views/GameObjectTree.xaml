@@ -5,24 +5,28 @@
                         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
                         xmlns:prism="http://prismlibrary.com/"
                         xmlns:conv="clr-namespace:NPC.Presenter.Windows.Converters"
+                        xmlns:go="clr-namespace:NPC.Presenter.GameObjects"
                         xmlns:tv="clr-namespace:System.Windows.Controls;assembly=MultiSelectTreeView"
                         mc:Ignorable="d"
                         prism:ViewModelLocator.AutoWireViewModel="True"
-                        ItemsSource="{Binding Content}">
-
-    <!--<tv:MultiSelectTreeView.Resources>
+                        ItemsSource="{Binding References}">
+    <tv:MultiSelectTreeView.Resources>
         <conv:NameToImageConverter x:Key="imageConverter"/>
 
-        <HierarchicalDataTemplate DataType="{x:Type db:Group}" ItemsSource="{Binding Entries}">
+        <HierarchicalDataTemplate DataType="{x:Type go:ObjectReferenceGroup}" ItemsSource="{Binding References}">
             <StackPanel Margin="2 2 10 2" Orientation="Horizontal">
-                <Image Source="{Binding Path=Type, Converter={StaticResource imageConverter}, ConverterParameter=Elements}" MaxWidth="16" MaxHeight="16" Margin="0 0 3 0"/>
-                <TextBlock Text="{Binding Path=Type, Converter={StaticResource nameConverter}}" VerticalAlignment="Center"/>
+                <Image Source="{Binding Path=Type, Converter={StaticResource imageConverter}, ConverterParameter=GameObjects}"
+                       MaxWidth="16" MaxHeight="16" Margin="0 0 3 0"/>
+                <TextBlock Text="{Binding Type}" VerticalAlignment="Center"/>
             </StackPanel>
         </HierarchicalDataTemplate>
-        <DataTemplate DataType="{x:Type db:Entry}">
+
+        <DataTemplate DataType="{x:Type go:ObjectReference}">
             <StackPanel Margin="2 2 10 2" Orientation="Horizontal">
-                <TextBlock Text="Dummy" VerticalAlignment="Center"/>
+                <Image Source="{Binding Path=Type, Converter={StaticResource imageConverter}, ConverterParameter=GameObjects}"
+                       MaxWidth="16" MaxHeight="16" Margin="0 0 3 0"/>
+                <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
             </StackPanel>
         </DataTemplate>
-    </tv:MultiSelectTreeView.Resources>-->
+    </tv:MultiSelectTreeView.Resources>
 </tv:MultiSelectTreeView>

@@ -18,6 +18,21 @@ namespace NPC.Business.GameObjects
 
         protected T GameObject { get; }
 
+        public override int GetHashCode()
+        {
+            return GameObject.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is BaseGameObject<T> bgo)
+            {
+                return GameObject.Equals(bgo.GameObject);
+            }
+
+            return false;
+        }
+
         protected override void RegisterBindings()
         {
             AddBinding(nameof(GameObject.IsDirty), nameof(IsDirty));

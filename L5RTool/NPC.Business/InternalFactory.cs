@@ -1,5 +1,4 @@
 ﻿using NPC.Business.GameObjects;
-using NPC.Common;
 using System;
 
 namespace NPC.Business
@@ -8,19 +7,16 @@ namespace NPC.Business
     {
         public IGameObject Create(Data.GameObjects.IGameObject source)
         {
-            if (source == null)
+            switch (source)
             {
-                throw new ArgumentNullException("NPC.Business: Data object is null.");
-            }
-
-            switch (source.Type)
-            {
-                case ObjectType.Advantage:
-                    return new Advantage(source as Data.GameObjects.IAdvantage);
-                case ObjectType.Disadvantage:
-                    return new Disadvantage(source as Data.GameObjects.IDisadvantage);
+                case Data.GameObjects.IAdvantage s:
+                    return new Advantage(s);
+                case Data.GameObjects.IDisadvantage s:
+                    return new Disadvantage(s);
                 default:
                     throw new ArgumentOutOfRangeException("NPC.Business: Unknown type.");
+                case null:
+                    throw new ArgumentNullException("NPC.Business: Data object is null.");
             }
         }
     }
