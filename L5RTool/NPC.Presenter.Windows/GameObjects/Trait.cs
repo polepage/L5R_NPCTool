@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace NPC.Presenter.GameObjects
 {
-    abstract class Trait<T>: BaseGameObject<T>, ITrait where T: Business.GameObjects.ITrait
+    abstract class Trait<T>: GameObjectData<T>, ITrait where T: Business.GameObjects.ITrait
     {
         private SetWrapper<SkillGroup> _skillGroups;
         private SetWrapper<TraitSphere> _spheres;
@@ -17,22 +17,16 @@ namespace NPC.Presenter.GameObjects
             _spheres = new SetWrapper<TraitSphere>(trait.Spheres);
         }
 
-        public string Name
-        {
-            get => GameObject.Name;
-            set => GameObject.Name = value;
-        }
-
         public string Description
         {
-            get => GameObject.Description;
-            set => GameObject.Description = value;
+            get => DataObject.Description;
+            set => DataObject.Description = value;
         }
 
         public Ring Ring
         {
-            get => GameObject.Ring;
-            set => GameObject.Ring = value;
+            get => DataObject.Ring;
+            set => DataObject.Ring = value;
         }
 
         public ISet<SkillGroup> SkillGroups => _skillGroups;
@@ -44,11 +38,8 @@ namespace NPC.Presenter.GameObjects
 
         protected override void RegisterBindings()
         {
-            base.RegisterBindings();
-
-            AddBinding(nameof(GameObject.Name), nameof(Name));
-            AddBinding(nameof(GameObject.Description), nameof(Description));
-            AddBinding(nameof(GameObject.Ring), nameof(Ring));
+            AddBinding(nameof(DataObject.Description), nameof(Description));
+            AddBinding(nameof(DataObject.Ring), nameof(Ring));
         }
     }
 }

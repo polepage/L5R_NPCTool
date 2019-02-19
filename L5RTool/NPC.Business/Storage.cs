@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using NPC.Business.GameObjects;
 
@@ -18,16 +19,30 @@ namespace NPC.Business
 
         public void Save(IGameObject gameObject)
         {
-            var goSource = gameObject as IGameObjectSource;
-            if (goSource != null)
+            if (gameObject is GameObject go)
             {
-                _storage.Save(goSource.SourceObject);
+                _storage.Save(go.Source);
             }
         }
 
         public void Save(IEnumerable<IGameObject> gameObjects)
         {
-            _storage.Save(gameObjects.OfType<IGameObjectSource>().Select(s => s.SourceObject));
+            _storage.Save(gameObjects.OfType<GameObject>().Select(s => s.Source));
+        }
+
+        public IGameObject Open(IObjectReference objectReference)
+        {
+            if (objectReference is ObjectReference reference)
+            {
+                return new GameObject(_storage.Open(reference.Source));
+            }
+
+            throw new ArgumentException("Business.Storage: Can't open reference. Reference don't exist.");
+        }
+
+        public IEnumerable<IGameObject> Open(IEnumerable<IObjectReference> objectReferences)
+        {
+            return objectReferences.Select(or => Open(or));
         }
     }
 }

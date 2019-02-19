@@ -1,5 +1,6 @@
 ﻿using CS.Utils.Collections;
 using NPC.Common;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Xml.Linq;
 
 namespace NPC.Data.GameObjects
 {
-    abstract class Trait : BaseGameObject, ITrait
+    abstract class Trait : GameObjectData, ITrait
     {
         public Trait()
         {
@@ -16,13 +17,6 @@ namespace NPC.Data.GameObjects
 
             (SkillGroups as INotifyCollectionChanged).CollectionChanged += (sender, args) => IsDirty = true;
             (Spheres as INotifyCollectionChanged).CollectionChanged += (sender, args) => IsDirty = true;
-        }
-
-        private string _name;
-        public string Name
-        {
-            get => _name;
-            set => IsDirty |= SetProperty(ref _name, value);
         }
 
         private string _description;
@@ -42,14 +36,27 @@ namespace NPC.Data.GameObjects
         public ISet<SkillGroup> SkillGroups { get; }
         public ISet<TraitSphere> Spheres { get; }
 
-        public ObjectType Type { get; protected set; }
-
-        public override XElement GenerateXML()
+        public override void LoadXML(XElement xml)
         {
-            return new XElement("GameObject",
-                                new XAttribute("Type", Type),
-                                new XAttribute("Id", Id),
-                                new XElement("Name", Name),
+            XElement traitData = xml.Element("TraitData");
+
+            Description = traitData.Element("Description").Value;
+            Ring = (Ring)Enum.Parse(typeof(Ring), traitData.Element("Ring").Value);
+
+            foreach (XElement skillGroup in traitData.Element("SkillGroups").Elements())
+            {
+                SkillGroups.Add((SkillGroup)Enum.Parse(typeof(SkillGroup), skillGroup.Value));
+            }
+
+            foreach (XElement sphere in traitData.Element("Spheres").Elements())
+            {
+                Spheres.Add((TraitSphere)Enum.Parse(typeof(TraitSphere), sphere.Value));
+            }
+        }
+
+        public override XElement CreateXML()
+        {
+            return new XElement("TraitData",
                                 new XElement("Description", Description),
                                 new XElement("Ring", Ring),
                                 new XElement("SkillGroups",
@@ -58,12 +65,21 @@ namespace NPC.Data.GameObjects
                                              Spheres.Select(s => new XElement("Item", s))));
         }
 
-        public override ObjectReference CreateReference()
-        {
-            return new ObjectReference(Id, Type)
-            {
-                Name = string.IsNullOrEmpty(Name) ? Type.ToString() : Name
-            };
-        }
+        //protected override void LoadXML(XElement xml)
+        //{
+        //    Name = xml.Element("Name").Value;
+        //    Description = xml.Element("Description").Value;
+        //    Ring = (Ring)Enum.Parse(typeof(Ring), xml.Element("Ring").Value);
+
+        //    foreach (XElement skillGroup in xml.Element("SkillGroups").Elements())
+        //    {
+        //        SkillGroups.Add((SkillGroup)Enum.Parse(typeof(SkillGroup), skillGroup.Value));
+        //    }
+
+        //    foreach (XElement sphere in xml.Element("Spheres").Elements())
+        //    {
+        //        Spheres.Add((TraitSphere)Enum.Parse(typeof(TraitSphere), sphere.Value));
+        //    }
+        //}
     }
 }

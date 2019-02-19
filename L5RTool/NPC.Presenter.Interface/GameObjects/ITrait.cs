@@ -3,9 +3,8 @@ using System.Collections.Generic;
 
 namespace NPC.Presenter.GameObjects
 {
-    public interface ITrait
+    public interface ITrait: IGameObjectData
     {
-        string Name { get; set; }
         string Description { get; set; }
         Ring Ring { get; set; }
         ISet<SkillGroup> SkillGroups { get; }

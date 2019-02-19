@@ -5,27 +5,27 @@ namespace NPC.Business.GameObjects
 {
     class ObjectReference : RelayBindableBase, IObjectReference
     {
-        Data.GameObjects.IObjectReference _source;
-
         public ObjectReference(Data.GameObjects.IObjectReference source)
             : base(source)
         {
-            _source = source;
+            Source = source;
         }
 
-        public ObjectType Type => _source.Type;
-        public string Name => _source.Name;
+        public Data.GameObjects.IObjectReference Source { get; }
+
+        public ObjectType Type => Source.Type;
+        public string Name => Source.Name;
 
         public override int GetHashCode()
         {
-            return _source.GetHashCode();
+            return Source.GetHashCode();
         }
 
         public override bool Equals(object obj)
         {
             if (obj is ObjectReference or)
             {
-                return _source.Equals(or._source);
+                return Source.Equals(or.Source);
             }
 
             return false;
@@ -33,8 +33,8 @@ namespace NPC.Business.GameObjects
 
         protected override void RegisterBindings()
         {
-            AddBinding(nameof(_source.Type), nameof(Type));
-            AddBinding(nameof(_source.Name), nameof(Name));
+            AddBinding(nameof(Source.Type), nameof(Type));
+            AddBinding(nameof(Source.Name), nameof(Name));
         }
     }
 }

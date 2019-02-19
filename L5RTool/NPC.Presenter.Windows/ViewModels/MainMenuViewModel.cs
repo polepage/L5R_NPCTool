@@ -1,5 +1,4 @@
-﻿using NPC.Business;
-using NPC.Common;
+﻿using NPC.Common;
 using NPC.Presenter.GameObjects;
 using NPC.Presenter.Windows.Events;
 using NPC.Presenter.Windows.Interaction;
@@ -8,23 +7,23 @@ using Prism.Commands;
 using Prism.Events;
 using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Input;
 
 namespace NPC.Presenter.Windows.ViewModels
 {
     class MainMenuViewModel : BindableBase
     {
-        private IEventAggregator _eventAggegator;
-        private IGameObjectFactory _gameObjectFactory;
+        private IEventAggregator _eventAggregator;
+        private Business.IGameObjectFactory _gameObjectFactory;
+        private Business.IStorage _storage;
 
-        private InternalFactory _factory;
-
-        public MainMenuViewModel(IEventAggregator eventAggregator, IGameObjectFactory gameObjectFactory, InternalFactory internalFactory)
+        public MainMenuViewModel(IEventAggregator eventAggregator, Business.IGameObjectFactory gameObjectFactory, Business.IStorage storage)
         {
-            _eventAggegator = eventAggregator;
+            _eventAggregator = eventAggregator;
             _gameObjectFactory = gameObjectFactory;
-
-            _factory = internalFactory;
+            _storage = storage;
         }
 
         private DelegateCommand _newCommand;
@@ -68,17 +67,34 @@ namespace NPC.Presenter.Windows.ViewModels
             InteractionRequests.NewRequest.Raise(confirmation);
             if (confirmation.Confirmed)
             {
-                IGameObject gameObject = _factory.Create(_gameObjectFactory.CreateNewObject(confirmation.Value));
+                IGameObject gameObject = new GameObject(_gameObjectFactory.CreateNewObject(confirmation.Value));
                 if (gameObject != null)
                 {
-                    _eventAggegator.GetEvent<OpenGameObjectEvent>().Publish(gameObject);
+                    _eventAggregator.GetEvent<OpenGameObjectEvent>().Publish(gameObject);
                 }
             }
         }
 
         private void Open()
         {
+            var confirmation = new ValueConfirmation<IEnumerable<IObjectReference>>
+            {
+                Title = "Open Game Object"
+            };
 
+            InteractionRequests.OpenRequest.Raise(confirmation);
+            if (confirmation.Confirmed)
+            {
+                foreach (IGameObject gameObject in
+                    _storage.Open(
+                        confirmation.Value
+                            .OfType<ObjectReference>()
+                            .Select(or => or.Source))
+                        .Select(go => new GameObject(go)))
+                {
+                    _eventAggregator.GetEvent<OpenGameObjectEvent>().Publish(gameObject);
+                }
+            }
         }
 
         private void Close()
@@ -93,12 +109,12 @@ namespace NPC.Presenter.Windows.ViewModels
 
         private void Save()
         {
-            _eventAggegator.GetEvent<SaveCurrentGameObjectEvent>().Publish();
+            _eventAggregator.GetEvent<SaveCurrentGameObjectEvent>().Publish();
         }
 
         private void SaveAll()
         {
-            _eventAggegator.GetEvent<SaveAllGameObjectsEvent>().Publish();
+            _eventAggregator.GetEvent<SaveAllGameObjectsEvent>().Publish();
         }
 
         private void Import()

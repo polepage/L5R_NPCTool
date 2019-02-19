@@ -79,9 +79,9 @@ namespace NPC.Presenter.Windows.ViewModels
         {
             if (SelectedObject.IsDirty)
             {
-                if (SelectedObject is IGameObjectSource goSource)
+                if (SelectedObject is GameObject go)
                 {
-                    _storage.Save(goSource.SourceObject);
+                    _storage.Save(go.Source);
                 }
             }
         }
@@ -90,7 +90,7 @@ namespace NPC.Presenter.Windows.ViewModels
         {
             if (GameObjects.Any(e => e.IsDirty))
             {
-                _storage.Save(GameObjects.Where(o => o.IsDirty).OfType<IGameObjectSource>().Select(s => s.SourceObject));
+                _storage.Save(GameObjects.Where(o => o.IsDirty).OfType<GameObject>().Select(s => s.Source));
             }
         }
     }

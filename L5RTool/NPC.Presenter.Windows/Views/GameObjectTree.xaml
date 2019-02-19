@@ -4,29 +4,28 @@
                         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
                         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
                         xmlns:prism="http://prismlibrary.com/"
-                        xmlns:conv="clr-namespace:NPC.Presenter.Windows.Converters"
-                        xmlns:go="clr-namespace:NPC.Presenter.GameObjects"
                         xmlns:tv="clr-namespace:System.Windows.Controls;assembly=MultiSelectTreeView"
                         mc:Ignorable="d"
                         prism:ViewModelLocator.AutoWireViewModel="True"
-                        ItemsSource="{Binding References}">
+                        ItemsSource="{Binding References}"
+                        SelectedItems="{Binding SelectedItems}"
+                        BorderBrush="Transparent">
     <tv:MultiSelectTreeView.Resources>
-        <conv:NameToImageConverter x:Key="imageConverter"/>
-
-        <HierarchicalDataTemplate DataType="{x:Type go:ObjectReferenceGroup}" ItemsSource="{Binding References}">
-            <StackPanel Margin="2 2 10 2" Orientation="Horizontal">
-                <Image Source="{Binding Path=Type, Converter={StaticResource imageConverter}, ConverterParameter=GameObjects}"
-                       MaxWidth="16" MaxHeight="16" Margin="0 0 3 0"/>
-                <TextBlock Text="{Binding Type}" VerticalAlignment="Center"/>
-            </StackPanel>
-        </HierarchicalDataTemplate>
-
-        <DataTemplate DataType="{x:Type go:ObjectReference}">
-            <StackPanel Margin="2 2 10 2" Orientation="Horizontal">
-                <Image Source="{Binding Path=Type, Converter={StaticResource imageConverter}, ConverterParameter=GameObjects}"
-                       MaxWidth="16" MaxHeight="16" Margin="0 0 3 0"/>
-                <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
-            </StackPanel>
-        </DataTemplate>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ObjectReferenceViews.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </tv:MultiSelectTreeView.Resources>
+
+    <tv:MultiSelectTreeView.ContextMenu>
+        <ContextMenu DataContext="{Binding Source={StaticResource proxy}, Path=Data}"
+                     Visibility="{Binding CanOpen, Converter={StaticResource visibilityConverter}, Mode=OneWay}">
+            <MenuItem Header="Open" Command="{Binding OpenCommand}"
+                      Visibility="{Binding CanOpen, Converter={StaticResource visibilityConverter}, Mode=OneWay}"/>
+            <!--<Separator/>
+            <MenuItem Header="Duplicate"/>
+            <MenuItem Header="Delete"/>-->
+        </ContextMenu>
+    </tv:MultiSelectTreeView.ContextMenu>
 </tv:MultiSelectTreeView>

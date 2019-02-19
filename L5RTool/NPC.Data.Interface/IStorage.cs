@@ -9,5 +9,8 @@ namespace NPC.Data
 
         void Save(IGameObject gameObject);
         void Save(IEnumerable<IGameObject> gameObjects);
+
+        IGameObject Open(IObjectReference objectReference);
+        IEnumerable<IGameObject> Open(IEnumerable<IObjectReference> objectReferences);
     }
 }

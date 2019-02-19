@@ -9,7 +9,7 @@
         xmlns:prism="http://prismlibrary.com/"
         mc:Ignorable="d"
         Title="L5R NPC Creation Tool"
-        Height="450" Width="800"
+        MinHeight="450" MinWidth="600"
         prism:ViewModelLocator.AutoWireViewModel="True">
 
     <i:Interaction.Triggers>
@@ -27,6 +27,21 @@
                 </prism:PopupWindowAction.WindowContent>
             </prism:PopupWindowAction>
         </prism:InteractionRequestTrigger>
+
+        <prism:InteractionRequestTrigger SourceObject="{x:Static interaction:InteractionRequests.OpenRequest}">
+            <prism:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True">
+                <prism:PopupWindowAction.WindowStyle>
+                    <Style TargetType="{x:Type Window}">
+                        <Setter Property="ResizeMode" Value="NoResize"/>
+                        <Setter Property="MaxWidth" Value="400"/>
+                        <Setter Property="SizeToContent" Value="Height"/>
+                    </Style>
+                </prism:PopupWindowAction.WindowStyle>
+                <prism:PopupWindowAction.WindowContent>
+                    <views:OpenDialog/>
+                </prism:PopupWindowAction.WindowContent>
+            </prism:PopupWindowAction>
+        </prism:InteractionRequestTrigger>
         
         <prism:InteractionRequestTrigger SourceObject="{x:Static interaction:InteractionRequests.ExitRequest}">
             <interaction:CloseWindowAction/>
@@ -37,9 +52,9 @@
         <views:MainMenu DockPanel.Dock="Top"/>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" MinWidth="50"/>
+                <ColumnDefinition Width="*" MinWidth="400"/>
                 <ColumnDefinition Width="3"/>
-                <ColumnDefinition Width="Auto" MinWidth="50"/>
+                <ColumnDefinition Width="Auto" MinWidth="200"/>
             </Grid.ColumnDefinitions>
 
             <views:GameObjectEditor Grid.Column="0"/>

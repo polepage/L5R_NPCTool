@@ -3,6 +3,7 @@ using System.Linq;
 using System.IO;
 using NPC.Data.GameObjects;
 using System.Xml.Linq;
+using System;
 
 namespace NPC.Data
 {
@@ -25,38 +26,58 @@ namespace NPC.Data
 
         public void Save(IGameObject gameObject)
         {
-            var baseObject = gameObject as BaseGameObject;
-
-            SaveGameObject(baseObject);
-            SaveReferences(baseObject);
+            if (gameObject is GameObject go)
+            {
+                SaveGameObject(go);
+                SaveReferences(go);
+            }
         }
 
         public void Save(IEnumerable<IGameObject> gameObjects)
         {
-            IEnumerable<BaseGameObject> baseGameObjects = gameObjects.OfType<BaseGameObject>();
-            foreach (BaseGameObject baseGameObject in baseGameObjects)
+            IEnumerable<GameObject> gos = gameObjects.OfType<GameObject>();
+            foreach (GameObject go in gos)
             {
-                SaveGameObject(baseGameObject);
+                SaveGameObject(go);
             }
 
-            SaveReferences(baseGameObjects.ToArray());
+            SaveReferences(gos.ToArray());
         }
 
-        private void SaveGameObject(BaseGameObject baseObject)
+        public IGameObject Open(IObjectReference objectReference)
         {
-            string path = Path.Combine(DatabaseFolder, GameObjectFolder, baseObject.Id + GameObjectExtension);
-            Directory.CreateDirectory(Path.GetDirectoryName(path));
-            baseObject.GenerateXML().Save(path);
+            if (objectReference is ObjectReference reference)
+            {
+                return OpenFile(Path.Combine(DatabaseFolder, GameObjectFolder, reference.Id + GameObjectExtension));
+            }
 
-            baseObject.IsDirty = false;
+            throw new ArgumentException("Data.Storage: Cannot Open reference, reference don't exist.");
         }
 
-        private void SaveReferences(params BaseGameObject[] baseGameObjects)
+        public IEnumerable<IGameObject> Open(IEnumerable<IObjectReference> objectReferences)
+        {
+            return objectReferences.Select(or => Open(or));
+        }
+
+        private void SaveGameObject(GameObject gameObject)
+        {
+            string path = Path.Combine(DatabaseFolder, GameObjectFolder, gameObject.Id + GameObjectExtension);
+            Directory.CreateDirectory(Path.GetDirectoryName(path));
+            gameObject.CreateXML().Save(path);
+            gameObject.ResetDirty();
+        }
+
+        private IGameObject OpenFile(string path)
+        {
+            return GameObject.FromXML(XElement.Load(path));
+        }
+
+        private void SaveReferences(params GameObject[] gameObjects)
         {
             bool needToSave = false;
-            foreach(BaseGameObject baseGameObject in  baseGameObjects)
+            foreach(GameObject gameObject in gameObjects)
             {
-                needToSave |= _references.AddOrModify(baseGameObject.CreateReference());
+                needToSave |= _references.AddOrModify(gameObject.CreateReference());
             }
 
             if (needToSave)

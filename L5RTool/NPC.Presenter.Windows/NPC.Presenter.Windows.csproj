@@ -55,13 +55,13 @@
     <Compile Include="Controls\TagSelector.cs" />
     <Compile Include="Converters\NameFallbackConverter.cs" />
     <Compile Include="Converters\NameToImageConverter.cs" />
+    <Compile Include="Converters\StackConverter.cs" />
     <Compile Include="Events\Events.cs" />
     <Compile Include="Events\SingleSubEvent.cs" />
     <Compile Include="GameObjects\Advantage.cs" />
-    <Compile Include="GameObjects\BaseGameObject.cs" />
     <Compile Include="GameObjects\Disadvantage.cs" />
-    <Compile Include="GameObjects\IGameObjectSource.cs" />
-    <Compile Include="GameObjects\InternalFactory.cs" />
+    <Compile Include="GameObjects\GameObject.cs" />
+    <Compile Include="GameObjects\GameObjectData.cs" />
     <Compile Include="GameObjects\ObjectReference.cs" />
     <Compile Include="GameObjects\ObjectReferenceGroup.cs" />
     <Compile Include="GameObjects\Trait.cs" />
@@ -76,6 +76,7 @@
     <Compile Include="ViewModels\MainMenuViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\NewDialogViewModel.cs" />
+    <Compile Include="ViewModels\OpenDialogViewModel.cs" />
     <Compile Include="Views\GameObjectTree.xaml.cs">
       <DependentUpon>GameObjectTree.xaml</DependentUpon>
     </Compile>
@@ -90,6 +91,9 @@
     </Compile>
     <Compile Include="Views\NewDialog.xaml.cs">
       <DependentUpon>NewDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OpenDialog.xaml.cs">
+      <DependentUpon>OpenDialog.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -164,6 +168,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\ObjectReferenceViews.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\GameObjectViews.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -179,6 +187,10 @@
     <Page Include="Views\NewDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\OpenDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup />

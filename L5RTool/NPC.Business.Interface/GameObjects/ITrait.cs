@@ -3,9 +3,8 @@ using System.Collections.Generic;
 
 namespace NPC.Business.GameObjects
 {
-    public interface ITrait: IGameObject
+    public interface ITrait: IGameObjectData
     {
-        string Name { get; set; }
         string Description { get; set; }
         Ring Ring { get; set; }
         ISet<SkillGroup> SkillGroups { get; }
