@@ -68,15 +68,20 @@
     <Compile Include="InitializationService.cs" />
     <Compile Include="Interaction\CloseWindowAction.cs" />
     <Compile Include="Interaction\InteractionRequests.cs" />
+    <Compile Include="Interaction\Notifications\SaveConfirmation.cs" />
     <Compile Include="Interaction\Notifications\ValueConfirmation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Templates\ElementTemplateSelector.cs" />
+    <Compile Include="ViewModels\SaveDialogViewModel.cs" />
     <Compile Include="ViewModels\GameObjectTreeViewModel.cs" />
     <Compile Include="ViewModels\GameObjectEditorViewModel.cs" />
     <Compile Include="ViewModels\MainMenuViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\NewDialogViewModel.cs" />
     <Compile Include="ViewModels\OpenDialogViewModel.cs" />
+    <Compile Include="Views\SaveDialog.xaml.cs">
+      <DependentUpon>SaveDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\GameObjectTree.xaml.cs">
       <DependentUpon>GameObjectTree.xaml</DependentUpon>
     </Compile>
@@ -159,6 +164,10 @@
     <Page Include="Theme\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SaveDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\GameObjectTree.xaml">
       <Generator>MSBuild:Compile</Generator>

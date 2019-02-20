@@ -1,5 +1,7 @@
 ﻿using NPC.Presenter.GameObjects;
 using NPC.Presenter.Windows.Events;
+using NPC.Presenter.Windows.Interaction;
+using NPC.Presenter.Windows.Interaction.Notifications;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -21,6 +23,8 @@ namespace NPC.Presenter.Windows.ViewModels
             _eventAggregator.GetEvent<OpenGameObjectEvent>().Subscribe(GameObjectOpened);
             _eventAggregator.GetEvent<SaveCurrentGameObjectEvent>().Subscribe(Save);
             _eventAggregator.GetEvent<SaveAllGameObjectsEvent>().Subscribe(SaveAll);
+            _eventAggregator.GetEvent<CloseCurrentGameObjectEvent>().Subscribe(Close);
+            _eventAggregator.GetEvent<CloseAllGameObjectsEvent>().Subscribe(CloseAll);
 
             _storage = storage;
 
@@ -62,17 +66,53 @@ namespace NPC.Presenter.Windows.ViewModels
 
         private void Close()
         {
-
+            if (ValidateDirtyFiles(new List<IGameObject> { SelectedObject }))
+            {
+                GameObjects.Remove(SelectedObject);                
+            }
         }
 
         private void CloseAll()
         {
-
+            if (ValidateDirtyFiles(GameObjects))
+            {
+                GameObjects.Clear();
+            }
         }
 
         private void CloseOthers()
         {
+            if (ValidateDirtyFiles(GameObjects.Where(go => !go.Equals(SelectedObject))))
+            {
+                var toRemove = GameObjects.Where(go => !go.Equals(SelectedObject)).ToList();
+                foreach (IGameObject go in toRemove)
+                {
+                    GameObjects.Remove(go);
+                }
+            }
+        }
 
+        private bool ValidateDirtyFiles(IEnumerable<IGameObject> gameObjects)
+        {
+            if (!gameObjects.Where(go => go.IsDirty).Any())
+            {
+                return true;
+            }
+
+            var confirmation = new SaveConfirmation
+            {
+                Title = "Unsaved Changes",
+                Content = gameObjects.Where(go => go.IsDirty).ToList(),
+                Selector = go => SelectedObject = go
+            };
+
+            InteractionRequests.SaveRequest.Raise(confirmation);
+            if (confirmation.Value)
+            {
+                _storage.Save(GameObjects.Where(o => o.IsDirty).OfType<GameObject>().Select(s => s.Source));
+            }
+
+            return confirmation.Confirmed;
         }
 
         private void Save()

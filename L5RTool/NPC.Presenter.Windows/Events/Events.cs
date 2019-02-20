@@ -7,4 +7,7 @@ namespace NPC.Presenter.Windows.Events
 
     class SaveCurrentGameObjectEvent: SingleSubEvent { }
     class SaveAllGameObjectsEvent: SingleSubEvent { }
+
+    class CloseCurrentGameObjectEvent: PubSubEvent { }
+    class CloseAllGameObjectsEvent: PubSubEvent { }
 }

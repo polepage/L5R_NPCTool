@@ -42,6 +42,21 @@
                 </prism:PopupWindowAction.WindowContent>
             </prism:PopupWindowAction>
         </prism:InteractionRequestTrigger>
+
+        <prism:InteractionRequestTrigger SourceObject="{x:Static interaction:InteractionRequests.SaveRequest}">
+            <prism:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True">
+                <prism:PopupWindowAction.WindowStyle>
+                    <Style TargetType="{x:Type Window}">
+                        <Setter Property="ResizeMode" Value="NoResize"/>
+                        <Setter Property="MaxWidth" Value="400"/>
+                        <Setter Property="SizeToContent" Value="Height"/>
+                    </Style>
+                </prism:PopupWindowAction.WindowStyle>
+                <prism:PopupWindowAction.WindowContent>
+                    <views:SaveDialog/>
+                </prism:PopupWindowAction.WindowContent>
+            </prism:PopupWindowAction>
+        </prism:InteractionRequestTrigger>
         
         <prism:InteractionRequestTrigger SourceObject="{x:Static interaction:InteractionRequests.ExitRequest}">
             <interaction:CloseWindowAction/>

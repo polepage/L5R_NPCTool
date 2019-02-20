@@ -14,6 +14,9 @@ namespace NPC.Presenter.Windows.Interaction
         private static InteractionRequest<ValueConfirmation<IEnumerable<IObjectReference>>> _openRequest;
         public static InteractionRequest<ValueConfirmation<IEnumerable<IObjectReference>>> OpenRequest => _openRequest ?? (_openRequest = new InteractionRequest<ValueConfirmation<IEnumerable<IObjectReference>>>());
 
+        private static InteractionRequest<SaveConfirmation> _saveRequest;
+        public static InteractionRequest<SaveConfirmation> SaveRequest => _saveRequest ?? (_saveRequest = new InteractionRequest<SaveConfirmation>());
+
         private static InteractionRequest<INotification> _exitRequest;
         public static InteractionRequest<INotification> ExitRequest => _exitRequest ?? (_exitRequest = new InteractionRequest<INotification>());
     }

@@ -20,11 +20,25 @@
             <conv:NameToImageConverter x:Key="imageConverter"/>
             <conv:NameFallbackConverter x:Key="nameFallbackConverter"/>
 
+            <SolidColorBrush x:Key="closeButtonGlyph" Color="#FF606060"/>
+            
             <Style TargetType="{x:Type TabItem}">
                 <Setter Property="HeaderTemplate">
                     <Setter.Value>
                         <DataTemplate>
-                            <StackPanel Margin="2 2 10 2" Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel.Style>
+                                    <Style TargetType="{x:Type StackPanel}">
+                                        <Setter Property="Margin" Value="2 2 0 2"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TabItem}}}"
+                                                         Value="False">
+                                                <Setter Property="Margin" Value="2 2 6 2"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </StackPanel.Style>
+                                
                                 <Image Source="{Binding Path=Type, Converter={StaticResource imageConverter}, ConverterParameter=GameObjects}" MaxWidth="16" MaxHeight="16" Margin="0 0 3 0"/>
                                 <TextBlock VerticalAlignment="Center">
                                     <TextBlock.Text>
@@ -36,6 +50,17 @@
                                 </TextBlock>
                                 <TextBlock Text="*" VerticalAlignment="Center"
                                            Visibility="{Binding IsDirty, Converter={StaticResource visibilityConverter}}"/>
+                                <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+                                        VerticalAlignment="Center" Margin="8 0 0 0"
+                                        Command="{Binding Data.CloseCommand, Source={StaticResource proxy}}"
+                                        Visibility="{Binding IsSelected, Converter={StaticResource visibilityConverter}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TabItem}}}">
+                                    <Button.Content>
+                                        <Path Margin="1.5" Stroke="{StaticResource closeButtonGlyph}"
+                                              StrokeThickness="1.5" StrokeStartLineCap="Square" StrokeEndLineCap="Square"
+                                              Stretch="Uniform" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                              Data="M 0,0 L 5,5 M 0,5 L 5,0"/>
+                                    </Button.Content>
+                                </Button>
                             </StackPanel>
                         </DataTemplate>
                     </Setter.Value>

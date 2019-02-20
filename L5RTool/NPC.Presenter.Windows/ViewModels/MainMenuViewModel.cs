@@ -99,12 +99,12 @@ namespace NPC.Presenter.Windows.ViewModels
 
         private void Close()
         {
-
+            _eventAggregator.GetEvent<CloseCurrentGameObjectEvent>().Publish();
         }
 
         private void CloseAll()
         {
-
+            _eventAggregator.GetEvent<CloseAllGameObjectsEvent>().Publish();
         }
 
         private void Save()

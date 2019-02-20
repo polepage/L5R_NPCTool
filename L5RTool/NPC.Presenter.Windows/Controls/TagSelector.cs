@@ -198,10 +198,10 @@ namespace NPC.Presenter.Windows.Controls
 
         private void UpdateItemsAvailability()
         {
-            AvailableItems = ItemsSource.Cast<object>().Where(o => !SelectedItems.Contains(o));
-            CurrentSelection = ItemsSource.Cast<object>().Where(o => SelectedItems.Contains(o));
+            AvailableItems = ItemsSource?.Cast<object>().Where(o => !SelectedItems.Contains(o));
+            CurrentSelection = ItemsSource?.Cast<object>().Where(o => SelectedItems.Contains(o));
 
-            if (_selectorPart != null)
+            if (_selectorPart != null && AvailableItems != null)
             {
                 _selectorPart.IsEnabled = AvailableItems.Cast<object>().Count() > 0;
             }

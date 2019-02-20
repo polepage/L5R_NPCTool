@@ -15,6 +15,7 @@ namespace NPC.Presenter.Windows
             container.Register<GameObjectTreeViewModel>();
             container.Register<NewDialogViewModel>();
             container.Register<OpenDialogViewModel>();
+            container.Register<SaveDialogViewModel>();
 
             ViewModelLocationProvider.Register<MainWindow>(() => provider.Resolve<MainWindowViewModel>());
             ViewModelLocationProvider.Register<MainMenu>(() => provider.Resolve<MainMenuViewModel>());
@@ -22,6 +23,7 @@ namespace NPC.Presenter.Windows
             ViewModelLocationProvider.Register<GameObjectTree>(() => provider.Resolve<GameObjectTreeViewModel>());
             ViewModelLocationProvider.Register<NewDialog>(() => provider.Resolve<NewDialogViewModel>());
             ViewModelLocationProvider.Register<OpenDialog>(() => provider.Resolve<OpenDialogViewModel>());
+            ViewModelLocationProvider.Register<SaveDialog>(() => provider.Resolve<SaveDialogViewModel>());
         }
     }
 }
