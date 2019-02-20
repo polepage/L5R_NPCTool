@@ -1,5 +1,6 @@
 ﻿using NPC.Presenter.GameObjects;
 using Prism.Events;
+using System;
 
 namespace NPC.Presenter.Windows.Events
 {
@@ -10,4 +11,5 @@ namespace NPC.Presenter.Windows.Events
 
     class CloseCurrentGameObjectEvent: PubSubEvent { }
     class CloseAllGameObjectsEvent: PubSubEvent { }
+    class CancellableCloseAllGameObjectsEvent: PubSubEvent<Action> { }
 }

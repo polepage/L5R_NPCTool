@@ -134,11 +134,6 @@ namespace NPC.Presenter.Windows.ViewModels
 
         private void Exit()
         {
-            //if (IsDirty)
-            //{
-            //    // Pop Dirty Dialog
-            //}
-
             InteractionRequests.ExitRequest.Raise(new Notification());
         }
     }

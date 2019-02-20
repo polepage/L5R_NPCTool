@@ -66,6 +66,7 @@
     <Compile Include="GameObjects\ObjectReferenceGroup.cs" />
     <Compile Include="GameObjects\Trait.cs" />
     <Compile Include="InitializationService.cs" />
+    <Compile Include="Interaction\InvokeCancellableCommandAction.cs" />
     <Compile Include="Interaction\CloseWindowAction.cs" />
     <Compile Include="Interaction\InteractionRequests.cs" />
     <Compile Include="Interaction\Notifications\SaveConfirmation.cs" />

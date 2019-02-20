@@ -5,6 +5,7 @@ using NPC.Presenter.Windows.Interaction.Notifications;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace NPC.Presenter.Windows.ViewModels
             _eventAggregator.GetEvent<SaveAllGameObjectsEvent>().Subscribe(SaveAll);
             _eventAggregator.GetEvent<CloseCurrentGameObjectEvent>().Subscribe(Close);
             _eventAggregator.GetEvent<CloseAllGameObjectsEvent>().Subscribe(CloseAll);
+            _eventAggregator.GetEvent<CancellableCloseAllGameObjectsEvent>().Subscribe(CancellableCloseAll);
 
             _storage = storage;
 
@@ -74,9 +76,18 @@ namespace NPC.Presenter.Windows.ViewModels
 
         private void CloseAll()
         {
+            CancellableCloseAll(null);
+        }
+
+        private void CancellableCloseAll(Action cancel)
+        {
             if (ValidateDirtyFiles(GameObjects))
             {
                 GameObjects.Clear();
+            }
+            else
+            {
+                cancel?.Invoke();
             }
         }
 

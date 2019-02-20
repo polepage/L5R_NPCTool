@@ -61,6 +61,10 @@
         <prism:InteractionRequestTrigger SourceObject="{x:Static interaction:InteractionRequests.ExitRequest}">
             <interaction:CloseWindowAction/>
         </prism:InteractionRequestTrigger>
+
+        <i:EventTrigger EventName="Closing">
+            <interaction:InvokeCancellableCommandAction Command="{Binding ExitingCommand}"/>
+        </i:EventTrigger>
     </i:Interaction.Triggers>
 
     <DockPanel LastChildFill="True">
