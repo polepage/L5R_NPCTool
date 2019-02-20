@@ -13,6 +13,13 @@ namespace NPC.Business.GameObjects
             Data = CreateData(source.Data);
         }
 
+        public GameObject(Data.GameObjects.IGameObject source, IGameObject copySource)
+            : this (source)
+        {
+            Name = copySource.Name;
+            CopyData(copySource.Data);
+        }
+
         public Data.GameObjects.IGameObject Source { get; }
 
         public IGameObjectData Data { get; }
@@ -59,6 +66,14 @@ namespace NPC.Business.GameObjects
                     throw new ArgumentOutOfRangeException("NPC.Business: Unknown type.");
                 case null:
                     throw new ArgumentNullException("NPC.Business: Data object is null.");
+            }
+        }
+
+        private void CopyData(IGameObjectData copySource)
+        {
+            if (Data is ICopyTarget copyTarget)
+            {
+                copyTarget.CopyData(copySource);
             }
         }
     }

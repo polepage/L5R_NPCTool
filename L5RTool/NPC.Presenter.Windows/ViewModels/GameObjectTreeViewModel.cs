@@ -18,11 +18,13 @@ namespace NPC.Presenter.Windows.ViewModels
     {
         private IEventAggregator _eventAggregator;
         private Business.IStorage _storage;
+        private Business.IGameObjectFactory _factory;
 
-        public GameObjectTreeViewModel(IEventAggregator eventAggregator, Business.IStorage storage)
+        public GameObjectTreeViewModel(IEventAggregator eventAggregator, Business.IStorage storage, Business.IGameObjectFactory factory)
         {
             _eventAggregator = eventAggregator;
             _storage = storage;
+            _factory = factory;
 
             References = EnumHelpers.GetValues<ObjectType>()
                 .Select(ot => new ObjectReferenceGroup(ot, _storage.Database.References));
@@ -41,10 +43,13 @@ namespace NPC.Presenter.Windows.ViewModels
             set => SetProperty(ref _selectedItems, value);
         }
 
-        public bool CanOpen => _selectedItems.OfType<ObjectReference>().Any();
+        public bool IsReferenceSelected => _selectedItems.OfType<ObjectReference>().Any();
 
         private DelegateCommand _openCommand;
         public ICommand OpenCommand => _openCommand ?? (_openCommand = new DelegateCommand(Open));
+
+        private DelegateCommand _duplicateCommand;
+        public ICommand DuplicateCommand => _duplicateCommand ?? (_duplicateCommand = new DelegateCommand(Duplicate));
 
         private void Open()
         {
@@ -59,9 +64,22 @@ namespace NPC.Presenter.Windows.ViewModels
             }
         }
 
+        private void Duplicate()
+        {
+            foreach (IGameObject gameObject in
+                _factory.DuplicateReference(
+                    SelectedItems
+                        .OfType<ObjectReference>()
+                        .Select(or => or.Source))
+                    .Select(go => new GameObject(go)))
+            {
+                _eventAggregator.GetEvent<OpenGameObjectEvent>().Publish(gameObject);
+            }
+        }
+
         private void SelectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            RaisePropertyChanged(nameof(CanOpen));
+            RaisePropertyChanged(nameof(IsReferenceSelected));
         }
     }
 }

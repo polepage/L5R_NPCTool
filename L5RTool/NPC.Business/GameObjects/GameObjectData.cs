@@ -2,7 +2,7 @@
 
 namespace NPC.Business.GameObjects
 {
-    abstract class GameObjectData<T> : RelayBindableBase, IGameObjectData where T: Data.GameObjects.IGameObjectData
+    abstract class GameObjectData<T> : RelayBindableBase, IGameObjectData, ICopyTarget where T: Data.GameObjects.IGameObjectData
     {
         public GameObjectData(T dataObject)
             : base(dataObject)
@@ -11,5 +11,7 @@ namespace NPC.Business.GameObjects
         }
 
         protected T DataObject { get; }
+
+        public abstract void CopyData(IGameObjectData copySource);
     }
 }

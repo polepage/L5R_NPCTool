@@ -25,6 +25,17 @@ namespace NPC.Business.GameObjects
         public ISet<SkillGroup> SkillGroups => DataObject.SkillGroups;
         public ISet<TraitSphere> Spheres => DataObject.Spheres;
 
+        public override void CopyData(IGameObjectData copySource)
+        {
+            if (copySource is ITrait trait)
+            {
+                Description = trait.Description;
+                Ring = trait.Ring;
+                SkillGroups.UnionWith(trait.SkillGroups);
+                Spheres.UnionWith(trait.Spheres);
+            }
+        }
+
         protected override void RegisterBindings()
         {
             AddBinding(nameof(DataObject.Description), nameof(Description));

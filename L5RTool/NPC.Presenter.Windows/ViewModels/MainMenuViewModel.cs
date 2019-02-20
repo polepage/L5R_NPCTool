@@ -44,6 +44,9 @@ namespace NPC.Presenter.Windows.ViewModels
         private DelegateCommand _saveAllCommand;
         public ICommand SaveAllCommand => _saveAllCommand ?? (_saveAllCommand = new DelegateCommand(SaveAll));
 
+        private DelegateCommand _duplicateCommand;
+        public ICommand DuplicateCommand => _duplicateCommand ?? (_duplicateCommand = new DelegateCommand(Duplicate));
+
         private DelegateCommand _importCommand;
         public ICommand ImportCommand => _importCommand ?? (_importCommand = new DelegateCommand(Import));
 
@@ -115,6 +118,11 @@ namespace NPC.Presenter.Windows.ViewModels
         private void SaveAll()
         {
             _eventAggregator.GetEvent<SaveAllGameObjectsEvent>().Publish();
+        }
+
+        private void Duplicate()
+        {
+            _eventAggregator.GetEvent<DuplicateCurrentGameObjectEvent>().Publish();
         }
 
         private void Import()

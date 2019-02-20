@@ -20,11 +20,13 @@
 
     <tv:MultiSelectTreeView.ContextMenu>
         <ContextMenu DataContext="{Binding Source={StaticResource proxy}, Path=Data}"
-                     Visibility="{Binding CanOpen, Converter={StaticResource visibilityConverter}, Mode=OneWay}">
-            <MenuItem Header="Open" Command="{Binding OpenCommand}"
-                      Visibility="{Binding CanOpen, Converter={StaticResource visibilityConverter}, Mode=OneWay}"/>
-            <!--<Separator/>
-            <MenuItem Header="Duplicate"/>
+                     Visibility="{Binding IsReferenceSelected, Converter={StaticResource visibilityConverter}, Mode=OneWay}">
+            <MenuItem Header="Open" Command="{Binding OpenCommand}"/>
+            <Separator/>
+            <MenuItem Header="Duplicate" Command="{Binding DuplicateCommand}"/>
+            
+            <!--
+            
             <MenuItem Header="Delete"/>-->
         </ContextMenu>
     </tv:MultiSelectTreeView.ContextMenu>

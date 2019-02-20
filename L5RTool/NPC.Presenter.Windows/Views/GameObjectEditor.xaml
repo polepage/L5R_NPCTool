@@ -82,6 +82,8 @@
                             <MenuItem Header="Close" InputGestureText="Ctrl+W" Command="{Binding CloseCommand}"/>
                             <MenuItem Header="Close All" InputGestureText="Ctrl+Shift+W" Command="{Binding CloseAllCommand}"/>
                             <MenuItem Header="Close Others" Command="{Binding CloseOthersCommand}"/>
+                            <Separator/>
+                            <MenuItem Header="Duplicate" InputGestureText="Ctrl+D" Command="{Binding DuplicateCommand}"/>
                         </ContextMenu>
                     </Setter.Value>
                 </Setter>

@@ -17,6 +17,7 @@
         <KeyBinding Gesture="Ctrl+Shift+W" Command="{Binding CloseAllCommand}"/>
         <KeyBinding Gesture="Ctrl+S" Command="{Binding SaveCommand}"/>
         <KeyBinding Gesture="Ctrl+Shift+S" Command="{Binding SaveAllCommand}"/>
+        <KeyBinding Gesture="Ctrl+D" Command="{Binding DuplicateCommand}"/>
         <KeyBinding Gesture="Ctrl+P" Command="{Binding PrintCommand}"/>
         <KeyBinding Gesture="Alt+F4" Command="{Binding ExitCommand}"/>
     </Menu.InputBindings>

@@ -17,8 +17,9 @@ namespace NPC.Presenter.Windows.ViewModels
     {
         IEventAggregator _eventAggregator;
         Business.IStorage _storage;
+        Business.IGameObjectFactory _factory;
 
-        public GameObjectEditorViewModel(IEventAggregator eventAggregator, Business.IStorage storage)
+        public GameObjectEditorViewModel(IEventAggregator eventAggregator, Business.IStorage storage, Business.IGameObjectFactory factory)
         {
             _eventAggregator = eventAggregator;
             _eventAggregator.GetEvent<OpenGameObjectEvent>().Subscribe(GameObjectOpened);
@@ -27,8 +28,10 @@ namespace NPC.Presenter.Windows.ViewModels
             _eventAggregator.GetEvent<CloseCurrentGameObjectEvent>().Subscribe(Close);
             _eventAggregator.GetEvent<CloseAllGameObjectsEvent>().Subscribe(CloseAll);
             _eventAggregator.GetEvent<CancellableCloseAllGameObjectsEvent>().Subscribe(CancellableCloseAll);
+            _eventAggregator.GetEvent<DuplicateCurrentGameObjectEvent>().Subscribe(Duplicate);
 
             _storage = storage;
+            _factory = factory;
 
             GameObjects = new ObservableCollection<IGameObject>();
         }
@@ -53,6 +56,9 @@ namespace NPC.Presenter.Windows.ViewModels
 
         private DelegateCommand _saveCommand;
         public ICommand SaveCommand => _saveCommand ?? (_saveCommand = new DelegateCommand(Save));
+
+        private DelegateCommand _duplicateCommand;
+        public ICommand DuplicateCommand => _duplicateCommand ?? (_duplicateCommand = new DelegateCommand(Duplicate));
 
         private void GameObjectOpened(IGameObject gameObject)
         {
@@ -142,6 +148,15 @@ namespace NPC.Presenter.Windows.ViewModels
             if (GameObjects.Any(e => e.IsDirty))
             {
                 _storage.Save(GameObjects.Where(o => o.IsDirty).OfType<GameObject>().Select(s => s.Source));
+            }
+        }
+
+        private void Duplicate()
+        {
+            if (SelectedObject is GameObject gameObject)
+            {
+                IGameObject copy = new GameObject(_factory.DuplicateObject(gameObject.Source));
+                GameObjectOpened(copy);
             }
         }
     }
