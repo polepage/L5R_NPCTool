@@ -24,10 +24,7 @@
             <MenuItem Header="Open" Command="{Binding OpenCommand}"/>
             <Separator/>
             <MenuItem Header="Duplicate" Command="{Binding DuplicateCommand}"/>
-            
-            <!--
-            
-            <MenuItem Header="Delete"/>-->
+            <MenuItem Header="Delete" Command="{Binding DeleteCommand}"/>
         </ContextMenu>
     </tv:MultiSelectTreeView.ContextMenu>
 </tv:MultiSelectTreeView>

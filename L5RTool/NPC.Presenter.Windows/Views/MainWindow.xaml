@@ -57,6 +57,10 @@
                 </prism:PopupWindowAction.WindowContent>
             </prism:PopupWindowAction>
         </prism:InteractionRequestTrigger>
+
+        <prism:InteractionRequestTrigger SourceObject="{x:Static interaction:InteractionRequests.DeleteConfirmationRequest}">
+            <prism:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True"/>
+        </prism:InteractionRequestTrigger>
         
         <prism:InteractionRequestTrigger SourceObject="{x:Static interaction:InteractionRequests.ExitRequest}">
             <interaction:CloseWindowAction/>

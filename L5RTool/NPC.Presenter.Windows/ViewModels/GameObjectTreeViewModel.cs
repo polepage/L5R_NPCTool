@@ -2,8 +2,10 @@
 using NPC.Common;
 using NPC.Presenter.GameObjects;
 using NPC.Presenter.Windows.Events;
+using NPC.Presenter.Windows.Interaction;
 using Prism.Commands;
 using Prism.Events;
+using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
 using System.Collections;
 using System.Collections.Generic;
@@ -51,6 +53,9 @@ namespace NPC.Presenter.Windows.ViewModels
         private DelegateCommand _duplicateCommand;
         public ICommand DuplicateCommand => _duplicateCommand ?? (_duplicateCommand = new DelegateCommand(Duplicate));
 
+        private DelegateCommand _deleteCommand;
+        public ICommand DeleteCommand => _deleteCommand ?? (_deleteCommand = new DelegateCommand(Delete));
+
         private void Open()
         {
             foreach (IGameObject gameObject in
@@ -75,6 +80,38 @@ namespace NPC.Presenter.Windows.ViewModels
             {
                 _eventAggregator.GetEvent<OpenGameObjectEvent>().Publish(gameObject);
             }
+        }
+
+        private void Delete()
+        {
+            //IEnumerable<ObjectReference> references = SelectedItems.OfType<ObjectReference>();
+            //if (!references.Any())
+            //{
+            //    return;
+            //}
+
+            //string confirmationContent = " will be deleted permanently.";
+            //if (references.Count() == 1)
+            //{
+            //    confirmationContent = "'" + references.First().Name + "'" + confirmationContent;
+            //}
+            //else
+            //{
+            //    confirmationContent = "The selected items" + confirmationContent;
+            //}
+
+            //var confirmation = new Confirmation
+            //{
+            //    Title = "L5R NPC Creation Tool",
+            //    Content = confirmationContent
+            //};
+
+            //InteractionRequests.DeleteConfirmationRequest.Raise(confirmation);
+            //if (confirmation.Confirmed)
+            //{
+            //    // Close objects if necessary
+            //    // Delete references
+            //}
         }
 
         private void SelectionChanged(object sender, NotifyCollectionChangedEventArgs e)
