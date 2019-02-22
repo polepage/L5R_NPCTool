@@ -1,6 +1,5 @@
-﻿using System.Windows;
-using System.Windows.Input;
-using System.Windows.Interactivity;
+﻿using Microsoft.Xaml.Behaviors;
+using System.Windows;
 
 namespace NPC.Presenter.Windows.Behaviors
 {

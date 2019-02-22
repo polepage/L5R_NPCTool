@@ -14,4 +14,6 @@ namespace NPC.Presenter.Windows.Events
     class CancellableCloseAllGameObjectsEvent: PubSubEvent<Action> { }
 
     class DuplicateCurrentGameObjectEvent: SingleSubEvent { }
+
+    class ExitApplicationEvent: SingleSubEvent { }
 }

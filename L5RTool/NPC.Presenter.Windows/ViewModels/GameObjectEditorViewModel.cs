@@ -1,10 +1,10 @@
 ﻿using NPC.Presenter.GameObjects;
+using NPC.Presenter.Windows.Dialogs;
 using NPC.Presenter.Windows.Events;
-using NPC.Presenter.Windows.Interaction;
-using NPC.Presenter.Windows.Interaction.Notifications;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
+using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,10 +16,11 @@ namespace NPC.Presenter.Windows.ViewModels
     class GameObjectEditorViewModel: BindableBase
     {
         IEventAggregator _eventAggregator;
+        IDialogService _dialogService;
         Business.IStorage _storage;
         Business.IGameObjectFactory _factory;
 
-        public GameObjectEditorViewModel(IEventAggregator eventAggregator, Business.IStorage storage, Business.IGameObjectFactory factory)
+        public GameObjectEditorViewModel(IEventAggregator eventAggregator, IDialogService dialogService, Business.IStorage storage, Business.IGameObjectFactory factory)
         {
             _eventAggregator = eventAggregator;
             _eventAggregator.GetEvent<OpenGameObjectEvent>().Subscribe(GameObjectOpened);
@@ -30,6 +31,7 @@ namespace NPC.Presenter.Windows.ViewModels
             _eventAggregator.GetEvent<CancellableCloseAllGameObjectsEvent>().Subscribe(CancellableCloseAll);
             _eventAggregator.GetEvent<DuplicateCurrentGameObjectEvent>().Subscribe(Duplicate);
 
+            _dialogService = dialogService;
             _storage = storage;
             _factory = factory;
 
@@ -116,20 +118,22 @@ namespace NPC.Presenter.Windows.ViewModels
                 return true;
             }
 
-            var confirmation = new SaveConfirmation
-            {
-                Title = "Unsaved Changes",
-                Content = gameObjects.Where(go => go.IsDirty).ToList(),
-                Selector = go => SelectedObject = go
-            };
+            IDialogParameters parameters = new DialogParameters();
+            parameters.Add(Dialog.Title, "Unsaved Changes");
+            parameters.Add(Dialog.Save.Items, gameObjects.Where(go => go.IsDirty).ToList());
+            parameters.Add(Dialog.Save.Selector, (Action<IGameObject>)(go => SelectedObject = go));
 
-            InteractionRequests.SaveRequest.Raise(confirmation);
-            if (confirmation.Value)
+            bool result = false;
+            _dialogService.ShowDialog(Dialog.Save.Name, parameters, dialogResult =>
             {
-                _storage.Save(GameObjects.Where(o => o.IsDirty).OfType<GameObject>().Select(s => s.Source));
-            }
+                result = dialogResult.Result.GetValueOrDefault();
+                if (dialogResult.Parameters.TryGetValue(Dialog.Save.NeedSave, out bool needSave) && needSave)
+                {
+                    _storage.Save(GameObjects.Where(o => o.IsDirty).OfType<GameObject>().Select(s => s.Source));
+                }
+            });
 
-            return confirmation.Confirmed;
+            return result;
         }
 
         private void Save()

@@ -1,12 +1,12 @@
 ﻿using CS.Utils;
 using NPC.Common;
 using NPC.Presenter.GameObjects;
+using NPC.Presenter.Windows.Dialogs;
 using NPC.Presenter.Windows.Events;
-using NPC.Presenter.Windows.Interaction;
 using Prism.Commands;
 using Prism.Events;
-using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
+using Prism.Services.Dialogs;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,12 +19,14 @@ namespace NPC.Presenter.Windows.ViewModels
     class GameObjectTreeViewModel : BindableBase
     {
         private IEventAggregator _eventAggregator;
+        private IDialogService _dialogService;
         private Business.IStorage _storage;
         private Business.IGameObjectFactory _factory;
 
-        public GameObjectTreeViewModel(IEventAggregator eventAggregator, Business.IStorage storage, Business.IGameObjectFactory factory)
+        public GameObjectTreeViewModel(IEventAggregator eventAggregator, IDialogService dialogService, Business.IStorage storage, Business.IGameObjectFactory factory)
         {
             _eventAggregator = eventAggregator;
+            _dialogService = dialogService;
             _storage = storage;
             _factory = factory;
 
@@ -84,34 +86,34 @@ namespace NPC.Presenter.Windows.ViewModels
 
         private void Delete()
         {
-            //IEnumerable<ObjectReference> references = SelectedItems.OfType<ObjectReference>();
-            //if (!references.Any())
-            //{
-            //    return;
-            //}
+            IEnumerable<ObjectReference> references = SelectedItems.OfType<ObjectReference>();
+            if (!references.Any())
+            {
+                return;
+            }
 
-            //string confirmationContent = " will be deleted permanently.";
-            //if (references.Count() == 1)
-            //{
-            //    confirmationContent = "'" + references.First().Name + "'" + confirmationContent;
-            //}
-            //else
-            //{
-            //    confirmationContent = "The selected items" + confirmationContent;
-            //}
+            string confirmationContent = " will be deleted permanently.";
+            if (references.Count() == 1)
+            {
+                confirmationContent = "'" + references.First().Name + "'" + confirmationContent;
+            }
+            else
+            {
+                confirmationContent = "The selected items" + confirmationContent;
+            }
 
-            //var confirmation = new Confirmation
-            //{
-            //    Title = "L5R NPC Creation Tool",
-            //    Content = confirmationContent
-            //};
+            IDialogParameters parameters = new DialogParameters();
+            parameters.Add(Dialog.Title, "L5R NPC Creation Tool");
+            parameters.Add(Dialog.Confirmation.Content, confirmationContent);
 
-            //InteractionRequests.DeleteConfirmationRequest.Raise(confirmation);
-            //if (confirmation.Confirmed)
-            //{
-            //    // Close objects if necessary
-            //    // Delete references
-            //}
+            _dialogService.ShowDialog(Dialog.Confirmation.Name, parameters, dialogResult =>
+            {
+                if (dialogResult.Result.GetValueOrDefault())
+                {
+                    // Close object if necessary
+                    // Delete references
+                }
+            });
         }
 
         private void SelectionChanged(object sender, NotifyCollectionChangedEventArgs e)

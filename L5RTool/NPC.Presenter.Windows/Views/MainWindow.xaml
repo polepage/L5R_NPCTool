@@ -1,75 +1,29 @@
 ﻿<Window x:Class="NPC.Presenter.Windows.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:views="clr-namespace:NPC.Presenter.Windows.Views"
         xmlns:interaction="clr-namespace:NPC.Presenter.Windows.Interaction"
+        xmlns:b="clr-namespace:NPC.Presenter.Windows.Behaviors"
+        xmlns:conv="clr-namespace:NPC.Presenter.Windows.Converters"
         xmlns:prism="http://prismlibrary.com/"
-        mc:Ignorable="d"
+        xmlns:mb="http://schemas.microsoft.com/xaml/behaviors"
         Title="L5R NPC Creation Tool"
         MinHeight="450" MinWidth="600"
         prism:ViewModelLocator.AutoWireViewModel="True">
 
-    <i:Interaction.Triggers>
-        <prism:InteractionRequestTrigger SourceObject="{x:Static interaction:InteractionRequests.NewRequest}">
-            <prism:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True">
-                <prism:PopupWindowAction.WindowStyle>
-                    <Style TargetType="{x:Type Window}">
-                        <Setter Property="ResizeMode" Value="NoResize"/>
-                        <Setter Property="MaxWidth" Value="400"/>
-                        <Setter Property="SizeToContent" Value="Height"/>
-                    </Style>
-                </prism:PopupWindowAction.WindowStyle>
-                <prism:PopupWindowAction.WindowContent>
-                    <views:NewDialog/>
-                </prism:PopupWindowAction.WindowContent>
-            </prism:PopupWindowAction>
-        </prism:InteractionRequestTrigger>
+    <Window.Resources>
+        <conv:CancelEventArgsConverter x:Key="cancelEventConverter"/>
+    </Window.Resources>
 
-        <prism:InteractionRequestTrigger SourceObject="{x:Static interaction:InteractionRequests.OpenRequest}">
-            <prism:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True">
-                <prism:PopupWindowAction.WindowStyle>
-                    <Style TargetType="{x:Type Window}">
-                        <Setter Property="ResizeMode" Value="NoResize"/>
-                        <Setter Property="MaxWidth" Value="400"/>
-                        <Setter Property="SizeToContent" Value="Height"/>
-                    </Style>
-                </prism:PopupWindowAction.WindowStyle>
-                <prism:PopupWindowAction.WindowContent>
-                    <views:OpenDialog/>
-                </prism:PopupWindowAction.WindowContent>
-            </prism:PopupWindowAction>
-        </prism:InteractionRequestTrigger>
-
-        <prism:InteractionRequestTrigger SourceObject="{x:Static interaction:InteractionRequests.SaveRequest}">
-            <prism:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True">
-                <prism:PopupWindowAction.WindowStyle>
-                    <Style TargetType="{x:Type Window}">
-                        <Setter Property="ResizeMode" Value="NoResize"/>
-                        <Setter Property="MaxWidth" Value="400"/>
-                        <Setter Property="SizeToContent" Value="Height"/>
-                    </Style>
-                </prism:PopupWindowAction.WindowStyle>
-                <prism:PopupWindowAction.WindowContent>
-                    <views:SaveDialog/>
-                </prism:PopupWindowAction.WindowContent>
-            </prism:PopupWindowAction>
-        </prism:InteractionRequestTrigger>
-
-        <prism:InteractionRequestTrigger SourceObject="{x:Static interaction:InteractionRequests.DeleteConfirmationRequest}">
-            <prism:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True"/>
-        </prism:InteractionRequestTrigger>
-        
-        <prism:InteractionRequestTrigger SourceObject="{x:Static interaction:InteractionRequests.ExitRequest}">
-            <interaction:CloseWindowAction/>
-        </prism:InteractionRequestTrigger>
-
-        <i:EventTrigger EventName="Closing">
-            <interaction:InvokeCancellableCommandAction Command="{Binding ExitingCommand}"/>
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
+    <mb:Interaction.Behaviors>
+        <b:DialogAwareClose/>
+    </mb:Interaction.Behaviors>
+    
+    <mb:Interaction.Triggers>
+        <mb:EventTrigger EventName="Closing">
+            <interaction:InvokeCommandAction Command="{Binding ExitingCommand}" EventArgsConverter="{StaticResource cancelEventConverter}"/>
+        </mb:EventTrigger>
+    </mb:Interaction.Triggers>
 
     <DockPanel LastChildFill="True">
         <views:MainMenu DockPanel.Dock="Top"/>

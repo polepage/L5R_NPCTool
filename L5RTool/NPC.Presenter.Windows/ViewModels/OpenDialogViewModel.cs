@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -8,20 +7,16 @@ using System.Windows.Input;
 using CS.Utils;
 using NPC.Common;
 using NPC.Presenter.GameObjects;
-using NPC.Presenter.Windows.Interaction.Notifications;
+using NPC.Presenter.Windows.Dialogs;
 using Prism.Commands;
-using Prism.Interactivity.InteractionRequest;
-using Prism.Mvvm;
+using Prism.Services.Dialogs;
 
 namespace NPC.Presenter.Windows.ViewModels
 {
-    class OpenDialogViewModel : BindableBase, IInteractionRequestAware
+    class OpenDialogViewModel : BaseDialogViewModel
     {
-        public OpenDialogViewModel(Business.IStorage storage)
+        public OpenDialogViewModel()
         {
-            References = EnumHelpers.GetValues<ObjectType>()
-                .Select(ot => new ObjectReferenceGroup(ot, storage.Database.References));
-
             var collection = new ObservableCollection<object>();
             collection.CollectionChanged += SelectionChanged;
             SelectedItems = collection;
@@ -30,18 +25,14 @@ namespace NPC.Presenter.Windows.ViewModels
         private DelegateCommand _openCommand;
         public ICommand OpenCommand => _openCommand ?? (_openCommand = new DelegateCommand(Open));
 
-        private ValueConfirmation<IEnumerable<IObjectReference>> _confirmation;
-        public INotification Notification
-        {
-            get => _confirmation;
-            set => SetProperty(ref _confirmation, value as ValueConfirmation<IEnumerable<IObjectReference>>);
-        }
-
-        public Action FinishInteraction { get; set; }
-
         public bool CanOpen => SelectedItems.OfType<ObjectReference>().Any();
 
-        public IEnumerable<ObjectReferenceGroup> References { get; }
+        private IEnumerable<ObjectReferenceGroup> _references;
+        public IEnumerable<ObjectReferenceGroup> References
+        {
+            get => _references;
+            private set => SetProperty(ref _references, value);
+        }
 
         private IList _selectedItems;
         public IList SelectedItems
@@ -50,13 +41,23 @@ namespace NPC.Presenter.Windows.ViewModels
             set => SetProperty(ref _selectedItems, value);
         }
 
+        public override void OnDialogOpened(IDialogParameters parameters)
+        {
+            base.OnDialogOpened(parameters);
+            Title = parameters.GetValue<string>(Dialog.Title);
+
+            References = EnumHelpers.GetValues<ObjectType>()
+                .Select(ot => new ObjectReferenceGroup(ot, parameters.GetValue<Business.IReferenceDatabase>(Dialog.Open.Source).References));
+        }
+
         private void Open()
         {
             if (CanOpen)
             {
-                _confirmation.Confirmed = true;
-                _confirmation.Value = SelectedItems.OfType<ObjectReference>().ToList();
-                FinishInteraction?.Invoke();
+                IDialogResult result = new DialogResult(true);
+                result.Parameters.Add(Dialog.Open.Selection, SelectedItems.OfType<ObjectReference>().ToList());
+
+                RaiseRequestClose(result);
             }
         }
 

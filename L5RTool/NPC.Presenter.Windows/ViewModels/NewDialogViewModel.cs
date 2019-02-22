@@ -1,34 +1,17 @@
-﻿using System;
-using System.Windows.Input;
-using NPC.Presenter.Windows.Interaction.Notifications;
+﻿using System.Windows.Input;
 using NPC.Common;
 using Prism.Commands;
-using Prism.Interactivity.InteractionRequest;
-using Prism.Mvvm;
 using System.Collections.Generic;
 using CS.Utils;
+using Prism.Services.Dialogs;
+using NPC.Presenter.Windows.Dialogs;
 
 namespace NPC.Presenter.Windows.ViewModels
 {
-    class NewDialogViewModel : BindableBase, IInteractionRequestAware
+    class NewDialogViewModel : BaseDialogViewModel
     {
         private DelegateCommand _createCommand;
         public ICommand CreateCommand => _createCommand ?? (_createCommand = new DelegateCommand(Create));
-
-        private ValueConfirmation<ObjectType> _confirmation;
-        public INotification Notification
-        {
-            get => _confirmation;
-            set
-            {
-                if (SetProperty(ref _confirmation, value as ValueConfirmation<ObjectType>))
-                {
-                    Selection = _confirmation.Value;
-                }
-            }
-        }
-
-        public Action FinishInteraction { get; set; }
 
         public IEnumerable<ObjectType> Types => EnumHelpers.GetValues<ObjectType>();
 
@@ -39,11 +22,19 @@ namespace NPC.Presenter.Windows.ViewModels
             set { SetProperty(ref _selection, value); }
         }
 
+        public override void OnDialogOpened(IDialogParameters parameters)
+        {
+            base.OnDialogOpened(parameters);
+            Title = parameters.GetValue<string>(Dialog.Title);
+            Selection = 0;
+        }
+
         private void Create()
         {
-            _confirmation.Confirmed = true;
-            _confirmation.Value = Selection;
-            FinishInteraction?.Invoke();
+            IDialogResult result = new DialogResult(true);
+            result.Parameters.Add(Dialog.New.Type, Selection);
+
+            RaiseRequestClose(result);
         }
     }
 }

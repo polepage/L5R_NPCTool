@@ -1,9 +1,9 @@
-﻿using System.Collections;
+﻿using Microsoft.Xaml.Behaviors;
+using System.Collections;
 using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Interactivity;
 
 namespace NPC.Presenter.Windows.Behaviors
 {

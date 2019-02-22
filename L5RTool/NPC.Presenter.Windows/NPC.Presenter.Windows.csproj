@@ -49,13 +49,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behaviors\BindMultiSelection.cs" />
+    <Compile Include="Behaviors\DialogAwareClose.cs" />
     <Compile Include="Behaviors\PropagateInputBindings.cs" />
     <Compile Include="Collections\SetWrapper.cs" />
     <Compile Include="Controls\BindingProxy.cs" />
     <Compile Include="Controls\TagSelector.cs" />
+    <Compile Include="Converters\CancelEventArgsConverter.cs" />
     <Compile Include="Converters\NameFallbackConverter.cs" />
     <Compile Include="Converters\NameToImageConverter.cs" />
     <Compile Include="Converters\StackConverter.cs" />
+    <Compile Include="Dialogs\BaseDialogViewModel.cs" />
+    <Compile Include="Dialogs\Dialog.cs" />
+    <Compile Include="Dialogs\DialogHost.xaml.cs">
+      <DependentUpon>DialogHost.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Events\Events.cs" />
     <Compile Include="Events\SingleSubEvent.cs" />
     <Compile Include="GameObjects\Advantage.cs" />
@@ -66,13 +73,10 @@
     <Compile Include="GameObjects\ObjectReferenceGroup.cs" />
     <Compile Include="GameObjects\Trait.cs" />
     <Compile Include="InitializationService.cs" />
-    <Compile Include="Interaction\InvokeCancellableCommandAction.cs" />
-    <Compile Include="Interaction\CloseWindowAction.cs" />
-    <Compile Include="Interaction\InteractionRequests.cs" />
-    <Compile Include="Interaction\Notifications\SaveConfirmation.cs" />
-    <Compile Include="Interaction\Notifications\ValueConfirmation.cs" />
+    <Compile Include="Interaction\InvokeCommandAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Templates\ElementTemplateSelector.cs" />
+    <Compile Include="ViewModels\ConfirmationDialogViewModel.cs" />
     <Compile Include="ViewModels\SaveDialogViewModel.cs" />
     <Compile Include="ViewModels\GameObjectTreeViewModel.cs" />
     <Compile Include="ViewModels\GameObjectEditorViewModel.cs" />
@@ -80,6 +84,9 @@
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\NewDialogViewModel.cs" />
     <Compile Include="ViewModels\OpenDialogViewModel.cs" />
+    <Compile Include="Views\ConfirmationDialog.xaml.cs">
+      <DependentUpon>ConfirmationDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SaveDialog.xaml.cs">
       <DependentUpon>SaveDialog.xaml</DependentUpon>
     </Compile>
@@ -103,11 +110,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf">
+      <Version>1.0.1</Version>
+    </PackageReference>
     <PackageReference Include="MultiSelectTreeView">
       <Version>1.0.9</Version>
     </PackageReference>
     <PackageReference Include="Prism.Wpf">
-      <Version>7.1.0.431</Version>
+      <Version>7.2.0.1038-pre</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -162,9 +172,17 @@
     <Resource Include="Icons\Rings\Water.png" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Dialogs\DialogHost.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Theme\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ConfirmationDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SaveDialog.xaml">
       <SubType>Designer</SubType>
@@ -203,10 +221,13 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Icons\System\Warning.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\GameObjects\Advantage.png" />
     <Resource Include="Icons\GameObjects\Disadvantage.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

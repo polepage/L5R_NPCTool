@@ -1,12 +1,13 @@
 ﻿using NPC.Common;
 using NPC.Presenter.GameObjects;
+using NPC.Presenter.Windows.Dialogs;
 using NPC.Presenter.Windows.Events;
 using NPC.Presenter.Windows.Interaction;
-using NPC.Presenter.Windows.Interaction.Notifications;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
+using Prism.Services.Dialogs;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
@@ -16,12 +17,14 @@ namespace NPC.Presenter.Windows.ViewModels
     class MainMenuViewModel : BindableBase
     {
         private IEventAggregator _eventAggregator;
+        private IDialogService _dialogService;
         private Business.IGameObjectFactory _gameObjectFactory;
         private Business.IStorage _storage;
 
-        public MainMenuViewModel(IEventAggregator eventAggregator, Business.IGameObjectFactory gameObjectFactory, Business.IStorage storage)
+        public MainMenuViewModel(IEventAggregator eventAggregator, IDialogService dialogService, Business.IGameObjectFactory gameObjectFactory, Business.IStorage storage)
         {
             _eventAggregator = eventAggregator;
+            _dialogService = dialogService;
             _gameObjectFactory = gameObjectFactory;
             _storage = storage;
         }
@@ -61,43 +64,43 @@ namespace NPC.Presenter.Windows.ViewModels
 
         private void New()
         {
-            var confirmation = new ValueConfirmation<ObjectType>
-            {
-                Title = "Create New Game Object",
-                Value = 0
-            };
+            IDialogParameters parameters = new DialogParameters();
+            parameters.Add(Dialog.Title, "Create New Game Object");
 
-            InteractionRequests.NewRequest.Raise(confirmation);
-            if (confirmation.Confirmed)
+            _dialogService.ShowDialog(Dialog.New.Name, parameters, dialogResult =>
             {
-                IGameObject gameObject = new GameObject(_gameObjectFactory.CreateNewObject(confirmation.Value));
-                if (gameObject != null)
+                if (dialogResult.Result.GetValueOrDefault())
                 {
-                    _eventAggregator.GetEvent<OpenGameObjectEvent>().Publish(gameObject);
+                    IGameObject gameObject = new GameObject(
+                        _gameObjectFactory.CreateNewObject(dialogResult.Parameters.GetValue<ObjectType>(Dialog.New.Type)));
+                    if (gameObject != null)
+                    {
+                        _eventAggregator.GetEvent<OpenGameObjectEvent>().Publish(gameObject);
+                    }
                 }
-            }
+            });
         }
 
         private void Open()
         {
-            var confirmation = new ValueConfirmation<IEnumerable<IObjectReference>>
-            {
-                Title = "Open Game Object"
-            };
+            IDialogParameters parameters = new DialogParameters();
+            parameters.Add(Dialog.Title, "Open Game Object");
+            parameters.Add(Dialog.Open.Source, _storage.Database);
 
-            InteractionRequests.OpenRequest.Raise(confirmation);
-            if (confirmation.Confirmed)
+            _dialogService.ShowDialog(Dialog.Open.Name, parameters, dialogResult =>
             {
-                foreach (IGameObject gameObject in
-                    _storage.Open(
-                        confirmation.Value
-                            .OfType<ObjectReference>()
-                            .Select(or => or.Source))
-                        .Select(go => new GameObject(go)))
+                if (dialogResult.Result.GetValueOrDefault())
                 {
-                    _eventAggregator.GetEvent<OpenGameObjectEvent>().Publish(gameObject);
+                    foreach (IGameObject gameObject in
+                        _storage.Open(
+                            dialogResult.Parameters.GetValue<IEnumerable<ObjectReference>>(Dialog.Open.Selection)
+                                .Select(or => or.Source))
+                            .Select(go => new GameObject(go)))
+                    {
+                        _eventAggregator.GetEvent<OpenGameObjectEvent>().Publish(gameObject);
+                    }
                 }
-            }
+            });
         }
 
         private void Close()
@@ -142,7 +145,7 @@ namespace NPC.Presenter.Windows.ViewModels
 
         private void Exit()
         {
-            InteractionRequests.ExitRequest.Raise(new Notification());
+            _eventAggregator.GetEvent<ExitApplicationEvent>().Publish();
         }
     }
 }

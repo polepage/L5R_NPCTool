@@ -1,15 +1,14 @@
 ﻿using NPC.Presenter.GameObjects;
-using NPC.Presenter.Windows.Interaction.Notifications;
+using NPC.Presenter.Windows.Dialogs;
 using Prism.Commands;
-using Prism.Interactivity.InteractionRequest;
-using Prism.Mvvm;
+using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Windows.Input;
 
 namespace NPC.Presenter.Windows.ViewModels
 {
-    class SaveDialogViewModel : BindableBase, IInteractionRequestAware
+    class SaveDialogViewModel : BaseDialogViewModel
     {
         private Action<IGameObject> _selector;
 
@@ -18,22 +17,6 @@ namespace NPC.Presenter.Windows.ViewModels
 
         private DelegateCommand _dontSaveCommand;
         public ICommand DontSaveCommand => _dontSaveCommand ?? (_dontSaveCommand = new DelegateCommand(DontSave));
-
-        private SaveConfirmation _confirmation;
-        public INotification Notification
-        {
-            get => _confirmation;
-            set
-            {
-                if (SetProperty(ref _confirmation, value as SaveConfirmation))
-                {
-                    DirtyObjects = _confirmation.Content as IEnumerable<IGameObject>;
-                    _selector = _confirmation.Selector;
-                }
-            }
-        }
-
-        public Action FinishInteraction { get; set; }
 
         private IEnumerable<IGameObject> _dirtyObjects;
         public IEnumerable<IGameObject> DirtyObjects
@@ -55,17 +38,27 @@ namespace NPC.Presenter.Windows.ViewModels
             }
         }
 
+        public override void OnDialogOpened(IDialogParameters parameters)
+        {
+            base.OnDialogOpened(parameters);
+            Title = parameters.GetValue<string>(Dialog.Title);
+
+            DirtyObjects = parameters.GetValue<IEnumerable<IGameObject>>(Dialog.Save.Items);
+            _selector = parameters.GetValue<Action<IGameObject>>(Dialog.Save.Selector);
+        }
+
         private void Save()
         {
-            _confirmation.Confirmed = true;
-            _confirmation.Value = true;
-            FinishInteraction?.Invoke();
+            IDialogResult dialogResult = new DialogResult(true);
+            dialogResult.Parameters.Add(Dialog.Save.NeedSave, true);
+            RaiseRequestClose(dialogResult);
         }
 
         private void DontSave()
         {
-            _confirmation.Confirmed = true;
-            FinishInteraction?.Invoke();
+            IDialogResult dialogResult = new DialogResult(true);
+            dialogResult.Parameters.Add(Dialog.Save.NeedSave, false);
+            RaiseRequestClose(dialogResult);
         }
     }
 }

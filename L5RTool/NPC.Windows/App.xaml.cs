@@ -14,22 +14,27 @@ namespace NPC.Windows
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+            RegisterContainer();
+            RegisterComponents();
             InitializeDependencies();
-            RegisterComponents(_container);
+        }
+
+        private void RegisterContainer()
+        {
+            _container = new UnityContainerExtension();
+            _container.RegisterInstance(_container);
+        }
+
+        private void RegisterComponents()
+        {
+            _container.RegisterSingleton<IEventAggregator, EventAggregator>();
         }
 
         private void InitializeDependencies()
         {
-            _container = new UnityContainerExtension();
-
             Data.InitializationService.Initialize(_container);
             Business.InitializationService.Initialize(_container);
             Presenter.Windows.InitializationService.Initialize(_container, _container);
-        }
-
-        private void RegisterComponents(IContainerRegistry container)
-        {
-            container.RegisterSingleton<IEventAggregator, EventAggregator>();
         }
     }
 }
