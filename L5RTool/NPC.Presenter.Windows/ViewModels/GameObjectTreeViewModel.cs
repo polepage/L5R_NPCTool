@@ -21,24 +21,24 @@ namespace NPC.Presenter.Windows.ViewModels
         private IEventAggregator _eventAggregator;
         private IDialogService _dialogService;
         private Business.IStorage _storage;
-        private Business.IGameObjectFactory _factory;
+        private Business.IFactory _factory;
 
-        public GameObjectTreeViewModel(IEventAggregator eventAggregator, IDialogService dialogService, Business.IStorage storage, Business.IGameObjectFactory factory)
+        public GameObjectTreeViewModel(IEventAggregator eventAggregator, IDialogService dialogService, Business.IStorage storage, Business.IFactory factory)
         {
             _eventAggregator = eventAggregator;
             _dialogService = dialogService;
             _storage = storage;
             _factory = factory;
 
-            References = EnumHelpers.GetValues<ObjectType>()
-                .Select(ot => new ObjectReferenceGroup(ot, _storage.Database.References));
+            GameObjects = EnumHelpers.GetValues<ObjectType>()
+                .Select(ot => new ObjectMetadataGroup(ot, _storage.Database.GameObjects));
 
             var collection = new ObservableCollection<object>();
             collection.CollectionChanged += SelectionChanged;
             SelectedItems = collection;
         }
 
-        public IEnumerable<ObjectReferenceGroup> References { get; }
+        public IEnumerable<ObjectMetadataGroup> GameObjects { get; }
 
         private IList _selectedItems;
         public IList SelectedItems
@@ -47,7 +47,7 @@ namespace NPC.Presenter.Windows.ViewModels
             set => SetProperty(ref _selectedItems, value);
         }
 
-        public bool IsReferenceSelected => _selectedItems.OfType<ObjectReference>().Any();
+        public bool IsReferenceSelected => _selectedItems.OfType<GameObjectMetadata>().Any();
 
         private DelegateCommand _openCommand;
         public ICommand OpenCommand => _openCommand ?? (_openCommand = new DelegateCommand(Open));
@@ -63,7 +63,7 @@ namespace NPC.Presenter.Windows.ViewModels
             foreach (IGameObject gameObject in
                 _storage.Open(
                         SelectedItems
-                            .OfType<ObjectReference>()
+                            .OfType<GameObjectMetadata>()
                             .Select(or => or.Source))
                         .Select(go => new GameObject(go)))
             {
@@ -74,9 +74,9 @@ namespace NPC.Presenter.Windows.ViewModels
         private void Duplicate()
         {
             foreach (IGameObject gameObject in
-                _factory.DuplicateReference(
+                _factory.Duplicate(
                     SelectedItems
-                        .OfType<ObjectReference>()
+                        .OfType<GameObjectMetadata>()
                         .Select(or => or.Source))
                     .Select(go => new GameObject(go)))
             {
@@ -86,7 +86,7 @@ namespace NPC.Presenter.Windows.ViewModels
 
         private void Delete()
         {
-            IEnumerable<ObjectReference> references = SelectedItems.OfType<ObjectReference>();
+            IEnumerable<GameObjectMetadata> references = SelectedItems.OfType<GameObjectMetadata>();
             if (!references.Any())
             {
                 return;

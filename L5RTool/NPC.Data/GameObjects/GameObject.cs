@@ -2,22 +2,21 @@
 using System.ComponentModel;
 using System.Xml.Linq;
 using NPC.Common;
-using Prism.Mvvm;
 
 namespace NPC.Data.GameObjects
 {
-    class GameObject : BindableBase, IGameObject
+    class GameObject : GameObjectReference, IGameObject
     {
         private GameObjectData _data;
 
         public GameObject(ObjectType type)
-            : this(type, Guid.NewGuid())
+            : this(Guid.NewGuid(), type)
         {
         }
 
-        private GameObject(ObjectType type, Guid id)
+        private GameObject(Guid id, ObjectType type)
+            : base(id)
         {
-            Id = id;
             Type = type;
             _data = CreateData(type);
 
@@ -38,7 +37,6 @@ namespace NPC.Data.GameObjects
             set => IsDirty |= SetProperty(ref _name, value);
         }
 
-        public Guid Id { get; }
         public ObjectType Type { get; }
         public IGameObjectData Data => _data;
 
@@ -51,8 +49,8 @@ namespace NPC.Data.GameObjects
         public static GameObject FromXML(XElement xml)
         {
             var gameObject = new GameObject(
-                (ObjectType)Enum.Parse(typeof(ObjectType), xml.Attribute("Type").Value),
-                Guid.Parse(xml.Attribute("Id").Value));
+                Guid.Parse(xml.Attribute("Id").Value),
+                (ObjectType)Enum.Parse(typeof(ObjectType), xml.Attribute("Type").Value));
 
             gameObject.Name = xml.Element("Name").Value;
             gameObject._data.LoadXML(xml);
@@ -71,27 +69,12 @@ namespace NPC.Data.GameObjects
                                 _data.CreateXML());
         }
 
-        public ObjectReference CreateReference()
+        public GameObjectMetadata ExtractMetadata()
         {
-            return new ObjectReference(Id, Type)
+            return new GameObjectMetadata(Id, Type)
             {
                 Name = Name
             };
-        }
-
-        public override int GetHashCode()
-        {
-            return Id.GetHashCode();
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (obj is GameObject go)
-            {
-                return Id == go.Id;
-            }
-
-            return false;
         }
 
         private void IsDirtyChanged(object sender, PropertyChangedEventArgs e)

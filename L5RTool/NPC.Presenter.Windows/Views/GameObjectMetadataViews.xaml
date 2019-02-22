@@ -9,7 +9,7 @@
     <conv:NameToImageConverter x:Key="imageConverter"/>
     <BooleanToVisibilityConverter x:Key="visibilityConverter"/>
 
-    <HierarchicalDataTemplate DataType="{x:Type go:ObjectReferenceGroup}" ItemsSource="{Binding References}">
+    <HierarchicalDataTemplate DataType="{x:Type go:ObjectMetadataGroup}" ItemsSource="{Binding GameObjects}">
         <StackPanel Margin="2 2 10 2" Orientation="Horizontal">
             <Image Source="{Binding Path=Type, Converter={StaticResource imageConverter}, ConverterParameter=GameObjects}"
                        MaxWidth="16" MaxHeight="16" Margin="0 0 3 0"/>
@@ -17,7 +17,7 @@
         </StackPanel>
     </HierarchicalDataTemplate>
 
-    <DataTemplate DataType="{x:Type go:ObjectReference}">
+    <DataTemplate DataType="{x:Type go:GameObjectMetadata}">
         <Grid IsHitTestVisible="True" Background="Transparent">
             <Grid.InputBindings>
                 <MouseBinding Gesture="LeftDoubleClick" Command="{Binding Data.OpenCommand, Source={StaticResource proxy}}"/>

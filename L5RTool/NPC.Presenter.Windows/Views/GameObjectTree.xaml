@@ -7,13 +7,13 @@
                         xmlns:tv="clr-namespace:System.Windows.Controls;assembly=MultiSelectTreeView"
                         mc:Ignorable="d"
                         prism:ViewModelLocator.AutoWireViewModel="True"
-                        ItemsSource="{Binding References}"
+                        ItemsSource="{Binding GameObjects}"
                         SelectedItems="{Binding SelectedItems}"
                         BorderBrush="Transparent">
     <tv:MultiSelectTreeView.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="ObjectReferenceViews.xaml"/>
+                <ResourceDictionary Source="GameObjectMetadataViews.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </tv:MultiSelectTreeView.Resources>

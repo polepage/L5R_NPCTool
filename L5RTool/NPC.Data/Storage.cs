@@ -14,22 +14,22 @@ namespace NPC.Data
         private readonly string DatabaseFile = "References.db";
         private readonly string GameObjectExtension = ".go";
 
-        private ReferenceDatabase _references;
+        private Database _database;
 
         public Storage()
         {
-            _references = new ReferenceDatabase();
-            OpenReferences();
+            _database = new Database();
+            OpenDatabase();
         }
 
-        public IReferenceDatabase Database => _references;
+        public IDatabase Database => _database;
 
         public void Save(IGameObject gameObject)
         {
             if (gameObject is GameObject go)
             {
                 SaveGameObject(go);
-                SaveReferences(go);
+                SaveDatabase(go);
             }
         }
 
@@ -41,22 +41,22 @@ namespace NPC.Data
                 SaveGameObject(go);
             }
 
-            SaveReferences(gos.ToArray());
+            SaveDatabase(gos.ToArray());
         }
 
-        public IGameObject Open(IObjectReference objectReference)
+        public IGameObject Open(IGameObjectMetadata metadata)
         {
-            if (objectReference is ObjectReference reference)
+            if (metadata is GameObjectMetadata go)
             {
-                return OpenFile(Path.Combine(DatabaseFolder, GameObjectFolder, reference.Id + GameObjectExtension));
+                return OpenFile(Path.Combine(DatabaseFolder, GameObjectFolder, go.Id + GameObjectExtension));
             }
 
-            throw new ArgumentException("Data.Storage: Cannot Open reference, reference don't exist.");
+            throw new ArgumentException("Data.Storage: Cannot Open metadata, reference don't exist.");
         }
 
-        public IEnumerable<IGameObject> Open(IEnumerable<IObjectReference> objectReferences)
+        public IEnumerable<IGameObject> Open(IEnumerable<IGameObjectMetadata> metadata)
         {
-            return objectReferences.Select(or => Open(or));
+            return metadata.Select(go => Open(go));
         }
 
         private void SaveGameObject(GameObject gameObject)
@@ -72,28 +72,28 @@ namespace NPC.Data
             return GameObject.FromXML(XElement.Load(path));
         }
 
-        private void SaveReferences(params GameObject[] gameObjects)
+        private void SaveDatabase(params GameObject[] gameObjects)
         {
             bool needToSave = false;
             foreach(GameObject gameObject in gameObjects)
             {
-                needToSave |= _references.AddOrModify(gameObject.CreateReference());
+                needToSave |= _database.AddOrModify(gameObject.ExtractMetadata());
             }
 
             if (needToSave)
             {
                 string path = Path.Combine(DatabaseFolder, DatabaseFile);
                 Directory.CreateDirectory(Path.GetDirectoryName(path));
-                _references.CreateXML().Save(path);
+                _database.CreateXML().Save(path);
             }
         }
 
-        private void OpenReferences()
+        private void OpenDatabase()
         {
             string path = Path.Combine(DatabaseFolder, DatabaseFile);
             if (File.Exists(path))
             {
-                _references.LoadXML(XElement.Load(path));
+                _database.LoadXML(XElement.Load(path));
             }
         }
     }

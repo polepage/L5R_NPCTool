@@ -18,9 +18,9 @@ namespace NPC.Presenter.Windows.ViewModels
         IEventAggregator _eventAggregator;
         IDialogService _dialogService;
         Business.IStorage _storage;
-        Business.IGameObjectFactory _factory;
+        Business.IFactory _factory;
 
-        public GameObjectEditorViewModel(IEventAggregator eventAggregator, IDialogService dialogService, Business.IStorage storage, Business.IGameObjectFactory factory)
+        public GameObjectEditorViewModel(IEventAggregator eventAggregator, IDialogService dialogService, Business.IStorage storage, Business.IFactory factory)
         {
             _eventAggregator = eventAggregator;
             _eventAggregator.GetEvent<OpenGameObjectEvent>().Subscribe(GameObjectOpened);
@@ -159,7 +159,7 @@ namespace NPC.Presenter.Windows.ViewModels
         {
             if (SelectedObject is GameObject gameObject)
             {
-                IGameObject copy = new GameObject(_factory.DuplicateObject(gameObject.Source));
+                IGameObject copy = new GameObject(_factory.Duplicate(gameObject.Source));
                 GameObjectOpened(copy);
             }
         }

@@ -25,13 +25,13 @@ namespace NPC.Presenter.Windows.ViewModels
         private DelegateCommand _openCommand;
         public ICommand OpenCommand => _openCommand ?? (_openCommand = new DelegateCommand(Open));
 
-        public bool CanOpen => SelectedItems.OfType<ObjectReference>().Any();
+        public bool CanOpen => SelectedItems.OfType<GameObjectMetadata>().Any();
 
-        private IEnumerable<ObjectReferenceGroup> _references;
-        public IEnumerable<ObjectReferenceGroup> References
+        private IEnumerable<ObjectMetadataGroup> _gameObjectGroups;
+        public IEnumerable<ObjectMetadataGroup> GameObjectGroups
         {
-            get => _references;
-            private set => SetProperty(ref _references, value);
+            get => _gameObjectGroups;
+            private set => SetProperty(ref _gameObjectGroups, value);
         }
 
         private IList _selectedItems;
@@ -46,8 +46,8 @@ namespace NPC.Presenter.Windows.ViewModels
             base.OnDialogOpened(parameters);
             Title = parameters.GetValue<string>(Dialog.Title);
 
-            References = EnumHelpers.GetValues<ObjectType>()
-                .Select(ot => new ObjectReferenceGroup(ot, parameters.GetValue<Business.IReferenceDatabase>(Dialog.Open.Source).References));
+            GameObjectGroups = EnumHelpers.GetValues<ObjectType>()
+                .Select(ot => new ObjectMetadataGroup(ot, parameters.GetValue<Business.IDatabase>(Dialog.Open.Source).GameObjects));
         }
 
         private void Open()
@@ -55,7 +55,7 @@ namespace NPC.Presenter.Windows.ViewModels
             if (CanOpen)
             {
                 IDialogResult result = new DialogResult(true);
-                result.Parameters.Add(Dialog.Open.Selection, SelectedItems.OfType<ObjectReference>().ToList());
+                result.Parameters.Add(Dialog.Open.Selection, SelectedItems.OfType<GameObjectMetadata>().ToList());
 
                 RaiseRequestClose(result);
             }

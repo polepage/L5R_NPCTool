@@ -12,10 +12,10 @@ namespace NPC.Business
         public Storage(Data.IStorage storage)
         {
             _storage = storage;
-            Database = new ReferenceDatabase(storage.Database);
+            Database = new Database(storage.Database);
         }
 
-        public IReferenceDatabase Database { get; }
+        public IDatabase Database { get; }
 
         public void Save(IGameObject gameObject)
         {
@@ -30,19 +30,19 @@ namespace NPC.Business
             _storage.Save(gameObjects.OfType<GameObject>().Select(s => s.Source));
         }
 
-        public IGameObject Open(IObjectReference objectReference)
+        public IGameObject Open(IGameObjectMetadata metadata)
         {
-            if (objectReference is ObjectReference reference)
+            if (metadata is GameObjectMetadata go)
             {
-                return new GameObject(_storage.Open(reference.Source));
+                return new GameObject(_storage.Open(go.Source));
             }
 
-            throw new ArgumentException("Business.Storage: Can't open reference. Reference don't exist.");
+            throw new ArgumentException("Business.Storage: Can't open metadata. Reference don't exist.");
         }
 
-        public IEnumerable<IGameObject> Open(IEnumerable<IObjectReference> objectReferences)
+        public IEnumerable<IGameObject> Open(IEnumerable<IGameObjectMetadata> metadata)
         {
-            return objectReferences.Select(or => Open(or));
+            return metadata.Select(go => Open(go));
         }
     }
 }

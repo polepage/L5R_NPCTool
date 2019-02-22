@@ -14,12 +14,12 @@
             <RowDefinition Height="250"/>
         </Grid.RowDefinitions>
 
-        <tv:MultiSelectTreeView ItemsSource="{Binding References}" SelectedItems="{Binding SelectedItems}"
+        <tv:MultiSelectTreeView ItemsSource="{Binding GameObjectGroups}" SelectedItems="{Binding SelectedItems}"
                                 BorderBrush="Transparent">
             <tv:MultiSelectTreeView.Resources>
                 <ResourceDictionary>
                     <ResourceDictionary.MergedDictionaries>
-                        <ResourceDictionary Source="ObjectReferenceViews.xaml"/>
+                        <ResourceDictionary Source="GameObjectMetadataViews.xaml"/>
                     </ResourceDictionary.MergedDictionaries>
                 </ResourceDictionary>
             </tv:MultiSelectTreeView.Resources>

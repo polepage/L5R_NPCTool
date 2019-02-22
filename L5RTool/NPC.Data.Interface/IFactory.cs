@@ -3,7 +3,7 @@ using NPC.Data.GameObjects;
 
 namespace NPC.Data
 {
-    public interface IGameObjectFactory
+    public interface IFactory
     {
         IGameObject Create(ObjectType type);
     }

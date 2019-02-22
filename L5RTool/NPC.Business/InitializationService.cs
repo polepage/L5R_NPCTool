@@ -6,7 +6,7 @@ namespace NPC.Business
     {
         public static void Initialize(IContainerRegistry container)
         {
-            container.RegisterSingleton<IGameObjectFactory, GameObjectFactory>();
+            container.RegisterSingleton<IFactory, Factory>();
             container.RegisterSingleton<IStorage, Storage>();
         }
     }

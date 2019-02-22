@@ -5,12 +5,12 @@ namespace NPC.Data
 {
     public interface IStorage
     {
-        IReferenceDatabase Database { get; }
+        IDatabase Database { get; }
 
         void Save(IGameObject gameObject);
         void Save(IEnumerable<IGameObject> gameObjects);
 
-        IGameObject Open(IObjectReference objectReference);
-        IEnumerable<IGameObject> Open(IEnumerable<IObjectReference> objectReferences);
+        IGameObject Open(IGameObjectMetadata metadata);
+        IEnumerable<IGameObject> Open(IEnumerable<IGameObjectMetadata> metadata);
     }
 }

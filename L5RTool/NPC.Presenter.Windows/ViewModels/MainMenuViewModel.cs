@@ -18,14 +18,14 @@ namespace NPC.Presenter.Windows.ViewModels
     {
         private IEventAggregator _eventAggregator;
         private IDialogService _dialogService;
-        private Business.IGameObjectFactory _gameObjectFactory;
+        private Business.IFactory _factory;
         private Business.IStorage _storage;
 
-        public MainMenuViewModel(IEventAggregator eventAggregator, IDialogService dialogService, Business.IGameObjectFactory gameObjectFactory, Business.IStorage storage)
+        public MainMenuViewModel(IEventAggregator eventAggregator, IDialogService dialogService, Business.IFactory factory, Business.IStorage storage)
         {
             _eventAggregator = eventAggregator;
             _dialogService = dialogService;
-            _gameObjectFactory = gameObjectFactory;
+            _factory = factory;
             _storage = storage;
         }
 
@@ -72,7 +72,7 @@ namespace NPC.Presenter.Windows.ViewModels
                 if (dialogResult.Result.GetValueOrDefault())
                 {
                     IGameObject gameObject = new GameObject(
-                        _gameObjectFactory.CreateNewObject(dialogResult.Parameters.GetValue<ObjectType>(Dialog.New.Type)));
+                        _factory.CreateNew(dialogResult.Parameters.GetValue<ObjectType>(Dialog.New.Type)));
                     if (gameObject != null)
                     {
                         _eventAggregator.GetEvent<OpenGameObjectEvent>().Publish(gameObject);
@@ -93,7 +93,7 @@ namespace NPC.Presenter.Windows.ViewModels
                 {
                     foreach (IGameObject gameObject in
                         _storage.Open(
-                            dialogResult.Parameters.GetValue<IEnumerable<ObjectReference>>(Dialog.Open.Selection)
+                            dialogResult.Parameters.GetValue<IEnumerable<GameObjectMetadata>>(Dialog.Open.Selection)
                                 .Select(or => or.Source))
                             .Select(go => new GameObject(go)))
                     {

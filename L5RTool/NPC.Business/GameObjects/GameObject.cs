@@ -1,10 +1,9 @@
 ﻿using System;
-using CS.Utils.Prism.Mvvm;
 using NPC.Common;
 
 namespace NPC.Business.GameObjects
 {
-    class GameObject : RelayBindableBase, IGameObject
+    class GameObject : GameObjectReference, IGameObject
     {
         public GameObject(Data.GameObjects.IGameObject source)
             : base (source)
@@ -31,21 +30,6 @@ namespace NPC.Business.GameObjects
         {
             get => Source.Name;
             set => Source.Name = value;
-        }
-
-        public override int GetHashCode()
-        {
-            return Source.GetHashCode();
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (obj is GameObject go)
-            {
-                return Source.Equals(go.Source);
-            }
-
-            return false;
         }
 
         protected override void RegisterBindings()

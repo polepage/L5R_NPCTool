@@ -1,9 +1,8 @@
 ﻿using NPC.Common;
-using System.ComponentModel;
 
 namespace NPC.Data.GameObjects
 {
-    public interface IGameObject : INotifyPropertyChanged
+    public interface IGameObject : IGameObjectReference
     {
         IGameObjectData Data { get; }
         ObjectType Type { get; }

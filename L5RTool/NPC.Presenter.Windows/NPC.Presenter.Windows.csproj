@@ -69,8 +69,9 @@
     <Compile Include="GameObjects\Disadvantage.cs" />
     <Compile Include="GameObjects\GameObject.cs" />
     <Compile Include="GameObjects\GameObjectData.cs" />
-    <Compile Include="GameObjects\ObjectReference.cs" />
-    <Compile Include="GameObjects\ObjectReferenceGroup.cs" />
+    <Compile Include="GameObjects\GameObjectReference.cs" />
+    <Compile Include="GameObjects\GameObjectMetadata.cs" />
+    <Compile Include="GameObjects\ObjectMetadataGroup.cs" />
     <Compile Include="GameObjects\Trait.cs" />
     <Compile Include="InitializationService.cs" />
     <Compile Include="Interaction\InvokeCommandAction.cs" />
@@ -196,7 +197,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ObjectReferenceViews.xaml">
+    <Page Include="Views\GameObjectMetadataViews.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

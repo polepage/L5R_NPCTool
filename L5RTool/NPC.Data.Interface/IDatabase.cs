@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace NPC.Data
 {
-    public interface IReferenceDatabase
+    public interface IDatabase
     {
-        IEnumerable<IObjectReference> References { get; }
+        IEnumerable<IGameObjectMetadata> GameObjects { get; }
     }
 }
