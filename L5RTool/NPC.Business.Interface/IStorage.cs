@@ -12,5 +12,8 @@ namespace NPC.Business
 
         IGameObject Open(IGameObjectMetadata metadata);
         IEnumerable<IGameObject> Open(IEnumerable<IGameObjectMetadata> metadata);
+
+        void Delete(IGameObjectMetadata metadata);
+        void Delete(IEnumerable<IGameObjectMetadata> metadata);
     }
 }

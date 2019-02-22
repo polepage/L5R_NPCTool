@@ -1,6 +1,7 @@
 ﻿using CS.Utils;
 using NPC.Common;
 using NPC.Presenter.GameObjects;
+using NPC.Presenter.Windows.Collections;
 using NPC.Presenter.Windows.Dialogs;
 using NPC.Presenter.Windows.Events;
 using Prism.Commands;
@@ -110,8 +111,8 @@ namespace NPC.Presenter.Windows.ViewModels
             {
                 if (dialogResult.Result.GetValueOrDefault())
                 {
-                    // Close object if necessary
-                    // Delete references
+                    _eventAggregator.GetEvent<ForceCloseGameObjects>().Publish(references);
+                    _storage.Delete(references.Select(r => r.Source));
                 }
             });
         }

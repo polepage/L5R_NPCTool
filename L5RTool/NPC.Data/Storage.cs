@@ -29,7 +29,7 @@ namespace NPC.Data
             if (gameObject is GameObject go)
             {
                 SaveGameObject(go);
-                SaveDatabase(go);
+                UpdateDatabase(go);
             }
         }
 
@@ -41,7 +41,7 @@ namespace NPC.Data
                 SaveGameObject(go);
             }
 
-            SaveDatabase(gos.ToArray());
+            UpdateDatabase(gos.ToArray());
         }
 
         public IGameObject Open(IGameObjectMetadata metadata)
@@ -59,6 +59,26 @@ namespace NPC.Data
             return metadata.Select(go => Open(go));
         }
 
+        public void Delete(IGameObjectMetadata metadata)
+        {
+            if (metadata is GameObjectMetadata go)
+            {
+                DeleteGameObject(go);
+                RemoveFromDatabase(go);
+            }
+        }
+
+        public void Delete(IEnumerable<IGameObjectMetadata> metadata)
+        {
+            IEnumerable<GameObjectMetadata> gameObjects = metadata.OfType<GameObjectMetadata>();
+            foreach (GameObjectMetadata go in gameObjects)
+            {
+                DeleteGameObject(go);
+            }
+
+            RemoveFromDatabase(gameObjects.ToArray());
+        }
+
         private void SaveGameObject(GameObject gameObject)
         {
             string path = Path.Combine(DatabaseFolder, GameObjectFolder, gameObject.Id + GameObjectExtension);
@@ -72,7 +92,16 @@ namespace NPC.Data
             return GameObject.FromXML(XElement.Load(path));
         }
 
-        private void SaveDatabase(params GameObject[] gameObjects)
+        private void DeleteGameObject(GameObjectMetadata metadata)
+        {
+            string path = Path.Combine(DatabaseFolder, GameObjectFolder, metadata.Id + GameObjectExtension);
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
+        }
+
+        private void UpdateDatabase(params GameObject[] gameObjects)
         {
             bool needToSave = false;
             foreach(GameObject gameObject in gameObjects)
@@ -82,10 +111,29 @@ namespace NPC.Data
 
             if (needToSave)
             {
-                string path = Path.Combine(DatabaseFolder, DatabaseFile);
-                Directory.CreateDirectory(Path.GetDirectoryName(path));
-                _database.CreateXML().Save(path);
+                SaveDatabase();
             }
+        }
+
+        private void RemoveFromDatabase(params GameObjectMetadata[] gameObjects)
+        {
+            bool needToSave = false;
+            foreach(GameObjectMetadata metadata in gameObjects)
+            {
+                needToSave |= _database.Remove(metadata);
+            }
+
+            if (needToSave)
+            {
+                SaveDatabase();
+            }
+        }
+
+        private void SaveDatabase()
+        {
+            string path = Path.Combine(DatabaseFolder, DatabaseFile);
+            Directory.CreateDirectory(Path.GetDirectoryName(path));
+            _database.CreateXML().Save(path);
         }
 
         private void OpenDatabase()

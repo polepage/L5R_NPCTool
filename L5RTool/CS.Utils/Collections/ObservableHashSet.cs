@@ -97,7 +97,7 @@ namespace CS.Utils.Collections
             if (itemsToRemove.Count > 0)
             {
                 OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove,
-                                                                         itemsToRemove));
+                                                                         new List<T>(itemsToRemove)));
             }
         }
 
@@ -114,17 +114,17 @@ namespace CS.Utils.Collections
             if (itemsToAdd.Count > 0 && itemsToRemove.Count > 0)
             {
                 OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace,
-                                                                         itemsToAdd, itemsToRemove));
+                                                                         new List<T>(itemsToAdd), new List<T>(itemsToRemove)));
             }
             else if (itemsToAdd.Count > 0)
             {
                 OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add,
-                                                                         itemsToAdd));
+                                                                         new List<T>(itemsToAdd)));
             }
             else if (itemsToRemove.Count > 0)
             {
                 OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove,
-                                                                         itemsToRemove));
+                                                                         new List<T>(itemsToRemove)));
             }
         }
 
@@ -140,7 +140,7 @@ namespace CS.Utils.Collections
             if (itemsToAdd.Count > 0)
             {
                 OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add,
-                                                                         itemsToAdd));
+                                                                         new List<T>(itemsToAdd)));
             }
         }
 
@@ -156,7 +156,7 @@ namespace CS.Utils.Collections
             if (itemsToRemove.Count > 0)
             {
                 OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove,
-                                                                         itemsToRemove));
+                                                                         new List<T>(itemsToRemove)));
             }
         }
 

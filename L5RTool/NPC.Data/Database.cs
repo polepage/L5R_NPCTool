@@ -36,6 +36,11 @@ namespace NPC.Data
             }
         }
 
+        public bool Remove(GameObjectMetadata metadata)
+        {
+            return _collection.Remove(metadata);
+        }
+
         public XElement CreateXML()
         {
             return new XElement("Database",

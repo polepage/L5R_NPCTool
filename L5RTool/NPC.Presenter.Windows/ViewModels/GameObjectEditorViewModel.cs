@@ -29,6 +29,7 @@ namespace NPC.Presenter.Windows.ViewModels
             _eventAggregator.GetEvent<CloseCurrentGameObjectEvent>().Subscribe(Close);
             _eventAggregator.GetEvent<CloseAllGameObjectsEvent>().Subscribe(CloseAll);
             _eventAggregator.GetEvent<CancellableCloseAllGameObjectsEvent>().Subscribe(CancellableCloseAll);
+            _eventAggregator.GetEvent<ForceCloseGameObjects>().Subscribe(ForceClose);
             _eventAggregator.GetEvent<DuplicateCurrentGameObjectEvent>().Subscribe(Duplicate);
 
             _dialogService = dialogService;
@@ -108,6 +109,15 @@ namespace NPC.Presenter.Windows.ViewModels
                 {
                     GameObjects.Remove(go);
                 }
+            }
+        }
+
+        private void ForceClose(IEnumerable<IGameObjectReference> references)
+        {
+            var toRemove = GameObjects.Where(go => references.Contains(go)).ToList();
+            foreach (IGameObject go in toRemove)
+            {
+                GameObjects.Remove(go);
             }
         }
 

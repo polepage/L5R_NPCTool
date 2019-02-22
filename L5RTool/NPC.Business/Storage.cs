@@ -44,5 +44,22 @@ namespace NPC.Business
         {
             return metadata.Select(go => Open(go));
         }
+
+        public void Delete(IGameObjectMetadata metadata)
+        {
+            if (metadata is GameObjectMetadata go)
+            {
+                _storage.Delete(go.Source);
+            }
+
+            throw new ArgumentException("Business.Storage: Can't delete metadata. Reference don't exist.");
+        }
+
+        public void Delete(IEnumerable<IGameObjectMetadata> metadata)
+        {
+            _storage.Delete(metadata
+                .OfType<GameObjectMetadata>()
+                .Select(go => go.Source));
+        }
     }
 }
