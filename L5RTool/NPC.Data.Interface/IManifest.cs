@@ -1,9 +1,9 @@
-﻿using NPC.Business.GameObjects;
+﻿using NPC.Data.GameObjects;
 using System.Collections.Generic;
 
-namespace NPC.Business
+namespace NPC.Data
 {
-    public interface IDatabase
+    public interface IManifest
     {
         IEnumerable<IGameObjectMetadata> GameObjects { get; }
     }

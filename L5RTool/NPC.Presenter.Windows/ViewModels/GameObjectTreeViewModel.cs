@@ -1,7 +1,6 @@
 ﻿using CS.Utils;
 using NPC.Common;
 using NPC.Presenter.GameObjects;
-using NPC.Presenter.Windows.Collections;
 using NPC.Presenter.Windows.Dialogs;
 using NPC.Presenter.Windows.Events;
 using Prism.Commands;

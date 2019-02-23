@@ -14,15 +14,15 @@ namespace NPC.Data
         private readonly string DatabaseFile = "References.db";
         private readonly string GameObjectExtension = ".go";
 
-        private Database _database;
+        private Manifest _database;
 
         public Storage()
         {
-            _database = new Database();
+            _database = new Manifest();
             OpenDatabase();
         }
 
-        public IDatabase Database => _database;
+        public IManifest Database => _database;
 
         public void Save(IGameObject gameObject)
         {

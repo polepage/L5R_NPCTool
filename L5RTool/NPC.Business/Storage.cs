@@ -12,10 +12,10 @@ namespace NPC.Business
         public Storage(Data.IStorage storage)
         {
             _storage = storage;
-            Database = new Database(storage.Database);
+            Database = new Manifest(storage.Database);
         }
 
-        public IDatabase Database { get; }
+        public IManifest Database { get; }
 
         public void Save(IGameObject gameObject)
         {

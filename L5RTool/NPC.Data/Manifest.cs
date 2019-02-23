@@ -6,11 +6,11 @@ using NPC.Data.GameObjects;
 
 namespace NPC.Data
 {
-    class Database : IDatabase
+    class Manifest : IManifest
     {
         private ObservableHashSet<GameObjectMetadata> _collection;
 
-        public Database()
+        public Manifest()
         {
             _collection = new ObservableHashSet<GameObjectMetadata>();
         }

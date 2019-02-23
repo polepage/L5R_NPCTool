@@ -47,7 +47,7 @@ namespace NPC.Presenter.Windows.ViewModels
             Title = parameters.GetValue<string>(Dialog.Title);
 
             GameObjectGroups = EnumHelpers.GetValues<ObjectType>()
-                .Select(ot => new ObjectMetadataGroup(ot, parameters.GetValue<Business.IDatabase>(Dialog.Open.Source).GameObjects));
+                .Select(ot => new ObjectMetadataGroup(ot, parameters.GetValue<Business.IManifest>(Dialog.Open.Source).GameObjects));
         }
 
         private void Open()

@@ -4,11 +4,11 @@ using NPC.Business.GameObjects;
 
 namespace NPC.Business
 {
-    class Database : IDatabase
+    class Manifest : IManifest
     {
         private RelayObservableHashSet<IGameObjectMetadata, Data.GameObjects.IGameObjectMetadata> _collection;
 
-        public Database(Data.IDatabase database)
+        public Manifest(Data.IManifest database)
         {
             _collection = new RelayObservableHashSet<IGameObjectMetadata, Data.GameObjects.IGameObjectMetadata>(
                 database.GameObjects,

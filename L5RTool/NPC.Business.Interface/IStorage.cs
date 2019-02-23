@@ -5,7 +5,7 @@ namespace NPC.Business
 {
     public interface IStorage
     {
-        IDatabase Database { get; }
+        IManifest Database { get; }
 
         void Save(IGameObject gameObject);
         void Save(IEnumerable<IGameObject> gameObjects);
