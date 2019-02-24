@@ -7,14 +7,17 @@ namespace NPC.Presenter.GameObjects
 {
     class ObjectMetadataGroup: BindableBase
     {
-        private RelayObservableHashSet<IGameObjectMetadata, Business.GameObjects.IGameObjectMetadata> _gameObjects;
+        private EnumerableWrapper<IGameObjectMetadata, Business.GameObjects.IGameObjectMetadata> _gameObjects;
 
         public ObjectMetadataGroup(ObjectType type, IEnumerable<Business.GameObjects.IGameObjectMetadata> gameObjects)
         {
             Type = type;
 
-            _gameObjects = new RelayObservableHashSet<IGameObjectMetadata, Business.GameObjects.IGameObjectMetadata>(
-                gameObjects, or => new GameObjectMetadata(or), or => or.Type == Type);
+            _gameObjects = new EnumerableWrapper<IGameObjectMetadata, Business.GameObjects.IGameObjectMetadata>(
+                gameObjects, go => new GameObjectMetadata(go), go => go.Type == Type, (o1, o2) =>
+                {
+                    return o1.Name.CompareTo(o2.Name);
+                });
         }
 
         public ObjectType Type { get; }
