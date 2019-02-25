@@ -64,6 +64,7 @@
     </Compile>
     <Compile Include="Events\Events.cs" />
     <Compile Include="Events\SingleSubEvent.cs" />
+    <Compile Include="Extensions\DialogServiceExtension.cs" />
     <Compile Include="GameObjects\Advantage.cs" />
     <Compile Include="GameObjects\Disadvantage.cs" />
     <Compile Include="GameObjects\GameObject.cs" />
@@ -83,7 +84,7 @@
     <Compile Include="ViewModels\MainMenuViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\NewDialogViewModel.cs" />
-    <Compile Include="ViewModels\OpenDialogViewModel.cs" />
+    <Compile Include="ViewModels\SelectionDialogViewModel.cs" />
     <Compile Include="Views\ConfirmationDialog.xaml.cs">
       <DependentUpon>ConfirmationDialog.xaml</DependentUpon>
     </Compile>
@@ -105,8 +106,8 @@
     <Compile Include="Views\NewDialog.xaml.cs">
       <DependentUpon>NewDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\OpenDialog.xaml.cs">
-      <DependentUpon>OpenDialog.xaml</DependentUpon>
+    <Compile Include="Views\SelectionDialog.xaml.cs">
+      <DependentUpon>SelectionDialog.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -216,7 +217,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\OpenDialog.xaml">
+    <Page Include="Views\SelectionDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -228,8 +229,6 @@
     <Resource Include="Icons\GameObjects\Advantage.png" />
     <Resource Include="Icons\GameObjects\Disadvantage.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Collections\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

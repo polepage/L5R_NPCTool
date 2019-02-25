@@ -25,6 +25,8 @@
             <Separator/>
             <MenuItem Header="Duplicate" Command="{Binding DuplicateCommand}"/>
             <MenuItem Header="Delete" Command="{Binding DeleteCommand}"/>
+            <Separator/>
+            <MenuItem Header="Export" Command="{Binding ExportCommand}"/>
         </ContextMenu>
     </tv:MultiSelectTreeView.ContextMenu>
 </tv:MultiSelectTreeView>

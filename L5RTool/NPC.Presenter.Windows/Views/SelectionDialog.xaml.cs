@@ -5,9 +5,9 @@ namespace NPC.Presenter.Windows.Views
     /// <summary>
     /// Interaction logic for OpenDialog.xaml
     /// </summary>
-    public partial class OpenDialog : StackPanel
+    public partial class SelectionDialog : StackPanel
     {
-        public OpenDialog()
+        public SelectionDialog()
         {
             InitializeComponent();
         }

@@ -1,4 +1,4 @@
-﻿<StackPanel x:Class="NPC.Presenter.Windows.Views.OpenDialog"
+﻿<StackPanel x:Class="NPC.Presenter.Windows.Views.SelectionDialog"
             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:prism="http://prismlibrary.com/"
@@ -27,8 +27,8 @@
     </Grid>
 
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="30 15">
-        <Button Content="Open" IsDefault="True" MinWidth="80" MinHeight="18" Margin="0 0 5 0"
-                Command="{Binding OpenCommand}" IsEnabled="{Binding CanOpen}"/>
+        <Button Content="{Binding AcceptText}" IsDefault="True" MinWidth="80" MinHeight="18" Margin="0 0 5 0"
+                Command="{Binding AcceptCommand}" IsEnabled="{Binding CanAccept}"/>
         <Button Content="Cancel" IsCancel="True" MinWidth="80" MinHeight="18"/>
     </StackPanel>
 </StackPanel>

@@ -13,19 +13,26 @@ using Prism.Services.Dialogs;
 
 namespace NPC.Presenter.Windows.ViewModels
 {
-    class OpenDialogViewModel : BaseDialogViewModel
+    class SelectionDialogViewModel : BaseDialogViewModel
     {
-        public OpenDialogViewModel()
+        public SelectionDialogViewModel()
         {
             var collection = new ObservableCollection<object>();
             collection.CollectionChanged += SelectionChanged;
             SelectedItems = collection;
         }
 
-        private DelegateCommand _openCommand;
-        public ICommand OpenCommand => _openCommand ?? (_openCommand = new DelegateCommand(Open));
+        private DelegateCommand _acceptCommand;
+        public ICommand AcceptCommand => _acceptCommand ?? (_acceptCommand = new DelegateCommand(Accept));
 
-        public bool CanOpen => SelectedItems.OfType<GameObjectMetadata>().Any();
+        public bool CanAccept => SelectedItems.OfType<GameObjectMetadata>().Any();
+
+        private string _acceptText;
+        public string AcceptText
+        {
+            get => _acceptText;
+            set => SetProperty(ref _acceptText, value);
+        }
 
         private IEnumerable<ObjectMetadataGroup> _gameObjectGroups;
         public IEnumerable<ObjectMetadataGroup> GameObjectGroups
@@ -45,17 +52,18 @@ namespace NPC.Presenter.Windows.ViewModels
         {
             base.OnDialogOpened(parameters);
             Title = parameters.GetValue<string>(Dialog.Title);
+            AcceptText = parameters.GetValue<string>(Dialog.Selection.Accept);
 
             GameObjectGroups = EnumHelpers.GetValues<ObjectType>()
-                .Select(ot => new ObjectMetadataGroup(ot, parameters.GetValue<Business.IManifest>(Dialog.Open.Source).GameObjects));
+                .Select(ot => new ObjectMetadataGroup(ot, parameters.GetValue<Business.IManifest>(Dialog.Selection.Source).GameObjects));
         }
 
-        private void Open()
+        private void Accept()
         {
-            if (CanOpen)
+            if (CanAccept)
             {
                 IDialogResult result = new DialogResult(true);
-                result.Parameters.Add(Dialog.Open.Selection, SelectedItems.OfType<GameObjectMetadata>().ToList());
+                result.Parameters.Add(Dialog.Selection.SelectedItems, SelectedItems.OfType<GameObjectMetadata>().ToList());
 
                 RaiseRequestClose(result);
             }
@@ -63,7 +71,7 @@ namespace NPC.Presenter.Windows.ViewModels
 
         private void SelectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            RaisePropertyChanged(nameof(CanOpen));
+            RaisePropertyChanged(nameof(CanAccept));
         }
     }
 }

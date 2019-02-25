@@ -10,11 +10,12 @@
             public static readonly string Type = "Type";
         }
 
-        public static class Open
+        public static class Selection
         {
-            public static readonly string Name = "opendialog";
+            public static readonly string Name = "selectiondialog";
+            public static readonly string Accept = "Accept";
             public static readonly string Source = "Source";
-            public static readonly string Selection = "Selection";
+            public static readonly string SelectedItems = "SelectedItems";
         }
 
         public static class Save
@@ -29,6 +30,12 @@
         {
             public static readonly string Name = "confirmationdialog";
             public static readonly string Content = "Content";
+        }
+
+        public static class SaveFile
+        {
+            public static readonly string Filter = "Filter";
+            public static readonly string Target = "Target";
         }
     }
 }

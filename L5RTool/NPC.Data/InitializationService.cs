@@ -8,6 +8,7 @@ namespace NPC.Data
         {
             container.RegisterSingleton<IFactory, Factory>();
             container.RegisterSingleton<IStorage, Storage>();
+            container.RegisterSingleton<IExternalStorage, ExternalStorage>();
         }
     }
 }

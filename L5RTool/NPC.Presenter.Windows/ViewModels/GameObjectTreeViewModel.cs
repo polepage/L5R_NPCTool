@@ -58,6 +58,9 @@ namespace NPC.Presenter.Windows.ViewModels
         private DelegateCommand _deleteCommand;
         public ICommand DeleteCommand => _deleteCommand ?? (_deleteCommand = new DelegateCommand(Delete));
 
+        private DelegateCommand _exportCommand;
+        public ICommand ExportCommand => _exportCommand ?? (_exportCommand = new DelegateCommand(Export));
+
         private void Open()
         {
             foreach (IGameObject gameObject in
@@ -114,6 +117,11 @@ namespace NPC.Presenter.Windows.ViewModels
                     _storage.Delete(references.Select(r => r.Source));
                 }
             });
+        }
+
+        private void Export()
+        {
+            _eventAggregator.GetEvent<ExportGameObjectsEvent>().Publish(SelectedItems.OfType<GameObjectMetadata>());
         }
 
         private void SelectionChanged(object sender, NotifyCollectionChangedEventArgs e)

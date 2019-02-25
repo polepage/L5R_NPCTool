@@ -17,5 +17,7 @@ namespace NPC.Presenter.Windows.Events
 
     class DuplicateCurrentGameObjectEvent: SingleSubEvent { }
 
+    class ExportGameObjectsEvent: SingleSubEvent<IEnumerable<IGameObjectMetadata>> { }
+
     class ExitApplicationEvent: SingleSubEvent { }
 }

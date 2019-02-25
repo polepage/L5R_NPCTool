@@ -8,6 +8,7 @@ namespace NPC.Business
         {
             container.RegisterSingleton<IFactory, Factory>();
             container.RegisterSingleton<IStorage, Storage>();
+            container.RegisterSingleton<IExternalStorage, ExternalStorage>();
         }
     }
 }

@@ -2,10 +2,9 @@
 using NPC.Presenter.GameObjects;
 using NPC.Presenter.Windows.Dialogs;
 using NPC.Presenter.Windows.Events;
-using NPC.Presenter.Windows.Interaction;
+using NPC.Presenter.Windows.Extensions;
 using Prism.Commands;
 using Prism.Events;
-using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using System.Collections.Generic;
@@ -20,13 +19,17 @@ namespace NPC.Presenter.Windows.ViewModels
         private IDialogService _dialogService;
         private Business.IFactory _factory;
         private Business.IStorage _storage;
+        private Business.IExternalStorage _externalStorage;
 
-        public MainMenuViewModel(IEventAggregator eventAggregator, IDialogService dialogService, Business.IFactory factory, Business.IStorage storage)
+        public MainMenuViewModel(IEventAggregator eventAggregator, IDialogService dialogService, Business.IFactory factory, Business.IStorage storage, Business.IExternalStorage externalStorage)
         {
             _eventAggregator = eventAggregator;
+            _eventAggregator.GetEvent<ExportGameObjectsEvent>().Subscribe(ExportReferences);
+
             _dialogService = dialogService;
             _factory = factory;
             _storage = storage;
+            _externalStorage = externalStorage;
         }
 
         private DelegateCommand _newCommand;
@@ -85,15 +88,16 @@ namespace NPC.Presenter.Windows.ViewModels
         {
             IDialogParameters parameters = new DialogParameters();
             parameters.Add(Dialog.Title, "Open Game Object");
-            parameters.Add(Dialog.Open.Source, _storage.Database);
+            parameters.Add(Dialog.Selection.Source, _storage.Database);
+            parameters.Add(Dialog.Selection.Accept, "Open");
 
-            _dialogService.ShowDialog(Dialog.Open.Name, parameters, dialogResult =>
+            _dialogService.ShowDialog(Dialog.Selection.Name, parameters, dialogResult =>
             {
                 if (dialogResult.Result.GetValueOrDefault())
                 {
                     foreach (IGameObject gameObject in
                         _storage.Open(
-                            dialogResult.Parameters.GetValue<IEnumerable<GameObjectMetadata>>(Dialog.Open.Selection)
+                            dialogResult.Parameters.GetValue<IEnumerable<GameObjectMetadata>>(Dialog.Selection.SelectedItems)
                                 .Select(or => or.Source))
                             .Select(go => new GameObject(go)))
                     {
@@ -130,12 +134,23 @@ namespace NPC.Presenter.Windows.ViewModels
 
         private void Import()
         {
-
+            
         }
 
         private void Export()
         {
+            IDialogParameters parameters = new DialogParameters();
+            parameters.Add(Dialog.Title, "Export Game Objects");
+            parameters.Add(Dialog.Selection.Source, _storage.Database);
+            parameters.Add(Dialog.Selection.Accept, "Export");
 
+            _dialogService.ShowDialog(Dialog.Selection.Name, parameters, dialogResult =>
+            {
+                if (dialogResult.Result.GetValueOrDefault())
+                {
+                    ExportReferences(dialogResult.Parameters.GetValue<IEnumerable<GameObjectMetadata>>(Dialog.Selection.SelectedItems));
+                }
+            });
         }
 
         private void Print()
@@ -146,6 +161,21 @@ namespace NPC.Presenter.Windows.ViewModels
         private void Exit()
         {
             _eventAggregator.GetEvent<ExitApplicationEvent>().Publish();
+        }
+
+        private void ExportReferences(IEnumerable<IGameObjectMetadata> selection)
+        {
+            var parameters = new DialogParameters();
+            parameters.Add(Dialog.Title, "Select export file");
+            parameters.Add(Dialog.SaveFile.Filter, "L5R Files (*.l5r)|*.l5r");
+
+            _dialogService.ShowSaveDialog(parameters, dialogResult =>
+            {
+                _externalStorage.Export(selection
+                        .OfType<GameObjectMetadata>()
+                        .Select(go => go.Source),
+                    dialogResult.Parameters.GetValue<string>(Dialog.SaveFile.Target));
+            });
         }
     }
 }
