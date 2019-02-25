@@ -1,6 +1,6 @@
 ﻿using CS.Utils;
+using CS.Utils.Collections;
 using NPC.Common;
-using NPC.Presenter.Windows.Collections;
 using System.Collections.Generic;
 
 namespace NPC.Presenter.GameObjects
@@ -13,8 +13,14 @@ namespace NPC.Presenter.GameObjects
         public Trait(T trait)
             : base(trait)
         {
-            _skillGroups = new SetWrapper<SkillGroup>(trait.SkillGroups);
-            _spheres = new SetWrapper<TraitSphere>(trait.Spheres);
+            _skillGroups = new SetWrapper<SkillGroup>(trait.SkillGroups, (sk1, sk2) =>
+            {
+                return sk1.CompareTo(sk2);
+            });
+            _spheres = new SetWrapper<TraitSphere>(trait.Spheres, (ts1, ts2) =>
+            {
+                return ts1.CompareTo(ts2);
+            });
         }
 
         public string Description

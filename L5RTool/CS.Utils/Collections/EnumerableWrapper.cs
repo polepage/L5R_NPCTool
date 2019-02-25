@@ -143,6 +143,11 @@ namespace CS.Utils.Collections
             _collection.Clear();
         }
 
+        protected int FindIndex(T item)
+        {
+            return _collection.IndexOf(item);
+        }
+
         private void SourceChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             switch (e.Action)

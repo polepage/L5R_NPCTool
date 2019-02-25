@@ -51,7 +51,6 @@
     <Compile Include="Behaviors\BindMultiSelection.cs" />
     <Compile Include="Behaviors\DialogAwareClose.cs" />
     <Compile Include="Behaviors\PropagateInputBindings.cs" />
-    <Compile Include="Collections\SetWrapper.cs" />
     <Compile Include="Controls\BindingProxy.cs" />
     <Compile Include="Controls\TagSelector.cs" />
     <Compile Include="Converters\CancelEventArgsConverter.cs" />
@@ -229,6 +228,8 @@
     <Resource Include="Icons\GameObjects\Advantage.png" />
     <Resource Include="Icons\GameObjects\Disadvantage.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Collections\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
