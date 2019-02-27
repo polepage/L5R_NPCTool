@@ -19,6 +19,7 @@ namespace NPC.Data.GameObjects
         {
             Type = type;
             _data = CreateData(type);
+            Name = type.ToString();
 
             _data.PropertyChanged += IsDirtyChanged;
         }
@@ -48,8 +49,10 @@ namespace NPC.Data.GameObjects
 
         public static GameObject FromXML(XElement xml)
         {
+            var id = xml.Attribute("Id");
+
             var gameObject = new GameObject(
-                Guid.Parse(xml.Attribute("Id").Value),
+                id != null ? Guid.Parse(id.Value) : Guid.NewGuid(),
                 (ObjectType)Enum.Parse(typeof(ObjectType), xml.Attribute("Type").Value));
 
             gameObject.Name = xml.Element("Name").Value;
@@ -60,13 +63,18 @@ namespace NPC.Data.GameObjects
             return gameObject;
         }
 
-        public XElement CreateXML()
+        public XElement CreateXML(bool external = false)
         {
-            return new XElement("GameObject",
-                                new XAttribute("Id", Id),
-                                new XAttribute("Type", Type),
-                                new XElement("Name", Name),
-                                _data.CreateXML());
+            var xml = new XElement("GameObject");
+            if (!external)
+            {
+                xml.Add(new XAttribute("Id", Id));
+            }
+            xml.Add(new XAttribute("Type", Type),
+                    new XElement("Name", Name),
+                    _data.CreateXML());
+
+            return xml;
         }
 
         public GameObjectMetadata ExtractMetadata()

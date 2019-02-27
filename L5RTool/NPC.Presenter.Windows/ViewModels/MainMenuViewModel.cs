@@ -134,7 +134,14 @@ namespace NPC.Presenter.Windows.ViewModels
 
         private void Import()
         {
-            
+            var parameters = new DialogParameters();
+            parameters.Add(Dialog.Title, "Select export file");
+            parameters.Add(Dialog.File.Filter, "L5R Files (*.l5r)|*.l5r");
+
+            _dialogService.ShowOpenDialog(parameters, dialogResult =>
+            {
+                _externalStorage.Import(dialogResult.Parameters.GetValue<string>(Dialog.File.Target));
+            });
         }
 
         private void Export()
@@ -167,14 +174,14 @@ namespace NPC.Presenter.Windows.ViewModels
         {
             var parameters = new DialogParameters();
             parameters.Add(Dialog.Title, "Select export file");
-            parameters.Add(Dialog.SaveFile.Filter, "L5R Files (*.l5r)|*.l5r");
+            parameters.Add(Dialog.File.Filter, "L5R Files (*.l5r)|*.l5r");
 
             _dialogService.ShowSaveDialog(parameters, dialogResult =>
             {
                 _externalStorage.Export(selection
                         .OfType<GameObjectMetadata>()
                         .Select(go => go.Source),
-                    dialogResult.Parameters.GetValue<string>(Dialog.SaveFile.Target));
+                    dialogResult.Parameters.GetValue<string>(Dialog.File.Target));
             });
         }
     }

@@ -5,7 +5,7 @@ namespace NPC.Data
 {
     public interface IStorage
     {
-        IManifest Database { get; }
+        IManifest Manifest { get; }
 
         void Save(IGameObject gameObject);
         void Save(IEnumerable<IGameObject> gameObjects);

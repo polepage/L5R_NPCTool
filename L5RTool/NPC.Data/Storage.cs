@@ -4,6 +4,7 @@ using System.IO;
 using NPC.Data.GameObjects;
 using System.Xml.Linq;
 using System;
+using System.Text.RegularExpressions;
 
 namespace NPC.Data
 {
@@ -22,12 +23,13 @@ namespace NPC.Data
             OpenDatabase();
         }
 
-        public IManifest Database => _database;
+        public IManifest Manifest => _database;
 
         public void Save(IGameObject gameObject)
         {
             if (gameObject is GameObject go)
             {
+                ValidateName(go);
                 SaveGameObject(go);
                 UpdateDatabase(go);
             }
@@ -35,13 +37,10 @@ namespace NPC.Data
 
         public void Save(IEnumerable<IGameObject> gameObjects)
         {
-            IEnumerable<GameObject> gos = gameObjects.OfType<GameObject>();
-            foreach (GameObject go in gos)
+            foreach (IGameObject go in gameObjects)
             {
-                SaveGameObject(go);
+                Save(go);
             }
-
-            UpdateDatabase(gos.ToArray());
         }
 
         public IGameObject Open(IGameObjectMetadata metadata)
@@ -143,6 +142,57 @@ namespace NPC.Data
             {
                 _database.LoadXML(XElement.Load(path));
             }
+        }
+
+        private void ValidateName(GameObject gameObject)
+        {
+            if (_database.GameObjects
+                    .Where(m => !m.Equals(gameObject))
+                    .Where(m => m.Type == gameObject.Type)
+                    .Select(m => m.Name)
+                    .Contains(gameObject.Name))
+            {
+                var similarNames = _database.GameObjects
+                                        .Where(m => m.Type == gameObject.Type)
+                                        .Where(m => AreNamesSimilar(m.Name, gameObject.Name))
+                                        .Select(m => m.Name);
+
+                gameObject.Name = CreateUniqueName(gameObject.Name, similarNames);
+            }
+        }
+
+        private bool AreNamesSimilar(string name1, string name2)
+        {
+            Match regex1 = Regex.Match(name1, @"(.+) \((\d+)\)");
+            Match regex2 = Regex.Match(name2, @"(.+) \((\d+)\)");
+
+            string value1 = regex1.Success ? regex1.Groups[1].Value : name1;
+            string value2 = regex2.Success ? regex2.Groups[1].Value : name2;
+
+            return value1 == value2;
+        }
+
+        private string CreateUniqueName(string name, IEnumerable<string> similarNames)
+        {
+            int max = similarNames
+                        .Select(n => GetSimilarNameNumber(n))
+                        .Max();
+
+            Match regex = Regex.Match(name, @"(.+) \((\d+)\)");
+            string baseName = regex.Success ? regex.Groups[1].Value : name;
+
+            return $"{baseName} ({max + 1})";
+        }
+
+        private int GetSimilarNameNumber(string name)
+        {
+            Match regex = Regex.Match(name, @"(.+) \((\d+)\)");
+            if (regex.Success)
+            {
+                return int.Parse(regex.Groups[2].Value);
+            }
+
+            return 0;
         }
     }
 }

@@ -12,7 +12,7 @@ namespace NPC.Business
         public Storage(Data.IStorage storage)
         {
             _storage = storage;
-            Database = new Manifest(storage.Database);
+            Database = new Manifest(storage.Manifest);
         }
 
         public IManifest Database { get; }

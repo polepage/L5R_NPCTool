@@ -32,7 +32,7 @@
             public static readonly string Content = "Content";
         }
 
-        public static class SaveFile
+        public static class File
         {
             public static readonly string Filter = "Filter";
             public static readonly string Target = "Target";
