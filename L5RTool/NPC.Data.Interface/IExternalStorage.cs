@@ -1,5 +1,4 @@
 ﻿using NPC.Data.GameObjects;
-using System;
 using System.Collections.Generic;
 
 namespace NPC.Data

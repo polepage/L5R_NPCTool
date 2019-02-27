@@ -1,6 +1,7 @@
 ﻿using NPC.Presenter.GameObjects;
 using NPC.Presenter.Windows.Dialogs;
 using NPC.Presenter.Windows.Events;
+using NPC.Presenter.Windows.Extensions;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -139,7 +140,7 @@ namespace NPC.Presenter.Windows.ViewModels
                 result = dialogResult.Result.GetValueOrDefault();
                 if (dialogResult.Parameters.TryGetValue(Dialog.Save.NeedSave, out bool needSave) && needSave)
                 {
-                    _storage.Save(GameObjects.Where(o => o.IsDirty).OfType<GameObject>().Select(s => s.Source));
+                    _storage.Save(GameObjects.Where(o => o.IsDirty).Select(s => s.GetSource()));
                 }
             });
 
@@ -148,12 +149,9 @@ namespace NPC.Presenter.Windows.ViewModels
 
         private void Save()
         {
-            if (SelectedObject.IsDirty)
+            if (SelectedObject != null && SelectedObject.IsDirty)
             {
-                if (SelectedObject is GameObject go)
-                {
-                    _storage.Save(go.Source);
-                }
+                _storage.Save(SelectedObject.GetSource());
             }
         }
 
@@ -161,15 +159,15 @@ namespace NPC.Presenter.Windows.ViewModels
         {
             if (GameObjects.Any(e => e.IsDirty))
             {
-                _storage.Save(GameObjects.Where(o => o.IsDirty).OfType<GameObject>().Select(s => s.Source));
+                _storage.Save(GameObjects.Where(o => o.IsDirty).Select(s => s.GetSource()));
             }
         }
 
         private void Duplicate()
         {
-            if (SelectedObject is GameObject gameObject)
+            if (SelectedObject != null)
             {
-                IGameObject copy = new GameObject(_factory.Duplicate(gameObject.Source));
+                IGameObject copy = new GameObject(_factory.Duplicate(SelectedObject.GetSource()));
                 GameObjectOpened(copy);
             }
         }

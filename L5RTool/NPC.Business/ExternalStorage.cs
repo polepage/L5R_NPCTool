@@ -23,8 +23,7 @@ namespace NPC.Business
         {
             _externalStorage.Export(
                 references
-                    .OfType<GameObjectReference>()
-                    .Select(go => go.ReferenceSource),
+                    .Select(go => go.GetSource()),
                 target);
         }
     }

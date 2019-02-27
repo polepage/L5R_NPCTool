@@ -4,24 +4,24 @@ namespace NPC.Business.GameObjects
 {
     abstract class GameObjectReference: RelayBindableBase, IGameObjectReference
     {
+        Data.GameObjects.IGameObjectReference _source;
+
         protected GameObjectReference(Data.GameObjects.IGameObjectReference source)
             : base (source)
         {
-            ReferenceSource = source;
+            _source = source;
         }
-
-        public Data.GameObjects.IGameObjectReference ReferenceSource { get; }
 
         public override int GetHashCode()
         {
-            return ReferenceSource.GetHashCode();
+            return _source.GetHashCode();
         }
 
         public override bool Equals(object obj)
         {
             if (obj is GameObjectReference go)
             {
-                return ReferenceSource.Equals(go.ReferenceSource);
+                return _source.Equals(go._source);
             }
 
             return false;

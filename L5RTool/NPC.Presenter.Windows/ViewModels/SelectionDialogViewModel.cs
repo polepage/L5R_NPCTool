@@ -63,7 +63,7 @@ namespace NPC.Presenter.Windows.ViewModels
             if (CanAccept)
             {
                 IDialogResult result = new DialogResult(true);
-                result.Parameters.Add(Dialog.Selection.SelectedItems, SelectedItems.OfType<GameObjectMetadata>().ToList());
+                result.Parameters.Add(Dialog.Selection.SelectedItems, SelectedItems.OfType<IGameObjectMetadata>().ToList());
 
                 RaiseRequestClose(result);
             }

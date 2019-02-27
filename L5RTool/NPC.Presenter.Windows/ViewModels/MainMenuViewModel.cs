@@ -97,8 +97,8 @@ namespace NPC.Presenter.Windows.ViewModels
                 {
                     foreach (IGameObject gameObject in
                         _storage.Open(
-                            dialogResult.Parameters.GetValue<IEnumerable<GameObjectMetadata>>(Dialog.Selection.SelectedItems)
-                                .Select(or => or.Source))
+                            dialogResult.Parameters.GetValue<IEnumerable<IGameObjectMetadata>>(Dialog.Selection.SelectedItems)
+                                .Select(or => or.GetSource()))
                             .Select(go => new GameObject(go)))
                     {
                         _eventAggregator.GetEvent<OpenGameObjectEvent>().Publish(gameObject);
@@ -170,7 +170,7 @@ namespace NPC.Presenter.Windows.ViewModels
             _eventAggregator.GetEvent<ExitApplicationEvent>().Publish();
         }
 
-        private void ExportReferences(IEnumerable<IGameObjectMetadata> selection)
+        private void ExportReferences(IEnumerable<IGameObjectReference> selection)
         {
             var parameters = new DialogParameters();
             parameters.Add(Dialog.Title, "Select export file");
@@ -179,8 +179,7 @@ namespace NPC.Presenter.Windows.ViewModels
             _dialogService.ShowSaveDialog(parameters, dialogResult =>
             {
                 _externalStorage.Export(selection
-                        .OfType<GameObjectMetadata>()
-                        .Select(go => go.Source),
+                        .Select(go => go.GetSource()),
                     dialogResult.Parameters.GetValue<string>(Dialog.File.Target));
             });
         }

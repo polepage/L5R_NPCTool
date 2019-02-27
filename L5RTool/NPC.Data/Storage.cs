@@ -31,21 +31,33 @@ namespace NPC.Data
             {
                 ValidateName(go);
                 SaveGameObject(go);
-                UpdateDatabase(go);
+
+                if (UpdateDatabase(go))
+                {
+                    SaveDatabase();
+                }
             }
         }
 
         public void Save(IEnumerable<IGameObject> gameObjects)
         {
-            foreach (IGameObject go in gameObjects)
+            bool needToSaveDB = false;
+            foreach (GameObject go in gameObjects)
             {
-                Save(go);
+                ValidateName(go);
+                SaveGameObject(go);
+                needToSaveDB |= UpdateDatabase(go);
+            }
+
+            if (needToSaveDB)
+            {
+                SaveDatabase();
             }
         }
 
-        public IGameObject Open(IGameObjectMetadata metadata)
+        public IGameObject Open(IGameObjectReference reference)
         {
-            if (metadata is GameObjectMetadata go)
+            if (reference is GameObjectReference go)
             {
                 return OpenFile(Path.Combine(DatabaseFolder, GameObjectFolder, go.Id + GameObjectExtension));
             }
@@ -53,29 +65,36 @@ namespace NPC.Data
             throw new ArgumentException("Data.Storage: Cannot Open metadata, reference don't exist.");
         }
 
-        public IEnumerable<IGameObject> Open(IEnumerable<IGameObjectMetadata> metadata)
+        public IEnumerable<IGameObject> Open(IEnumerable<IGameObjectReference> references)
         {
-            return metadata.Select(go => Open(go));
+            return references.Select(go => Open(go));
         }
 
-        public void Delete(IGameObjectMetadata metadata)
+        public void Delete(IGameObjectReference reference)
         {
-            if (metadata is GameObjectMetadata go)
+            if (reference is GameObjectReference go)
             {
                 DeleteGameObject(go);
-                RemoveFromDatabase(go);
+                if (RemoveFromDatabase(go))
+                {
+                    SaveDatabase();
+                }
             }
         }
 
-        public void Delete(IEnumerable<IGameObjectMetadata> metadata)
+        public void Delete(IEnumerable<IGameObjectReference> references)
         {
-            IEnumerable<GameObjectMetadata> gameObjects = metadata.OfType<GameObjectMetadata>();
-            foreach (GameObjectMetadata go in gameObjects)
+            bool needToSaveDB = false;
+            foreach (GameObjectReference go in references)
             {
                 DeleteGameObject(go);
+                needToSaveDB |= RemoveFromDatabase(go);
             }
 
-            RemoveFromDatabase(gameObjects.ToArray());
+            if (needToSaveDB)
+            {
+                SaveDatabase();
+            }
         }
 
         private void SaveGameObject(GameObject gameObject)
@@ -86,46 +105,37 @@ namespace NPC.Data
             gameObject.ResetDirty();
         }
 
-        private IGameObject OpenFile(string path)
+        private GameObject OpenFile(string path)
         {
             return GameObject.FromXML(XElement.Load(path));
         }
 
-        private void DeleteGameObject(GameObjectMetadata metadata)
+        private void DeleteGameObject(GameObjectReference reference)
         {
-            string path = Path.Combine(DatabaseFolder, GameObjectFolder, metadata.Id + GameObjectExtension);
+            string path = Path.Combine(DatabaseFolder, GameObjectFolder, reference.Id + GameObjectExtension);
             if (File.Exists(path))
             {
                 File.Delete(path);
             }
         }
 
-        private void UpdateDatabase(params GameObject[] gameObjects)
+        private bool UpdateDatabase(GameObject gameObject)
         {
-            bool needToSave = false;
-            foreach(GameObject gameObject in gameObjects)
-            {
-                needToSave |= _database.AddOrModify(gameObject.ExtractMetadata());
-            }
-
-            if (needToSave)
-            {
-                SaveDatabase();
-            }
+            return _database.AddOrModify(gameObject.ExtractMetadata());
         }
 
-        private void RemoveFromDatabase(params GameObjectMetadata[] gameObjects)
+        private bool RemoveFromDatabase(GameObjectReference gameObject)
         {
-            bool needToSave = false;
-            foreach(GameObjectMetadata metadata in gameObjects)
+            if (gameObject is GameObjectMetadata meta)
             {
-                needToSave |= _database.Remove(metadata);
+                return _database.Remove(meta);
+            }
+            else if (gameObject is GameObject go)
+            {
+                return _database.Remove(go.ExtractMetadata());
             }
 
-            if (needToSave)
-            {
-                SaveDatabase();
-            }
+            throw new ArgumentException("Reference in not a GameObject nor a GameObjectMetadata.");
         }
 
         private void SaveDatabase()

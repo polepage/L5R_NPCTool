@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using NPC.Business.GameObjects;
 
@@ -19,47 +18,32 @@ namespace NPC.Business
 
         public void Save(IGameObject gameObject)
         {
-            if (gameObject is GameObject go)
-            {
-                _storage.Save(go.Source);
-            }
+            _storage.Save(gameObject.GetSource());
         }
 
         public void Save(IEnumerable<IGameObject> gameObjects)
         {
-            _storage.Save(gameObjects.OfType<GameObject>().Select(s => s.Source));
+            _storage.Save(gameObjects.Select(s => s.GetSource()));
         }
 
-        public IGameObject Open(IGameObjectMetadata metadata)
+        public IGameObject Open(IGameObjectReference reference)
         {
-            if (metadata is GameObjectMetadata go)
-            {
-                return new GameObject(_storage.Open(go.Source));
-            }
-
-            throw new ArgumentException("Business.Storage: Can't open metadata. Reference don't exist.");
+            return new GameObject(_storage.Open(reference.GetSource()));
         }
 
-        public IEnumerable<IGameObject> Open(IEnumerable<IGameObjectMetadata> metadata)
+        public IEnumerable<IGameObject> Open(IEnumerable<IGameObjectReference> references)
         {
-            return metadata.Select(go => Open(go));
+            return references.Select(go => Open(go));
         }
 
-        public void Delete(IGameObjectMetadata metadata)
+        public void Delete(IGameObjectReference reference)
         {
-            if (metadata is GameObjectMetadata go)
-            {
-                _storage.Delete(go.Source);
-            }
-
-            throw new ArgumentException("Business.Storage: Can't delete metadata. Reference don't exist.");
+            _storage.Delete(reference.GetSource());
         }
 
-        public void Delete(IEnumerable<IGameObjectMetadata> metadata)
+        public void Delete(IEnumerable<IGameObjectReference> references)
         {
-            _storage.Delete(metadata
-                .OfType<GameObjectMetadata>()
-                .Select(go => go.Source));
+            _storage.Delete(references.Select(go => go.GetSource()));
         }
     }
 }

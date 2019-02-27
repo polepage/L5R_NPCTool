@@ -3,6 +3,7 @@ using NPC.Common;
 using NPC.Presenter.GameObjects;
 using NPC.Presenter.Windows.Dialogs;
 using NPC.Presenter.Windows.Events;
+using NPC.Presenter.Windows.Extensions;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -66,8 +67,8 @@ namespace NPC.Presenter.Windows.ViewModels
             foreach (IGameObject gameObject in
                 _storage.Open(
                         SelectedItems
-                            .OfType<GameObjectMetadata>()
-                            .Select(or => or.Source))
+                            .OfType<IGameObjectMetadata>()
+                            .Select(or => or.GetSource()))
                         .Select(go => new GameObject(go)))
             {
                 _eventAggregator.GetEvent<OpenGameObjectEvent>().Publish(gameObject);
@@ -79,8 +80,8 @@ namespace NPC.Presenter.Windows.ViewModels
             foreach (IGameObject gameObject in
                 _factory.Duplicate(
                     SelectedItems
-                        .OfType<GameObjectMetadata>()
-                        .Select(or => or.Source))
+                        .OfType<IGameObjectMetadata>()
+                        .Select(or => or.GetSource()))
                     .Select(go => new GameObject(go)))
             {
                 _eventAggregator.GetEvent<OpenGameObjectEvent>().Publish(gameObject);
@@ -89,7 +90,7 @@ namespace NPC.Presenter.Windows.ViewModels
 
         private void Delete()
         {
-            IEnumerable<GameObjectMetadata> references = SelectedItems.OfType<GameObjectMetadata>();
+            IEnumerable<IGameObjectMetadata> references = SelectedItems.OfType<IGameObjectMetadata>();
             if (!references.Any())
             {
                 return;
@@ -114,14 +115,14 @@ namespace NPC.Presenter.Windows.ViewModels
                 if (dialogResult.Result.GetValueOrDefault())
                 {
                     _eventAggregator.GetEvent<ForceCloseGameObjects>().Publish(references);
-                    _storage.Delete(references.Select(r => r.Source));
+                    _storage.Delete(references.Select(r => r.GetSource()));
                 }
             });
         }
 
         private void Export()
         {
-            _eventAggregator.GetEvent<ExportGameObjectsEvent>().Publish(SelectedItems.OfType<GameObjectMetadata>());
+            _eventAggregator.GetEvent<ExportGameObjectsEvent>().Publish(SelectedItems.OfType<IGameObjectReference>());
         }
 
         private void SelectionChanged(object sender, NotifyCollectionChangedEventArgs e)

@@ -65,6 +65,7 @@
     <Compile Include="Events\Events.cs" />
     <Compile Include="Events\SingleSubEvent.cs" />
     <Compile Include="Extensions\DialogServiceExtension.cs" />
+    <Compile Include="Extensions\GameObjectExtension.cs" />
     <Compile Include="GameObjects\Advantage.cs" />
     <Compile Include="GameObjects\Disadvantage.cs" />
     <Compile Include="GameObjects\GameObject.cs" />

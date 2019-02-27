@@ -10,10 +10,10 @@ namespace NPC.Business
         void Save(IGameObject gameObject);
         void Save(IEnumerable<IGameObject> gameObjects);
 
-        IGameObject Open(IGameObjectMetadata metadata);
-        IEnumerable<IGameObject> Open(IEnumerable<IGameObjectMetadata> metadata);
+        IGameObject Open(IGameObjectReference metadata);
+        IEnumerable<IGameObject> Open(IEnumerable<IGameObjectReference> metadata);
 
-        void Delete(IGameObjectMetadata metadata);
-        void Delete(IEnumerable<IGameObjectMetadata> metadata);
+        void Delete(IGameObjectReference metadata);
+        void Delete(IEnumerable<IGameObjectReference> metadata);
     }
 }
