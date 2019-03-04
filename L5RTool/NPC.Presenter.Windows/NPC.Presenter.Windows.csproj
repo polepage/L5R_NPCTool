@@ -36,8 +36,10 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="PresentationFramework.Aero2" />
+    <Reference Include="ReachFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Printing" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -50,8 +52,10 @@
   <ItemGroup>
     <Compile Include="Behaviors\BindMultiSelection.cs" />
     <Compile Include="Behaviors\DialogAwareClose.cs" />
+    <Compile Include="Behaviors\GameObjectPrintPreview.cs" />
     <Compile Include="Behaviors\PropagateInputBindings.cs" />
     <Compile Include="Controls\BindingProxy.cs" />
+    <Compile Include="Controls\PrintDocumentViewer.cs" />
     <Compile Include="Controls\TagSelector.cs" />
     <Compile Include="Converters\CancelEventArgsConverter.cs" />
     <Compile Include="Converters\NameFallbackConverter.cs" />
@@ -78,7 +82,10 @@
     <Compile Include="Interaction\InvokeCommandAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Templates\ElementTemplateSelector.cs" />
+    <Compile Include="Viewers\GameObjectViewer.cs" />
+    <Compile Include="Viewers\TraitViewer.cs" />
     <Compile Include="ViewModels\ConfirmationDialogViewModel.cs" />
+    <Compile Include="ViewModels\PrintDialogViewModel.cs" />
     <Compile Include="ViewModels\SaveDialogViewModel.cs" />
     <Compile Include="ViewModels\GameObjectTreeViewModel.cs" />
     <Compile Include="ViewModels\GameObjectEditorViewModel.cs" />
@@ -88,6 +95,9 @@
     <Compile Include="ViewModels\SelectionDialogViewModel.cs" />
     <Compile Include="Views\ConfirmationDialog.xaml.cs">
       <DependentUpon>ConfirmationDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PrintDialog.xaml.cs">
+      <DependentUpon>PrintDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SaveDialog.xaml.cs">
       <DependentUpon>SaveDialog.xaml</DependentUpon>
@@ -186,6 +196,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\PrintDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SaveDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -230,6 +244,9 @@
     <Resource Include="Icons\GameObjects\Advantage.png" />
     <Resource Include="Icons\GameObjects\Disadvantage.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Fonts\IgniteTheLight.ttf" />
+    <Resource Include="Fonts\LinBiolinum_RBah.ttf" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

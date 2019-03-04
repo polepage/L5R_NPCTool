@@ -240,7 +240,7 @@ namespace CS.Utils.Collections
                 newItems = newItems.Where(_filter);
             }
 
-            base.OnAdd(newItems.Select(_converter).ToList(), index);
+            base.OnAdd(newItems.Select(Convert).ToList(), index);
         }
 
         protected override void OnRemove(IList removedItems, int index)
@@ -251,7 +251,12 @@ namespace CS.Utils.Collections
                 oldItems = oldItems.Where(_filter);
             }
 
-            base.OnRemove(oldItems.Select(_converter).ToList(), index);
+            base.OnRemove(oldItems.Select(Convert).ToList(), index);
+        }
+
+        protected virtual T Convert(TSource source)
+        {
+            return _converter(source);
         }
     }
 }

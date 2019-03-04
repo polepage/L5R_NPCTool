@@ -1,4 +1,6 @@
-﻿using NPC.Presenter.GameObjects;
+﻿using NPC.Common;
+using NPC.Presenter.GameObjects;
+using NPC.Presenter.Windows.Viewers;
 using System;
 
 namespace NPC.Presenter.Windows.Extensions
@@ -39,5 +41,16 @@ namespace NPC.Presenter.Windows.Extensions
             throw new ArgumentException("IGameObjectReference is not a GameObject or a GameObjectMetadata.");
         }
 
+        public static GameObjectViewer CreateViewer(this IGameObject gameObject, double maxWidth, double maxHeight)
+        {
+            switch (gameObject.Type)
+            {
+                case ObjectType.Advantage:
+                case ObjectType.Disadvantage:
+                    return new TraitViewer(gameObject, maxWidth, maxHeight);
+                default:
+                    throw new ArgumentException("Unkown object type.");
+            }
+        }
     }
 }

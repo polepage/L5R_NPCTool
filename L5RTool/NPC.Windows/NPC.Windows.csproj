@@ -112,5 +112,6 @@
       <Name>NPC.Presenter.Windows</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

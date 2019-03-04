@@ -1,0 +1,54 @@
+﻿<Grid x:Class="NPC.Presenter.Windows.Views.PrintDialog"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:prism="http://prismlibrary.com/"
+      xmlns:mb="http://schemas.microsoft.com/xaml/behaviors"
+      xmlns:tv="clr-namespace:System.Windows.Controls;assembly=MultiSelectTreeView"
+      xmlns:c="clr-namespace:NPC.Presenter.Windows.Controls"
+      xmlns:b="clr-namespace:NPC.Presenter.Windows.Behaviors"
+      prism:ViewModelLocator.AutoWireViewModel="True"
+      Width="1064" Height="600">
+
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" MinWidth="200"/>
+        <ColumnDefinition Width="3"/>
+        <ColumnDefinition Width="*" MinWidth="400"/>
+    </Grid.ColumnDefinitions>
+
+    <Grid.RowDefinitions>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+
+    <tv:MultiSelectTreeView ItemsSource="{Binding GameObjectGroups}" SelectedItems="{Binding SelectedItems}"
+                            BorderBrush="Transparent" Grid.Column="0">
+        <tv:MultiSelectTreeView.Resources>
+            <ResourceDictionary>
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="GameObjectMetadataViews.xaml"/>
+                </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary>
+        </tv:MultiSelectTreeView.Resources>
+    </tv:MultiSelectTreeView>
+
+    <Button Grid.Column="0" Grid.Row="1" Content="Preview Selection" MinWidth="100" Height="22" Margin="10" HorizontalAlignment="Right"
+            Command="{Binding RefreshCommand, ElementName=previewBehavior}"/>
+
+    <GridSplitter Grid.Column="1" Grid.RowSpan="2" Width="3" HorizontalAlignment="Stretch"/>
+
+    <c:PrintDocumentViewer Grid.Column="2" Grid.RowSpan="2" PrintCompleteCommand="{Binding PrintCompleteCommand}">
+        <DocumentViewer.Resources>
+            <Style TargetType="{x:Type ContentControl}">
+                <Style.Triggers>
+                    <Trigger Property="Name" Value="PART_FindToolBarHost">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </DocumentViewer.Resources>
+
+        <mb:Interaction.Behaviors>
+            <b:GameObjectPrintPreview x:Name="previewBehavior" GameObjects="{Binding DisplayedObjects}"/>
+        </mb:Interaction.Behaviors>
+    </c:PrintDocumentViewer>
+</Grid>

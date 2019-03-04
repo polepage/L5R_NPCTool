@@ -18,8 +18,7 @@ namespace NPC.Presenter.Windows
             container.RegisterDialog<SelectionDialog, SelectionDialogViewModel>(Dialog.Selection.Name);
             container.RegisterDialog<SaveDialog, SaveDialogViewModel>(Dialog.Save.Name);
             container.RegisterDialog<ConfirmationDialog, ConfirmationDialogViewModel>(Dialog.Confirmation.Name);
-
-            container.Register<ConfirmationDialog>(Dialog.Confirmation.Name);
+            container.RegisterDialog<PrintDialog, PrintDialogViewModel>(Dialog.Print.Name);
 
             container.Register<MainWindowViewModel>();
             container.Register<MainMenuViewModel>();

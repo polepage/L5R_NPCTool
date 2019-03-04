@@ -7,6 +7,7 @@ using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
@@ -162,7 +163,12 @@ namespace NPC.Presenter.Windows.ViewModels
 
         private void Print()
         {
+            var parameters = new DialogParameters();
+            parameters.Add(Dialog.Title, "Print Game Objects");
+            parameters.Add(Dialog.Print.Source, _storage.Database);
+            parameters.Add(Dialog.Print.Opener, (Func<IGameObjectReference, IGameObject>)(or => new GameObject(_storage.Open(or.GetSource()))));
 
+            _dialogService.ShowDialog(Dialog.Print.Name, parameters, dr => { });
         }
 
         private void Exit()

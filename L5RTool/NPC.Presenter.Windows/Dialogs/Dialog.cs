@@ -32,6 +32,13 @@
             public static readonly string Content = "Content";
         }
 
+        public static class Print
+        {
+            public static readonly string Name = "printdialog";
+            public static readonly string Source = "Source";
+            public static readonly string Opener = "Opener";
+        }
+
         public static class File
         {
             public static readonly string Filter = "Filter";

@@ -5,19 +5,19 @@ using System.Collections.Generic;
 
 namespace NPC.Presenter.Windows.Events
 {
-    class OpenGameObjectEvent: PubSubEvent<IGameObject> { }
+    class OpenGameObjectEvent : PubSubEvent<IGameObject> { }
 
-    class SaveCurrentGameObjectEvent: SingleSubEvent { }
-    class SaveAllGameObjectsEvent: SingleSubEvent { }
+    class SaveCurrentGameObjectEvent : SingleSubEvent { }
+    class SaveAllGameObjectsEvent : SingleSubEvent { }
 
-    class CloseCurrentGameObjectEvent: PubSubEvent { }
-    class CloseAllGameObjectsEvent: PubSubEvent { }
-    class CancellableCloseAllGameObjectsEvent: PubSubEvent<Action> { }
-    class ForceCloseGameObjects: PubSubEvent<IEnumerable<IGameObjectReference>> { }
+    class CloseCurrentGameObjectEvent : PubSubEvent { }
+    class CloseAllGameObjectsEvent : PubSubEvent { }
+    class CancellableCloseAllGameObjectsEvent : PubSubEvent<Action> { }
+    class ForceCloseGameObjects : PubSubEvent<IEnumerable<IGameObjectReference>> { }
 
-    class DuplicateCurrentGameObjectEvent: SingleSubEvent { }
+    class DuplicateCurrentGameObjectEvent : SingleSubEvent { }
 
-    class ExportGameObjectsEvent: SingleSubEvent<IEnumerable<IGameObjectReference>> { }
+    class ExportGameObjectsEvent : SingleSubEvent<IEnumerable<IGameObjectReference>> { }
 
     class ExitApplicationEvent: SingleSubEvent { }
 }

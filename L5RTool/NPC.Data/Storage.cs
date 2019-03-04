@@ -156,6 +156,11 @@ namespace NPC.Data
 
         private void ValidateName(GameObject gameObject)
         {
+            if (string.IsNullOrEmpty(gameObject.Name))
+            {
+                gameObject.Name = gameObject.Type.ToString();
+            }
+
             if (_database.GameObjects
                     .Where(m => !m.Equals(gameObject))
                     .Where(m => m.Type == gameObject.Type)
