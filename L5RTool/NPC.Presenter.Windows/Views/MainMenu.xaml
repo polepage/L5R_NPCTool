@@ -40,4 +40,7 @@
         <MenuItem Header="Import" Command="{Binding ImportCommand}"/>
         <MenuItem Header="Export" Command="{Binding ExportCommand}"/>
     </MenuItem>
+    <MenuItem Header="?">
+        <MenuItem Header="About" Command="{Binding AboutCommand}"/>
+    </MenuItem>
 </Menu>

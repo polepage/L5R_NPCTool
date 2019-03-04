@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Windows Presenter layer implementation for L5R NPC Tool.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("L5R NPC Tool")]
+[assembly: AssemblyProduct("L5R NPC Creation Tool")]
 [assembly: AssemblyCopyright("Copyright © Pierre Olivier LePage 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

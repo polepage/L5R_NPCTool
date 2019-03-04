@@ -44,5 +44,10 @@
             public static readonly string Filter = "Filter";
             public static readonly string Target = "Target";
         }
+
+        public static class About
+        {
+            public static readonly string Name = "aboutdialog";
+        }
     }
 }

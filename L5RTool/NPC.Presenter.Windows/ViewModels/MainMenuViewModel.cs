@@ -66,6 +66,9 @@ namespace NPC.Presenter.Windows.ViewModels
         private DelegateCommand _exitCommand;
         public ICommand ExitCommand => _exitCommand ?? (_exitCommand = new DelegateCommand(Exit));
 
+        private DelegateCommand _aboutCommand;
+        public ICommand AboutCommand => _aboutCommand ?? (_aboutCommand = new DelegateCommand(About));
+
         private void New()
         {
             IDialogParameters parameters = new DialogParameters();
@@ -174,6 +177,14 @@ namespace NPC.Presenter.Windows.ViewModels
         private void Exit()
         {
             _eventAggregator.GetEvent<ExitApplicationEvent>().Publish();
+        }
+
+        private void About()
+        {
+            var parameters = new DialogParameters();
+            parameters.Add(Dialog.Title, "About");
+
+            _dialogService.ShowDialog(Dialog.About.Name, parameters, dialogResults => { });
         }
 
         private void ExportReferences(IEnumerable<IGameObjectReference> selection)

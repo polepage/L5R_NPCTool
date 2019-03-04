@@ -5,7 +5,7 @@
     <RootNamespace>NPC.Data</RootNamespace>
     <Authors>Pierre Olivier LePage</Authors>
     <Company />
-    <Product>L5R NPC Tool</Product>
+    <Product>L5R NPC Creation Tool</Product>
     <Description>Data layer interfaces for L5R NPC Tool</Description>
     <Copyright>Copyright © Pierre Olivier LePage 2019</Copyright>
     <PackageProjectUrl></PackageProjectUrl>

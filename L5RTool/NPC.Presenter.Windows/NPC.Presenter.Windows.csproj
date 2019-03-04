@@ -53,6 +53,7 @@
     <Compile Include="Behaviors\BindMultiSelection.cs" />
     <Compile Include="Behaviors\DialogAwareClose.cs" />
     <Compile Include="Behaviors\GameObjectPrintPreview.cs" />
+    <Compile Include="Behaviors\OpenHyperlink.cs" />
     <Compile Include="Behaviors\PropagateInputBindings.cs" />
     <Compile Include="Controls\BindingProxy.cs" />
     <Compile Include="Controls\PrintDocumentViewer.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Templates\ElementTemplateSelector.cs" />
     <Compile Include="Viewers\GameObjectViewer.cs" />
     <Compile Include="Viewers\TraitViewer.cs" />
+    <Compile Include="ViewModels\AboutDialogViewModel.cs" />
     <Compile Include="ViewModels\ConfirmationDialogViewModel.cs" />
     <Compile Include="ViewModels\PrintDialogViewModel.cs" />
     <Compile Include="ViewModels\SaveDialogViewModel.cs" />
@@ -93,6 +95,9 @@
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\NewDialogViewModel.cs" />
     <Compile Include="ViewModels\SelectionDialogViewModel.cs" />
+    <Compile Include="Views\AboutDialog.xaml.cs">
+      <DependentUpon>AboutDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ConfirmationDialog.xaml.cs">
       <DependentUpon>ConfirmationDialog.xaml</DependentUpon>
     </Compile>
@@ -191,6 +196,10 @@
     <Page Include="Theme\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AboutDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ConfirmationDialog.xaml">
       <SubType>Designer</SubType>
