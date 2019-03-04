@@ -5,21 +5,36 @@
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
             xmlns:prism="http://prismlibrary.com/"
             xmlns:conv="clr-namespace:NPC.Presenter.Windows.Converters"
+            xmlns:c="clr-namespace:NPC.Presenter.Windows.Controls"
             mc:Ignorable="d" 
             prism:ViewModelLocator.AutoWireViewModel="True"
             Width="300">
 
     <StackPanel.Resources>
+        <c:BindingProxy x:Key="proxy" Data="{Binding}"/>
+        
         <conv:NameToImageConverter x:Key="imageConverter"/>
     </StackPanel.Resources>
     
     <ListView SelectionMode="Single" ItemsSource="{Binding Types}" SelectedItem="{Binding Selection}" Margin="15">
+        <ListView.ItemContainerStyle>
+            <Style TargetType="{x:Type ListViewItem}">
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            </Style>
+        </ListView.ItemContainerStyle>
+        
         <ListView.ItemTemplate>
             <DataTemplate>
-                <StackPanel Margin="5" Orientation="Horizontal">
-                    <Image Source="{Binding Converter={StaticResource imageConverter}, ConverterParameter=GameObjects}" MaxWidth="24" MaxHeight="24" Margin="0 0 5 0"/>
-                    <TextBlock Text="{Binding}" VerticalAlignment="Center"/>
-                </StackPanel>
+                <Grid IsHitTestVisible="True" Background="Transparent">
+                    <Grid.InputBindings>
+                        <MouseBinding Gesture="LeftDoubleClick" Command="{Binding Data.CreateCommand, Source={StaticResource proxy}}"/>
+                    </Grid.InputBindings>
+
+                    <StackPanel Margin="5" Orientation="Horizontal">
+                        <Image Source="{Binding Converter={StaticResource imageConverter}, ConverterParameter=GameObjects}" MaxWidth="24" MaxHeight="24" Margin="0 0 5 0"/>
+                        <TextBlock Text="{Binding}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Grid>
             </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>
