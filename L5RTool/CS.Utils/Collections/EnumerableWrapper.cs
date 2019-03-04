@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 
 namespace CS.Utils.Collections
@@ -47,6 +48,11 @@ namespace CS.Utils.Collections
             
             if (_comparer != null)
             {
+                foreach (INotifyPropertyChanged item in collectionSource.OfType<INotifyPropertyChanged>())
+                {
+                    item.PropertyChanged += ItemPropertyChanged;
+                }
+
                 var orderedSource = new List<T>(collectionSource);
                 orderedSource.Sort(_comparer);
                 collectionSource = orderedSource;
@@ -88,6 +94,11 @@ namespace CS.Utils.Collections
             {
                 foreach (T item in newItems)
                 {
+                    if (item is INotifyPropertyChanged propertyChanger)
+                    {
+                        propertyChanger.PropertyChanged += ItemPropertyChanged;
+                    }
+
                     for (int i = 0; i < _collection.Count; i++)
                     {
                         if (_comparer(item, _collection[i]) < 0)
@@ -121,6 +132,13 @@ namespace CS.Utils.Collections
                 oldItems = oldItems.Where(_filter);
             }
 
+            if (_comparer != null)
+            {
+                foreach (INotifyPropertyChanged item in oldItems.OfType<INotifyPropertyChanged>())
+                {
+                    item.PropertyChanged -= ItemPropertyChanged;
+                }
+            }
 
             if (index < 0)
             {
@@ -140,12 +158,57 @@ namespace CS.Utils.Collections
 
         protected virtual void OnReset()
         {
+            if (_comparer != null)
+            {
+                foreach (INotifyPropertyChanged item in _collection.OfType<INotifyPropertyChanged>())
+                {
+                    item.PropertyChanged -= ItemPropertyChanged;
+                }
+            }
+
             _collection.Clear();
         }
 
         protected int FindIndex(T item)
         {
             return _collection.IndexOf(item);
+        }
+
+        private void ReorderCollection()
+        {
+            if (_comparer == null)
+            {
+                return;
+            }
+
+            QuickSort(0, _collection.Count - 1);
+        }
+
+        private void QuickSort(int startIndex, int endIndex)
+        {
+            if (startIndex >= endIndex)
+            {
+                return;
+            }
+
+            int pivot = startIndex;
+            int currentOffset = 1;
+
+            while (pivot + currentOffset <= endIndex)
+            {
+                if (_comparer(_collection[pivot], _collection[pivot + currentOffset]) > 0)
+                {
+                    _collection.Move(pivot + currentOffset, pivot);
+                    pivot++;
+                }
+                else
+                {
+                    currentOffset++;
+                }
+            }
+
+            QuickSort(startIndex, pivot - 1);
+            QuickSort(pivot + 1, endIndex);
         }
 
         private void SourceChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -172,6 +235,11 @@ namespace CS.Utils.Collections
                 default:
                     break;
             }
+        }
+
+        private void ItemPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            ReorderCollection();
         }
     }
 
