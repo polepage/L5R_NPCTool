@@ -59,7 +59,7 @@
             <TextBlock Grid.Column="0" Grid.Row="0"
                        Text="Name" VerticalAlignment="Center"/>
             <TextBox Grid.Column="1" Grid.Row="0" Margin="5 3"
-                     MaxLength="256" Text="{Binding Name}"/>
+                     MaxLength="256" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
 
             <TextBlock Grid.Column="0" Grid.Row="1"
                        Text="Ring" VerticalAlignment="Center"/>
@@ -91,7 +91,7 @@
                        Text="Description" VerticalAlignment="Center"/>
             <TextBox Grid.Column="1" Grid.Row="4" Margin="5 3"
                      MinLines="3" AcceptsReturn="True" TextWrapping="Wrap"
-                     Text="{Binding Data.Description}"/>
+                     Text="{Binding Data.Description, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>
