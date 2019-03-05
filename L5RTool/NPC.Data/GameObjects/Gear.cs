@@ -22,17 +22,17 @@ namespace NPC.Data.GameObjects
 
         public override XElement CreateXML()
         {
-            return new XElement("TraitData",
+            return new XElement("GearData",
                                 new XElement("Description", Description),
                                 new XElement("GearType", GearType));
         }
 
         public override void LoadXML(XElement xml)
         {
-            XElement traitData = xml.Element("TraitData");
+            XElement gearData = xml.Element("GearData");
 
-            Description = traitData.Element("Description").Value;
-            GearType = (GearType)Enum.Parse(typeof(GearType), traitData.Element("GearType").Value);
+            Description = gearData.Element("Description").Value;
+            GearType = (GearType)Enum.Parse(typeof(GearType), gearData.Element("GearType").Value);
         }
     }
 }

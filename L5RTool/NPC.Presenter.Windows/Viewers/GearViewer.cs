@@ -21,7 +21,7 @@ namespace NPC.Presenter.Windows.Viewers
             var name = new TextBlock
             {
                 Text = GameObject.Name + " (" + gear.GearType.ToString() + ")",
-                FontSize = 17,
+                FontSize = 20,
                 FontWeight = FontWeights.Bold,
                 TextWrapping = TextWrapping.Wrap,
                 FontFamily = new FontFamily(FontUri, "./#Linux Biolinum")

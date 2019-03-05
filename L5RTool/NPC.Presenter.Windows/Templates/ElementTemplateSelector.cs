@@ -18,6 +18,8 @@ namespace NPC.Presenter.Windows.Templates
             {
                 switch (gameObject.Type)
                 {
+                    case ObjectType.Demeanor:
+                        return DemeanorTemplate;
                     case ObjectType.Advantage:
                     case ObjectType.Disadvantage:
                         return TraitTemplate;

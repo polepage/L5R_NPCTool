@@ -97,6 +97,8 @@ namespace NPC.Data.GameObjects
         {
             switch (type)
             {
+                case ObjectType.Demeanor:
+                    return new Demeanor();
                 case ObjectType.Advantage:
                     return new Advantage();
                 case ObjectType.Disadvantage:

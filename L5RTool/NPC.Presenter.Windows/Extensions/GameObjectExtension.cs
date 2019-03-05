@@ -45,6 +45,8 @@ namespace NPC.Presenter.Windows.Extensions
         {
             switch (gameObject.Type)
             {
+                case ObjectType.Demeanor:
+                    return new DemeanorViewer(gameObject, maxWidth, maxHeight);
                 case ObjectType.Advantage:
                 case ObjectType.Disadvantage:
                     return new TraitViewer(gameObject, maxWidth, maxHeight);

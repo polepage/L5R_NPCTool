@@ -35,6 +35,8 @@ namespace NPC.Presenter.GameObjects
         {
             switch (source)
             {
+                case Business.GameObjects.IDemeanor s:
+                    return new Demeanor(s);
                 case Business.GameObjects.IAdvantage s:
                     return new Advantage(s);
                 case Business.GameObjects.IDisadvantage s:
