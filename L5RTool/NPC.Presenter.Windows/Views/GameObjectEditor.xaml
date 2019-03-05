@@ -70,7 +70,8 @@
                     <Setter.Value>
                         <templates:ElementTemplateSelector DefaultTemplate="{StaticResource defaultEditTemplate}"
                                                            DemeanorTemplate="{StaticResource demeanorEditTemplate}"
-                                                           TraitTemplate="{StaticResource traitEditTemplate}"/>
+                                                           TraitTemplate="{StaticResource traitEditTemplate}"
+                                                           GearTemplate="{StaticResource gearEditTemplate}"/>
                     </Setter.Value>
                 </Setter>
 

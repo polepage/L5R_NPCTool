@@ -10,6 +10,7 @@ namespace NPC.Presenter.Windows.Templates
         public DataTemplate DefaultTemplate { get; set; }
         public DataTemplate DemeanorTemplate { get; set; }
         public DataTemplate TraitTemplate { get; set; }
+        public DataTemplate GearTemplate { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
@@ -20,6 +21,8 @@ namespace NPC.Presenter.Windows.Templates
                     case ObjectType.Advantage:
                     case ObjectType.Disadvantage:
                         return TraitTemplate;
+                    case ObjectType.Equipment:
+                        return GearTemplate;
                     default:
                         break;
                 }

@@ -64,22 +64,5 @@ namespace NPC.Data.GameObjects
                                 new XElement("Spheres",
                                              Spheres.Select(s => new XElement("Item", s))));
         }
-
-        //protected override void LoadXML(XElement xml)
-        //{
-        //    Name = xml.Element("Name").Value;
-        //    Description = xml.Element("Description").Value;
-        //    Ring = (Ring)Enum.Parse(typeof(Ring), xml.Element("Ring").Value);
-
-        //    foreach (XElement skillGroup in xml.Element("SkillGroups").Elements())
-        //    {
-        //        SkillGroups.Add((SkillGroup)Enum.Parse(typeof(SkillGroup), skillGroup.Value));
-        //    }
-
-        //    foreach (XElement sphere in xml.Element("Spheres").Elements())
-        //    {
-        //        Spheres.Add((TraitSphere)Enum.Parse(typeof(TraitSphere), sphere.Value));
-        //    }
-        //}
     }
 }

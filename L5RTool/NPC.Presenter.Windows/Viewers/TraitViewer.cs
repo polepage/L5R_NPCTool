@@ -25,10 +25,8 @@ namespace NPC.Presenter.Windows.Viewers
                 FontSize = 17,
                 FontWeight = FontWeights.Bold,
                 TextWrapping = TextWrapping.Wrap,
-                FontFamily = new FontFamily(FontUri, "./#Linux Biolinum"),
-                Margin = new Thickness(0, 0, 0, 3)
+                FontFamily = new FontFamily(FontUri, "./#Linux Biolinum")
             };
-
             Grid.SetRow(name, 0);
             grid.Children.Add(name);
 
@@ -37,7 +35,7 @@ namespace NPC.Presenter.Windows.Viewers
             var types = new TextBlock
             {
                 TextWrapping = TextWrapping.Wrap,
-                Margin = new Thickness(0, 0, 0, 4)
+                Margin = new Thickness(0, 3, 0, 0)
             };
             types.Inlines.Add(new Run("Types: ") { FontWeight = FontWeights.Bold });
             types.Inlines.Add(skills);
@@ -54,32 +52,14 @@ namespace NPC.Presenter.Windows.Viewers
                 var description = new TextBlock
                 {
                     Text = trait.Description,
-                    TextWrapping = TextWrapping.Wrap
+                    TextWrapping = TextWrapping.Wrap,
+                    Margin = new Thickness(0, 4, 0, 0)
                 };
                 Grid.SetRow(description, 2);
                 grid.Children.Add(description);
             }
 
             AddElement(grid);
-        }
-
-        private Grid CreateGrid(int rows)
-        {
-            var grid = new Grid
-            {
-                Width = MaxWidth,
-                Margin = new Thickness(0, 0, 0, 12)
-            };
-
-            for (int i = 0; i < rows; i++)
-            {
-                grid.RowDefinitions.Add(new RowDefinition
-                {
-                    Height = GridLength.Auto
-                });
-            }
-
-            return grid;
         }
     }
 }

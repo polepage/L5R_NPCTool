@@ -101,6 +101,8 @@ namespace NPC.Data.GameObjects
                     return new Advantage();
                 case ObjectType.Disadvantage:
                     return new Disadvantage();
+                case ObjectType.Equipment:
+                    return new Gear();
                 default:
                     throw new ArgumentOutOfRangeException("NPC.Data: Unknown object type.");
             }

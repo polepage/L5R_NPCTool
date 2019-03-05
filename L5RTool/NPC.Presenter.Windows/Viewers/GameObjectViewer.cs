@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace NPC.Presenter.Windows.Viewers
 {
@@ -44,6 +45,25 @@ namespace NPC.Presenter.Windows.Viewers
         {
             DoMesure(element);
             _divisions.Add(element);
+        }
+
+        protected Grid CreateGrid(int rows)
+        {
+            var grid = new Grid
+            {
+                Width = MaxWidth,
+                Margin = new Thickness(0, 0, 0, 12)
+            };
+
+            for (int i = 0; i < rows; i++)
+            {
+                grid.RowDefinitions.Add(new RowDefinition
+                {
+                    Height = GridLength.Auto
+                });
+            }
+
+            return grid;
         }
 
         private void DoMesure(FrameworkElement element)

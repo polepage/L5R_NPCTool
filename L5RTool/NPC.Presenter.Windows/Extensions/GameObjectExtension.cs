@@ -48,6 +48,8 @@ namespace NPC.Presenter.Windows.Extensions
                 case ObjectType.Advantage:
                 case ObjectType.Disadvantage:
                     return new TraitViewer(gameObject, maxWidth, maxHeight);
+                case ObjectType.Equipment:
+                    return new GearViewer(gameObject, maxWidth, maxHeight);
                 default:
                     throw new ArgumentException("Unkown object type.");
             }
