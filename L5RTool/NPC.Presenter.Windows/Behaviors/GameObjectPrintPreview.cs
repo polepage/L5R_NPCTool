@@ -1,8 +1,8 @@
 ﻿using CS.Utils;
 using Microsoft.Xaml.Behaviors;
 using NPC.Common;
+using NPC.Parser;
 using NPC.Presenter.GameObjects;
-using NPC.Presenter.Windows.Extensions;
 using NPC.Presenter.Windows.Viewers;
 using Prism.Commands;
 using System;
@@ -47,6 +47,19 @@ namespace NPC.Presenter.Windows.Behaviors
         }
         #endregion
 
+        #region Parser
+        public static readonly DependencyProperty ParserProperty =
+            DependencyProperty.Register("Parser",
+                                        typeof(IParser),
+                                        typeof(GameObjectPrintPreview));
+
+        public IParser Parser
+        {
+            get => (IParser)GetValue(ParserProperty);
+            set => SetValue(ParserProperty, value);
+        }
+        #endregion
+
         private readonly double _pageHeight = 10 * 96;
         private readonly double _verticalMargin = 0.5 * 96;
 
@@ -85,7 +98,7 @@ namespace NPC.Presenter.Windows.Behaviors
 
             foreach (ObjectType type in EnumHelpers.GetValues<ObjectType>())
             {
-                var elements = GameObjects.Where(go => go.Type == type).Select(go => go.CreateViewer(_columnWidth, _pageHeight));
+                var elements = GameObjects.Where(go => go.Type == type).Select(go => CreateViewer(go));
                 if (!elements.Any())
                 {
                     continue;
@@ -183,6 +196,24 @@ namespace NPC.Presenter.Windows.Behaviors
             title.Arrange(new Rect(title.DesiredSize));
 
             return title;
+        }
+
+        private GameObjectViewer CreateViewer(IGameObject gameObject)
+        {
+            switch (gameObject.Type)
+            {
+                case ObjectType.Demeanor:
+                    return new DemeanorViewer(gameObject, _columnWidth, _pageHeight);
+                case ObjectType.Advantage:
+                case ObjectType.Disadvantage:
+                    return new TraitViewer(gameObject, _columnWidth, _pageHeight);
+                case ObjectType.Ability:
+                    return new AbilityViewer(gameObject, _columnWidth, _pageHeight, Parser);
+                case ObjectType.Equipment:
+                    return new GearViewer(gameObject, _columnWidth, _pageHeight);
+                default:
+                    throw new ArgumentException("Unkown object type.");
+            }
         }
     }
 }

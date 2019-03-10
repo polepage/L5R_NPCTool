@@ -48,7 +48,7 @@
         </DocumentViewer.Resources>
 
         <mb:Interaction.Behaviors>
-            <b:GameObjectPrintPreview x:Name="previewBehavior" GameObjects="{Binding DisplayedObjects}"/>
+            <b:GameObjectPrintPreview x:Name="previewBehavior" GameObjects="{Binding DisplayedObjects}" Parser="{Binding Parser}"/>
         </mb:Interaction.Behaviors>
     </c:PrintDocumentViewer>
 </Grid>

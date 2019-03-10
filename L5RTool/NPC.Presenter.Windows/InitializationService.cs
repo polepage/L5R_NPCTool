@@ -25,11 +25,13 @@ namespace NPC.Presenter.Windows
             container.Register<MainMenuViewModel>();
             container.Register<GameObjectEditorViewModel>();
             container.Register<GameObjectTreeViewModel>();
+            container.Register<AbilityEditToolbarViewModel>();
 
             ViewModelLocationProvider.Register<MainWindow>(() => provider.Resolve<MainWindowViewModel>());
             ViewModelLocationProvider.Register<MainMenu>(() => provider.Resolve<MainMenuViewModel>());
             ViewModelLocationProvider.Register<GameObjectEditor>(() => provider.Resolve<GameObjectEditorViewModel>());
             ViewModelLocationProvider.Register<GameObjectTree>(() => provider.Resolve<GameObjectTreeViewModel>());
+            ViewModelLocationProvider.Register<AbilityEditToolbar>(() => provider.Resolve<AbilityEditToolbarViewModel>());
         }
     }
 }

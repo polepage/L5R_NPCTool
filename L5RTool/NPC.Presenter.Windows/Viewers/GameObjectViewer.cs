@@ -1,4 +1,5 @@
-﻿using NPC.Presenter.GameObjects;
+﻿using NPC.Parser;
+using NPC.Presenter.GameObjects;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,10 +15,16 @@ namespace NPC.Presenter.Windows.Viewers
         private List<FrameworkElement> _divisions;
 
         public GameObjectViewer(IGameObject gameObject, double maxWidth, double maxHeight)
+            : this(gameObject, null, maxWidth, maxHeight)
+        {
+        }
+
+        public GameObjectViewer(IGameObject gameObject, IParser parser, double maxWidth, double maxHeight)
         {
             _divisions = new List<FrameworkElement>();
 
             GameObject = gameObject;
+            Parser = parser;
             MaxWidth = maxWidth;
             MaxHeight = maxHeight;
 
@@ -25,6 +32,7 @@ namespace NPC.Presenter.Windows.Viewers
         }
 
         protected IGameObject GameObject { get; }
+        protected IParser Parser { get; }
 
         protected double MaxWidth { get; }
         protected double MaxHeight { get; }

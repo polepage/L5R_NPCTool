@@ -37,6 +37,7 @@
             public static readonly string Name = "printdialog";
             public static readonly string Source = "Source";
             public static readonly string Opener = "Opener";
+            public static readonly string Parser = "Parser";
         }
 
         public static class File

@@ -1,4 +1,5 @@
 ﻿using NPC.Common;
+using NPC.Parser;
 using NPC.Presenter.GameObjects;
 using NPC.Presenter.Windows.Dialogs;
 using NPC.Presenter.Windows.Events;
@@ -18,16 +19,18 @@ namespace NPC.Presenter.Windows.ViewModels
     {
         private IEventAggregator _eventAggregator;
         private IDialogService _dialogService;
+        private IParser _textParser;
         private Business.IFactory _factory;
         private Business.IStorage _storage;
         private Business.IExternalStorage _externalStorage;
 
-        public MainMenuViewModel(IEventAggregator eventAggregator, IDialogService dialogService, Business.IFactory factory, Business.IStorage storage, Business.IExternalStorage externalStorage)
+        public MainMenuViewModel(IEventAggregator eventAggregator, IDialogService dialogService, IParser parser, Business.IFactory factory, Business.IStorage storage, Business.IExternalStorage externalStorage)
         {
             _eventAggregator = eventAggregator;
             _eventAggregator.GetEvent<ExportGameObjectsEvent>().Subscribe(ExportReferences);
 
             _dialogService = dialogService;
+            _textParser = parser;
             _factory = factory;
             _storage = storage;
             _externalStorage = externalStorage;
@@ -170,6 +173,7 @@ namespace NPC.Presenter.Windows.ViewModels
             parameters.Add(Dialog.Title, "Print Game Objects");
             parameters.Add(Dialog.Print.Source, _storage.Database);
             parameters.Add(Dialog.Print.Opener, (Func<IGameObjectReference, IGameObject>)(or => new GameObject(_storage.Open(or.GetSource()))));
+            parameters.Add(Dialog.Print.Parser, _textParser);
 
             _dialogService.ShowDialog(Dialog.Print.Name, parameters, dr => { });
         }

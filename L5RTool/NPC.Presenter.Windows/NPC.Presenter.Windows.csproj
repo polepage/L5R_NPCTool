@@ -55,6 +55,7 @@
     <Compile Include="Behaviors\GameObjectPrintPreview.cs" />
     <Compile Include="Behaviors\OpenHyperlink.cs" />
     <Compile Include="Behaviors\PropagateInputBindings.cs" />
+    <Compile Include="Controls\ScriptFormatingToolbar.cs" />
     <Compile Include="Controls\BindingProxy.cs" />
     <Compile Include="Controls\PrintDocumentViewer.cs" />
     <Compile Include="Controls\TagSelector.cs" />
@@ -71,6 +72,8 @@
     <Compile Include="Events\SingleSubEvent.cs" />
     <Compile Include="Extensions\DialogServiceExtension.cs" />
     <Compile Include="Extensions\GameObjectExtension.cs" />
+    <Compile Include="Extensions\ParserExtensions.cs" />
+    <Compile Include="GameObjects\Ability.cs" />
     <Compile Include="GameObjects\Advantage.cs" />
     <Compile Include="GameObjects\Demeanor.cs" />
     <Compile Include="GameObjects\Disadvantage.cs" />
@@ -81,14 +84,18 @@
     <Compile Include="GameObjects\Gear.cs" />
     <Compile Include="GameObjects\ObjectMetadataGroup.cs" />
     <Compile Include="GameObjects\Trait.cs" />
+    <Compile Include="Helpers\TreeHelper.cs" />
     <Compile Include="InitializationService.cs" />
     <Compile Include="Interaction\InvokeCommandAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RichText\RichTextFormatConverter.cs" />
     <Compile Include="Templates\ElementTemplateSelector.cs" />
+    <Compile Include="Viewers\AbilityViewer.cs" />
     <Compile Include="Viewers\DemeanorViewer.cs" />
     <Compile Include="Viewers\GameObjectViewer.cs" />
     <Compile Include="Viewers\GearViewer.cs" />
     <Compile Include="Viewers\TraitViewer.cs" />
+    <Compile Include="ViewModels\AbilityEditToolbarViewModel.cs" />
     <Compile Include="ViewModels\AboutDialogViewModel.cs" />
     <Compile Include="ViewModels\ConfirmationDialogViewModel.cs" />
     <Compile Include="ViewModels\PrintDialogViewModel.cs" />
@@ -99,6 +106,9 @@
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\NewDialogViewModel.cs" />
     <Compile Include="ViewModels\SelectionDialogViewModel.cs" />
+    <Compile Include="Views\AbilityEditToolbar.xaml.cs">
+      <DependentUpon>AbilityEditToolbar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AboutDialog.xaml.cs">
       <DependentUpon>AboutDialog.xaml</DependentUpon>
     </Compile>
@@ -157,6 +167,10 @@
       <Project>{00D97EDC-DB08-4EB3-86CA-B0EE48EAC84E}</Project>
       <Name>NPC.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NPC.Parser\NPC.Parser.csproj">
+      <Project>{2f1ef13e-0eb8-45b8-ba3e-74f2572aaa77}</Project>
+      <Name>NPC.Parser</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NPC.Presenter.Interface\NPC.Presenter.Interface.csproj">
       <Project>{A3C0B167-E241-4444-A44F-816539E44AD1}</Project>
       <Name>NPC.Presenter.Interface</Name>
@@ -203,6 +217,10 @@
     <Page Include="Theme\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AbilityEditToolbar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AboutDialog.xaml">
       <SubType>Designer</SubType>
@@ -263,6 +281,21 @@
   <ItemGroup>
     <Resource Include="Fonts\IgniteTheLight.ttf" />
     <Resource Include="Fonts\LinBiolinum_RBah.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Toolbar\ExplodingSuccess.png" />
+    <Resource Include="Icons\Toolbar\Opportunity.png" />
+    <Resource Include="Icons\Toolbar\RingDie.png" />
+    <Resource Include="Icons\Toolbar\SkillDie.png" />
+    <Resource Include="Icons\Toolbar\Strife.png" />
+    <Resource Include="Icons\Toolbar\Success.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Toolbar\Bold.png" />
+    <Resource Include="Icons\Toolbar\Italic.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Toolbar\RightIndent.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

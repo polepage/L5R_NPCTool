@@ -110,6 +110,10 @@
       <Project>{1983a46d-bff4-4bad-8820-68fd2d5dfca2}</Project>
       <Name>NPC.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NPC.Parser\NPC.Parser.csproj">
+      <Project>{2f1ef13e-0eb8-45b8-ba3e-74f2572aaa77}</Project>
+      <Name>NPC.Parser</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NPC.Presenter.Windows\NPC.Presenter.Windows.csproj">
       <Project>{d39ccdb5-22e9-4899-a310-0f80434520dc}</Project>
       <Name>NPC.Presenter.Windows</Name>

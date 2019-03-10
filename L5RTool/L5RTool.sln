@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NPC.Presenter.Windows", "NP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NPC.Windows", "NPC.Windows\NPC.Windows.csproj", "{BEBC377A-43E3-4FA2-9E5A-CD4126290859}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NPC.Parser", "NPC.Parser\NPC.Parser.csproj", "{2F1EF13E-0EB8-45B8-BA3E-74F2572AAA77}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{BEBC377A-43E3-4FA2-9E5A-CD4126290859}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BEBC377A-43E3-4FA2-9E5A-CD4126290859}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BEBC377A-43E3-4FA2-9E5A-CD4126290859}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F1EF13E-0EB8-45B8-BA3E-74F2572AAA77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F1EF13E-0EB8-45B8-BA3E-74F2572AAA77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F1EF13E-0EB8-45B8-BA3E-74F2572AAA77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F1EF13E-0EB8-45B8-BA3E-74F2572AAA77}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

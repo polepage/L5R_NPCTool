@@ -217,5 +217,4 @@
     <Style TargetType="{x:Type c:TagSelector}">
         <Setter Property="Template" Value="{StaticResource tagSelectorTemplate}"/>
     </Style>
-    
 </ResourceDictionary>

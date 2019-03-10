@@ -71,6 +71,7 @@
                         <templates:ElementTemplateSelector DefaultTemplate="{StaticResource defaultEditTemplate}"
                                                            DemeanorTemplate="{StaticResource demeanorEditTemplate}"
                                                            TraitTemplate="{StaticResource traitEditTemplate}"
+                                                           AbilityTemplate="{StaticResource abilityEditTemplate}"
                                                            GearTemplate="{StaticResource gearEditTemplate}"/>
                     </Setter.Value>
                 </Setter>

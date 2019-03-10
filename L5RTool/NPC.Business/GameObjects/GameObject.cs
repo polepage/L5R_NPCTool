@@ -48,6 +48,8 @@ namespace NPC.Business.GameObjects
                     return new Advantage(s);
                 case Data.GameObjects.IDisadvantage s:
                     return new Disadvantage(s);
+                case Data.GameObjects.IAbility s:
+                    return new Ability(s);
                 case Data.GameObjects.IGear s:
                     return new Gear(s);
                 default:

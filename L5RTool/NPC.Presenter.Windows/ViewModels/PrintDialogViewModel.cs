@@ -1,6 +1,7 @@
 ﻿using CS.Utils;
 using CS.Utils.Collections;
 using NPC.Common;
+using NPC.Parser;
 using NPC.Presenter.GameObjects;
 using NPC.Presenter.Windows.Dialogs;
 using Prism.Commands;
@@ -50,6 +51,13 @@ namespace NPC.Presenter.Windows.ViewModels
             set => SetProperty(ref _displayedObjects, value);
         }
 
+        private IParser _parser;
+        public IParser Parser
+        {
+            get => _parser;
+            private set => SetProperty(ref _parser, value);
+        }
+
         public override void OnDialogOpened(IDialogParameters parameters)
         {
             base.OnDialogOpened(parameters);
@@ -74,6 +82,8 @@ namespace NPC.Presenter.Windows.ViewModels
 
                  return eq;
              });
+
+            Parser = parameters.GetValue<IParser>(Dialog.Print.Parser);
         }
 
         private void SelectionChanged(object sender, NotifyCollectionChangedEventArgs e)

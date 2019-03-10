@@ -85,9 +85,15 @@ namespace NPC.Data
         public void Delete(IEnumerable<IGameObjectReference> references)
         {
             bool needToSaveDB = false;
+            var toRemove = new List<GameObjectReference>();
             foreach (GameObjectReference go in references)
             {
                 DeleteGameObject(go);
+                toRemove.Add(go);
+            }
+
+            foreach (GameObjectReference go in toRemove)
+            {
                 needToSaveDB |= RemoveFromDatabase(go);
             }
 

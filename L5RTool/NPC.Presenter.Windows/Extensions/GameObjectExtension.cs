@@ -1,6 +1,4 @@
-﻿using NPC.Common;
-using NPC.Presenter.GameObjects;
-using NPC.Presenter.Windows.Viewers;
+﻿using NPC.Presenter.GameObjects;
 using System;
 
 namespace NPC.Presenter.Windows.Extensions
@@ -39,22 +37,6 @@ namespace NPC.Presenter.Windows.Extensions
             }
 
             throw new ArgumentException("IGameObjectReference is not a GameObject or a GameObjectMetadata.");
-        }
-
-        public static GameObjectViewer CreateViewer(this IGameObject gameObject, double maxWidth, double maxHeight)
-        {
-            switch (gameObject.Type)
-            {
-                case ObjectType.Demeanor:
-                    return new DemeanorViewer(gameObject, maxWidth, maxHeight);
-                case ObjectType.Advantage:
-                case ObjectType.Disadvantage:
-                    return new TraitViewer(gameObject, maxWidth, maxHeight);
-                case ObjectType.Equipment:
-                    return new GearViewer(gameObject, maxWidth, maxHeight);
-                default:
-                    throw new ArgumentException("Unkown object type.");
-            }
         }
     }
 }

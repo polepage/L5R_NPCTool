@@ -103,6 +103,8 @@ namespace NPC.Data.GameObjects
                     return new Advantage();
                 case ObjectType.Disadvantage:
                     return new Disadvantage();
+                case ObjectType.Ability:
+                    return new Ability();
                 case ObjectType.Equipment:
                     return new Gear();
                 default:

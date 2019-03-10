@@ -2,9 +2,14 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:tk="http://schemas.xceed.com/wpf/xaml/toolkit"
                     xmlns:c="clr-namespace:NPC.Presenter.Windows.Controls"
-                    xmlns:conv="clr-namespace:NPC.Presenter.Windows.Converters">
+                    xmlns:conv="clr-namespace:NPC.Presenter.Windows.Converters"
+                    xmlns:local="clr-namespace:NPC.Presenter.Windows.Views">
     <conv:NameToImageConverter x:Key="imageConverter"/>
 
+    <Style TargetType="{x:Type Paragraph}">
+        <Setter Property="Margin" Value="0"/>
+    </Style>
+    
     <DataTemplate x:Key="defaultEditTemplate">
         <TextBlock Foreground="Red" Text="Error, unknown element type"/>
     </DataTemplate>
@@ -122,6 +127,34 @@
         </Grid>
     </DataTemplate>
 
+    <DataTemplate x:Key="abilityEditTemplate">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Column="0" Grid.Row="0"
+                       Text="Name" VerticalAlignment="Center"/>
+            <TextBox Grid.Column="1" Grid.Row="0" Margin="5 3"
+                     MaxLength="256" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <TextBlock Grid.Column="0" Grid.Row="1" Grid.RowSpan="2"
+                       Text="Content" VerticalAlignment="Center"/>
+            <ToolBarTray Grid.Column="1" Grid.Row="1" Margin="5 3 5 1">
+                <local:AbilityEditToolbar Target="{Binding ElementName=abilityContent}"/>
+            </ToolBarTray>
+            <TextBox Grid.Column="1" Grid.Row="2" Margin="5 0 5 3" x:Name="abilityContent"
+                     MinLines="6" AcceptsReturn="True" TextWrapping="Wrap"
+                     Text="{Binding Data.Content, UpdateSourceTrigger=PropertyChanged}"/>
+        </Grid>
+    </DataTemplate>
+    
     <DataTemplate x:Key="gearEditTemplate">
         <Grid>
             <Grid.ColumnDefinitions>

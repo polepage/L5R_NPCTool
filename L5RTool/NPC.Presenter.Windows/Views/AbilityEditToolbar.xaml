@@ -1,0 +1,73 @@
+﻿<c:ScriptFormatingToolbar x:Class="NPC.Presenter.Windows.Views.AbilityEditToolbar"
+                          xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                          xmlns:prism="http://prismlibrary.com/"
+                          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                          xmlns:c="clr-namespace:NPC.Presenter.Windows.Controls"
+                          xmlns:common="clr-namespace:NPC.Common;assembly=NPC.Common"
+                          prism:ViewModelLocator.AutoWireViewModel="True"
+                          Formater="{Binding Formater}">
+
+    <c:ScriptFormatingToolbar.InputBindings>
+        <KeyBinding Command="{Binding BoldCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type c:ScriptFormatingToolbar}}}"
+                    Gesture="Ctrl+B"/>
+        <KeyBinding Command="{Binding ItalicCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type c:ScriptFormatingToolbar}}}"
+                    Gesture="Ctrl+I"/>
+        <KeyBinding Command="{Binding AddIndentationCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type c:ScriptFormatingToolbar}}}"
+                    Gesture="Ctrl+T"/>
+        <KeyBinding Command="{Binding InsertSymbolCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type c:ScriptFormatingToolbar}}}"
+                    CommandParameter="{x:Static common:DiceIcons.Success}" Gesture="Ctrl+1"/>
+        <KeyBinding Command="{Binding InsertSymbolCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type c:ScriptFormatingToolbar}}}"
+                    CommandParameter="{x:Static common:DiceIcons.ExplodingSuccess}" Gesture="Ctrl+2"/>
+        <KeyBinding Command="{Binding InsertSymbolCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type c:ScriptFormatingToolbar}}}"
+                    CommandParameter="{x:Static common:DiceIcons.Opportunity}" Gesture="Ctrl+3"/>
+        <KeyBinding Command="{Binding InsertSymbolCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type c:ScriptFormatingToolbar}}}"
+                    CommandParameter="{x:Static common:DiceIcons.Strife}" Gesture="Ctrl+4"/>
+        <KeyBinding Command="{Binding InsertSymbolCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type c:ScriptFormatingToolbar}}}"
+                    CommandParameter="{x:Static common:DiceIcons.RingDice}" Gesture="Ctrl+5"/>
+        <KeyBinding Command="{Binding InsertSymbolCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type c:ScriptFormatingToolbar}}}"
+                    CommandParameter="{x:Static common:DiceIcons.SkillDice}" Gesture="Ctrl+6"/>
+    </c:ScriptFormatingToolbar.InputBindings>
+
+    <Button Command="{Binding BoldCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type c:ScriptFormatingToolbar}}}"
+            ToolTip="Bold (Ctrl+B)">
+        <Image Source="pack://application:,,,/NPC.Presenter.Windows;component/Icons/Toolbar/Bold.png" Width="16" Height="16"/>
+    </Button>
+    <Button Command="{Binding ItalicCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type c:ScriptFormatingToolbar}}}"
+            ToolTip="Italic (Ctrl+I)">
+        <Image Source="pack://application:,,,/NPC.Presenter.Windows;component/Icons/Toolbar/Italic.png" Width="16" Height="16"/>
+    </Button>
+
+    <Separator/>
+
+    <Button Command="{Binding AddIndentationCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type c:ScriptFormatingToolbar}}}"
+            CommandParameter="Right" ToolTip="Add Indentation (Ctrl+T)">
+        <Image Source="pack://application:,,,/NPC.Presenter.Windows;component/Icons/Toolbar/RightIndent.png" Width="16" Height="16"/>
+    </Button>
+
+    <Separator/>
+
+    <Button Command="{Binding InsertSymbolCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type c:ScriptFormatingToolbar}}}"
+            CommandParameter="{x:Static common:DiceIcons.Success}" ToolTip="Success (Ctrl+1)">
+        <Image Source="pack://application:,,,/NPC.Presenter.Windows;component/Icons/Toolbar/Success.png" Width="16" Height="16"/>
+    </Button>
+    <Button Command="{Binding InsertSymbolCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type c:ScriptFormatingToolbar}}}"
+            CommandParameter="{x:Static common:DiceIcons.ExplodingSuccess}" ToolTip="Exploding Success (Ctrl+2)">
+        <Image Source="pack://application:,,,/NPC.Presenter.Windows;component/Icons/Toolbar/ExplodingSuccess.png" Width="16" Height="16"/>
+    </Button>
+    <Button Command="{Binding InsertSymbolCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type c:ScriptFormatingToolbar}}}"
+            CommandParameter="{x:Static common:DiceIcons.Opportunity}" ToolTip="Opportunity (Ctrl+3)">
+        <Image Source="pack://application:,,,/NPC.Presenter.Windows;component/Icons/Toolbar/Opportunity.png" Width="16" Height="16"/>
+    </Button>
+    <Button Command="{Binding InsertSymbolCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type c:ScriptFormatingToolbar}}}"
+            CommandParameter="{x:Static common:DiceIcons.Strife}" ToolTip="Strife (Ctrl+4)">
+        <Image Source="pack://application:,,,/NPC.Presenter.Windows;component/Icons/Toolbar/Strife.png" Width="16" Height="16"/>
+    </Button>
+    <Button Command="{Binding InsertSymbolCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type c:ScriptFormatingToolbar}}}"
+            CommandParameter="{x:Static common:DiceIcons.RingDice}" ToolTip="Ring Dice (Ctrl+5)">
+        <Image Source="pack://application:,,,/NPC.Presenter.Windows;component/Icons/Toolbar/RingDie.png" Width="16" Height="16"/>
+    </Button>
+    <Button Command="{Binding InsertSymbolCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type c:ScriptFormatingToolbar}}}"
+            CommandParameter="{x:Static common:DiceIcons.SkillDice}" ToolTip="Skill Dice (Ctrl+6)">
+        <Image Source="pack://application:,,,/NPC.Presenter.Windows;component/Icons/Toolbar/SkillDie.png" Width="16" Height="16"/>
+    </Button>
+</c:ScriptFormatingToolbar>
