@@ -17,7 +17,7 @@ namespace NPC.Presenter.Windows.Viewers
         protected override void CreateElements()
         {
             var trait = (ITrait)GameObject.Data;
-            var grid = CreateGrid(string.IsNullOrEmpty(trait.Description) ? 2 : 3);
+            var grid = CreateGrid(string.IsNullOrWhiteSpace(trait.Description) ? 2 : 3);
 
             var name = new TextBlock
             {
@@ -47,12 +47,13 @@ namespace NPC.Presenter.Windows.Viewers
             Grid.SetRow(types, 1);
             grid.Children.Add(types);
 
-            if (!string.IsNullOrEmpty(trait.Description))
+            if (!string.IsNullOrWhiteSpace(trait.Description))
             {
                 var description = new TextBlock
                 {
-                    Text = trait.Description,
+                    Text = trait.Description.Trim(),
                     TextWrapping = TextWrapping.Wrap,
+                    TextAlignment = TextAlignment.Justify,
                     Margin = new Thickness(0, 4, 0, 0)
                 };
                 Grid.SetRow(description, 2);

@@ -22,8 +22,8 @@ namespace NPC.Presenter.Windows.Viewers
             var demeanor = (IDemeanor)GameObject.Data;
 
             bool hasModifier = demeanor.Air != 0 || demeanor.Earth != 0 || demeanor.Fire != 0 || demeanor.Water != 0 || demeanor.Void != 0;
-            bool hasUnmasking = !string.IsNullOrEmpty(demeanor.Unmasking);
-            bool hasDescription = !string.IsNullOrEmpty(demeanor.Description);
+            bool hasUnmasking = !string.IsNullOrWhiteSpace(demeanor.Unmasking);
+            bool hasDescription = !string.IsNullOrWhiteSpace(demeanor.Description);
 
             var grid = CreateGrid(BoolHelpers.CountTrue(hasModifier, hasUnmasking, hasDescription) + 1);
 
@@ -44,8 +44,9 @@ namespace NPC.Presenter.Windows.Viewers
             {
                 var description = new TextBlock
                 {
-                    Text = demeanor.Description,
+                    Text = demeanor.Description.Trim(),
                     TextWrapping = TextWrapping.Wrap,
+                    TextAlignment = TextAlignment.Justify,
                     Margin = new Thickness(0, 4, 0, 0)
                 };
                 Grid.SetRow(description, currentRow);
@@ -77,6 +78,7 @@ namespace NPC.Presenter.Windows.Viewers
                 var modifiers = new TextBlock
                 {
                     TextWrapping = TextWrapping.Wrap,
+                    TextAlignment = TextAlignment.Justify,
                     Margin = new Thickness(0, 3, 0, 0)
                 };
                 modifiers.Inlines.Add(new Run("Social Check TN Modifers: ") { FontWeight = FontWeights.Bold });

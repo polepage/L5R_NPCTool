@@ -297,5 +297,8 @@
   <ItemGroup>
     <Resource Include="Icons\Toolbar\RightIndent.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Toolbar\LeftIndent.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

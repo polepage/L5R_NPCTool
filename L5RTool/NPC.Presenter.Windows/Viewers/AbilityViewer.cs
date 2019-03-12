@@ -5,6 +5,7 @@ using NPC.Presenter.Windows.Extensions;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -82,12 +83,18 @@ namespace NPC.Presenter.Windows.Viewers
 
             var content = new TextBlock
             {
-                TextWrapping = TextWrapping.Wrap
+                TextWrapping = TextWrapping.Wrap,
+                TextAlignment = TextAlignment.Justify
             };
 
             foreach (var inline in block.Elements)
             {
                 content.Inlines.Add(inline.GetWindowsInline());
+            }
+
+            if (content.Inlines.Last() is Run run)
+            {
+                run.Text = run.Text.Trim();
             }
 
             Grid.SetColumn(content, block.Indentation);

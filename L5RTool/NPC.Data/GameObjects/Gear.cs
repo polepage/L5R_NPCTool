@@ -31,7 +31,7 @@ namespace NPC.Data.GameObjects
         {
             XElement gearData = xml.Element("GearData");
 
-            Description = gearData.Element("Description").Value;
+            Description = gearData.Element("Description").Value.Replace("\n", Environment.NewLine);
             GearType = (GearType)Enum.Parse(typeof(GearType), gearData.Element("GearType").Value);
         }
     }

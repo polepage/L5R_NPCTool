@@ -55,7 +55,7 @@ namespace NPC.Data.GameObjects
                 id != null ? Guid.Parse(id.Value) : Guid.NewGuid(),
                 (ObjectType)Enum.Parse(typeof(ObjectType), xml.Attribute("Type").Value));
 
-            gameObject.Name = xml.Element("Name").Value;
+            gameObject.Name = xml.Element("Name").Value.Replace("\n", Environment.NewLine);
             gameObject._data.LoadXML(xml);
 
             gameObject.ResetDirty();

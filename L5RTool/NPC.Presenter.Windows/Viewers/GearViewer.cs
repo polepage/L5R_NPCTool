@@ -29,11 +29,11 @@ namespace NPC.Presenter.Windows.Viewers
             Grid.SetRow(name, 0);
             grid.Children.Add(name);
 
-            if (!string.IsNullOrEmpty(gear.Description))
+            if (!string.IsNullOrWhiteSpace(gear.Description))
             {
                 var description = new TextBlock
                 {
-                    Text = gear.Description,
+                    Text = gear.Description.Trim(),
                     TextWrapping = TextWrapping.Wrap,
                     Margin = new Thickness(0, 4, 0, 0)
                 };

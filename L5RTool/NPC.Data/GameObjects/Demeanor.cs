@@ -1,4 +1,5 @@
-﻿using System.Xml.Linq;
+﻿using System;
+using System.Xml.Linq;
 
 namespace NPC.Data.GameObjects
 {
@@ -74,8 +75,8 @@ namespace NPC.Data.GameObjects
             Fire = int.Parse(demeanorData.Element("Fire").Value);
             Water = int.Parse(demeanorData.Element("Water").Value);
             Void = int.Parse(demeanorData.Element("Void").Value);
-            Unmasking = demeanorData.Element("Unmasking").Value;
-            Description = demeanorData.Element("Description").Value;
+            Unmasking = demeanorData.Element("Unmasking").Value.Replace("\n", Environment.NewLine);
+            Description = demeanorData.Element("Description").Value.Replace("\n", Environment.NewLine);
         }
     }
 }

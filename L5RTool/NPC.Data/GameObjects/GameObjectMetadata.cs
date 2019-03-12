@@ -26,7 +26,7 @@ namespace NPC.Data.GameObjects
             return new GameObjectMetadata(Guid.Parse(xml.Attribute("Id").Value),
                                           (ObjectType)Enum.Parse(typeof(ObjectType), xml.Attribute("Type").Value))
             {
-                Name = xml.Value
+                Name = xml.Value.Replace("\n", Environment.NewLine)
             };
         }
 

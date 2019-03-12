@@ -12,6 +12,8 @@
                     Gesture="Ctrl+B"/>
         <KeyBinding Command="{Binding ItalicCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type c:ScriptFormatingToolbar}}}"
                     Gesture="Ctrl+I"/>
+        <KeyBinding Command="{Binding RemoveIndentationCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type c:ScriptFormatingToolbar}}}"
+                    Gesture="Ctrl+Shift+T"/>
         <KeyBinding Command="{Binding AddIndentationCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type c:ScriptFormatingToolbar}}}"
                     Gesture="Ctrl+T"/>
         <KeyBinding Command="{Binding InsertSymbolCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type c:ScriptFormatingToolbar}}}"
@@ -39,6 +41,10 @@
 
     <Separator/>
 
+    <Button Command="{Binding RemoveIndentationCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type c:ScriptFormatingToolbar}}}"
+            CommandParameter="Right" ToolTip="Remove Indentation (Ctrl+Shift+T)">
+        <Image Source="pack://application:,,,/NPC.Presenter.Windows;component/Icons/Toolbar/LeftIndent.png" Width="16" Height="16"/>
+    </Button>
     <Button Command="{Binding AddIndentationCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type c:ScriptFormatingToolbar}}}"
             CommandParameter="Right" ToolTip="Add Indentation (Ctrl+T)">
         <Image Source="pack://application:,,,/NPC.Presenter.Windows;component/Icons/Toolbar/RightIndent.png" Width="16" Height="16"/>

@@ -40,7 +40,7 @@ namespace NPC.Data.GameObjects
         {
             XElement traitData = xml.Element("TraitData");
 
-            Description = traitData.Element("Description").Value;
+            Description = traitData.Element("Description").Value.Replace("\n", Environment.NewLine);
             Ring = (Ring)Enum.Parse(typeof(Ring), traitData.Element("Ring").Value);
 
             foreach (XElement skillGroup in traitData.Element("SkillGroups").Elements())

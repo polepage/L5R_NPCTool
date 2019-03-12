@@ -1,6 +1,8 @@
 ﻿using CS.Utils;
 using NPC.Parser.Structure;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NPC.Parser
 {
@@ -8,10 +10,10 @@ namespace NPC.Parser
     {
         private readonly string _bold = "**";
         private readonly string _italic = "//";
-        private readonly string _indent = "\n|";
+        private readonly string _indent = "|";
         private readonly string _symbolStart = "{";
         private readonly string _symbolEnd = "}";
-        private readonly string _newLine = "\n";
+        private readonly string _newLine = Environment.NewLine;
 
         public string ApplyBold(string target)
         {
@@ -28,79 +30,139 @@ namespace NPC.Parser
             return _symbolStart + symbol + _symbolEnd;
         }
 
-        public string IndentBlock(string block)
+        public string AddIndent(string block)
         {
             if (string.IsNullOrEmpty(block))
             {
-                return _newLine + _indent;
+                return _indent;
             }
 
             string indentedBlock = block;
-            if (block[0] != _newLine[0])
+            if (!indentedBlock.StartsWith(_newLine))
             {
-                indentedBlock = _newLine + indentedBlock;
+                indentedBlock = _indent + indentedBlock;
             }
 
             return indentedBlock.Replace(_newLine, _newLine + _indent);
         }
 
+        public string RemoveIndent(string block)
+        {
+            if (string.IsNullOrEmpty(block))
+            {
+                return block;
+            }
+
+            string indentedBlock = block;
+            if (indentedBlock.StartsWith(_indent))
+            {
+                indentedBlock = indentedBlock.Substring(_indent.Length);
+            }
+
+            return indentedBlock.Replace(_newLine + _indent, _newLine);
+        }
+
         public IEnumerable<BlockElement> Parse(string text)
         {
             var content = new List<BlockElement>();
-            text?.Trim();
+            text = text?.Trim();
             if (string.IsNullOrWhiteSpace(text))
             {
                 return content;
             }
 
-            string currentString = text;
-            BlockElement currentBlock = null;
-
+            var textBlocks = SplitBlocks(text);
+            
             bool isBold = false;
             bool isItalic = false;
-            int indentation = 0;
-
-            while (!string.IsNullOrWhiteSpace(currentString))
+            foreach ((string blockText, int blockIndentation) in textBlocks)
             {
-                bool isText = ExtractNextElement(ref currentString, out string element);
-                string symbol = null;
-                if (isText || ExtractSymbol(element, out symbol))
+                if (string.IsNullOrWhiteSpace(blockText))
                 {
-                    InlineElement toAdd = null;
-                    if (isText)
-                    {
-                        toAdd = new TextRun(element, isBold, isItalic);
-                    }
-                    else
-                    {
-                        toAdd = new Symbol(symbol);
-                    }
-
-                    if (currentBlock == null)
-                    {
-                        currentBlock = new BlockElement(indentation);
-                        content.Add(currentBlock);
-                    }
-                    currentBlock.AddElement(toAdd);
                     continue;
                 }
 
-                if (element == _bold)
+                var block = new BlockElement(blockIndentation);
+                content.Add(block);
+
+                string currentString = blockText;
+                while (!string.IsNullOrWhiteSpace(currentString))
                 {
-                    isBold = !isBold;
-                }
-                else if (element == _italic)
-                {
-                    isItalic = !isItalic;
-                }
-                else
-                {
-                    currentBlock = null;
-                    indentation++;
+                    bool isText = ExtractNextElement(ref currentString, out string element);
+                    if (isText)
+                    {
+                        block.AddElement(new TextRun(element, isBold, isItalic));
+                    }
+                    else if (element == _bold)
+                    {
+                        isBold = !isBold;
+                    }
+                    else if (element == _italic)
+                    {
+                        isItalic = !isItalic;
+                    }
+                    else if (ExtractSymbol(element, out string symbol))
+                    {
+                        block.AddElement(new Symbol(symbol));
+                    }
                 }
             }
 
             return content;
+        }
+
+        private IEnumerable<(string block, int indentation)> SplitBlocks(string text)
+        {
+            string[] lines = text.Split(Environment.NewLine);
+
+            var indentedLines = new List<(string value, int indentation)>();
+            foreach (string line in lines)
+            {
+                string lineText = line;
+                int lineIndent = ExtractLineIndentation(ref lineText);
+                indentedLines.Add((lineText, lineIndent));
+            }
+
+            var blocks = new List<(string value, int indentation)>();
+            int blockStart = 0;
+            int blockLength = 1;
+            for (int i = 0; i < indentedLines.Count; i++)
+            {
+                if (i + 1 < indentedLines.Count && indentedLines[i].indentation == indentedLines[i + 1].indentation)
+                {
+                    blockLength++;
+                    continue;
+                }
+
+                string blockText = string.Join(
+                    Environment.NewLine,
+                    indentedLines
+                        .Skip(blockStart)
+                        .Take(blockLength)
+                        .Select(t => t.value));
+
+                blocks.Add((blockText, indentedLines[i].indentation));
+
+                blockStart = i + 1;
+                blockLength = 1;
+            }
+
+            return blocks;
+        }
+
+        private int ExtractLineIndentation(ref string line)
+        {
+            int indentation = 0;
+            for (int i = 0; i < line.Length; i++)
+            {
+                if (line.StartsWith(_indent))
+                {
+                    line = line.Remove(0, _indent.Length);
+                    indentation++;
+                }
+            }
+
+            return indentation;
         }
 
         private bool ExtractNextElement(ref string currentString, out string value)
@@ -117,7 +179,7 @@ namespace NPC.Parser
 
         private string ExtractText(ref string currentString)
         {
-            int nextSpecial = currentString.IndexOfAny(_bold, _italic, _indent, _symbolStart);
+            int nextSpecial = currentString.IndexOfAny(_bold, _italic, _symbolStart);
             string textValue;
             if (nextSpecial < 0)
             {

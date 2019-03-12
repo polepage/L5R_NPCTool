@@ -1,4 +1,5 @@
-﻿using System.Xml.Linq;
+﻿using System;
+using System.Xml.Linq;
 
 namespace NPC.Data.GameObjects
 {
@@ -18,7 +19,7 @@ namespace NPC.Data.GameObjects
 
         public override void LoadXML(XElement xml)
         {
-            Content = xml.Element("AbilityData").Value;
+            Content = xml.Element("AbilityData").Value.Replace("\n", Environment.NewLine);
         }
     }
 }

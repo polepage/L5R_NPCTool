@@ -1,5 +1,7 @@
-﻿using NPC.Parser;
+﻿using CS.Utils;
+using NPC.Parser;
 using Prism.Commands;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -84,6 +86,22 @@ namespace NPC.Presenter.Windows.Controls
         }
         #endregion
 
+        #region Remove Indentation
+        private static readonly DependencyPropertyKey RemoveIndentationCommandPropertyKey =
+            DependencyProperty.RegisterReadOnly("RemoveIndentationCommand",
+                                                typeof(ICommand),
+                                                typeof(ScriptFormatingToolbar),
+                                                new PropertyMetadata());
+
+        public static readonly DependencyProperty RemoveIndentationCommandProperty = RemoveIndentationCommandPropertyKey.DependencyProperty;
+
+        public ICommand RemoveIndentationCommand
+        {
+            get => (ICommand)GetValue(RemoveIndentationCommandProperty);
+            private set => SetValue(RemoveIndentationCommandPropertyKey, value);
+        }
+        #endregion
+
         #region Insert Text
         private static readonly DependencyPropertyKey InsertTextCommandPropertyKey =
             DependencyProperty.RegisterReadOnly("InsertTextCommand",
@@ -121,6 +139,7 @@ namespace NPC.Presenter.Windows.Controls
             BoldCommand = new DelegateCommand(ApplyBold);
             ItalicCommand = new DelegateCommand(ApplyItalic);
             AddIndentationCommand = new DelegateCommand(AddIntentation);
+            RemoveIndentationCommand = new DelegateCommand(RemoveIndentation);
             InsertTextCommand = new DelegateCommand<string>(InsertText);
             InsertSymbolCommand = new DelegateCommand<object>(InsertSymbol);
         }
@@ -192,19 +211,61 @@ namespace NPC.Presenter.Windows.Controls
                 return;
             }
 
-            string blockedText = Formater.IndentBlock(Target.SelectedText);
-            int currentCaret = Target.CaretIndex;
+            int selectionStart = Target.SelectionLength > 0 ? Target.SelectionStart : Target.CaretIndex;
+            int selectionEnd = Target.SelectionLength > 0 ? Target.SelectionStart + Target.SelectionLength : Target.CaretIndex;
+
+            int previousEol = Target.Text.LastIndexOfBounded(Environment.NewLine, selectionStart);
+            int nextEol = Target.Text.IndexOf(Environment.NewLine, selectionEnd);
+
+            int blockStart = previousEol < 0 ? 0 : previousEol + Environment.NewLine.Length;
+            int blockLength = nextEol < 0 ? Target.Text.Length - blockStart : nextEol - blockStart;
+
+            string indentedText = Formater.AddIndent(Target.Text.Substring(blockStart, blockLength));
 
             if (Target.SelectionLength > 0)
             {
-                Target.SelectedText = blockedText;
+                Target.SelectionStart = blockStart;
+                Target.SelectionLength = blockLength;
+                Target.SelectedText = indentedText;
             }
             else
             {
-                Target.Text = Target.Text.Insert(currentCaret, blockedText);
+                Target.Text = Target.Text.Remove(blockStart, blockLength);
+                Target.Text = Target.Text.Insert(blockStart, indentedText);
+                Target.CaretIndex = blockStart + indentedText.Length;
+            }
+        }
+
+        private void RemoveIndentation()
+        {
+            if (Target == null || Formater == null)
+            {
+                return;
             }
 
-            Target.CaretIndex = currentCaret + blockedText.Length;
+            int selectionStart = Target.SelectionLength > 0 ? Target.SelectionStart : Target.CaretIndex;
+            int selectionEnd = Target.SelectionLength > 0 ? Target.SelectionStart + Target.SelectionLength : Target.CaretIndex;
+
+            int previousEol = Target.Text.LastIndexOfBounded(Environment.NewLine, selectionStart);
+            int nextEol = Target.Text.IndexOf(Environment.NewLine, selectionEnd);
+
+            int blockStart = previousEol < 0 ? 0 : previousEol + Environment.NewLine.Length;
+            int blockLength = nextEol < 0 ? Target.Text.Length - blockStart : nextEol - blockStart;
+
+            string indentedText = Formater.RemoveIndent(Target.Text.Substring(blockStart, blockLength));
+
+            if (Target.SelectionLength > 0)
+            {
+                Target.SelectionStart = blockStart;
+                Target.SelectionLength = blockLength;
+                Target.SelectedText = indentedText;
+            }
+            else
+            {
+                Target.Text = Target.Text.Remove(blockStart, blockLength);
+                Target.Text = Target.Text.Insert(blockStart, indentedText);
+                Target.CaretIndex = blockStart + indentedText.Length;
+            }
         }
 
         private void InsertText(string text)

@@ -5,6 +5,7 @@
         string ApplyBold(string target);
         string ApplyItalic(string target);
         string InsertSymbol(string symbol);
-        string IndentBlock(string block);
+        string AddIndent(string block);
+        string RemoveIndent(string block);
     }
 }
