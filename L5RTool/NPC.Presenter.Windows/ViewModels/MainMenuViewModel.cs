@@ -10,7 +10,6 @@ using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Input;
 
 namespace NPC.Presenter.Windows.ViewModels
@@ -20,11 +19,11 @@ namespace NPC.Presenter.Windows.ViewModels
         private IEventAggregator _eventAggregator;
         private IDialogService _dialogService;
         private IParser _textParser;
-        private Business.IFactory _factory;
-        private Business.IStorage _storage;
-        private Business.IExternalStorage _externalStorage;
+        private IFactory _factory;
+        private IStorage _storage;
+        private IExternalStorage _externalStorage;
 
-        public MainMenuViewModel(IEventAggregator eventAggregator, IDialogService dialogService, IParser parser, Business.IFactory factory, Business.IStorage storage, Business.IExternalStorage externalStorage)
+        public MainMenuViewModel(IEventAggregator eventAggregator, IDialogService dialogService, IParser parser, IFactory factory, IStorage storage, IExternalStorage externalStorage)
         {
             _eventAggregator = eventAggregator;
             _eventAggregator.GetEvent<ExportGameObjectsEvent>().Subscribe(ExportReferences);
@@ -74,15 +73,16 @@ namespace NPC.Presenter.Windows.ViewModels
 
         private void New()
         {
-            IDialogParameters parameters = new DialogParameters();
-            parameters.Add(Dialog.Title, "Create New Game Object");
+            IDialogParameters parameters = new DialogParameters
+            {
+                { Dialog.Title, "Create New Game Object" }
+            };
 
             _dialogService.ShowDialog(Dialog.New.Name, parameters, dialogResult =>
             {
                 if (dialogResult.Result.GetValueOrDefault())
                 {
-                    IGameObject gameObject = new GameObject(
-                        _factory.CreateNew(dialogResult.Parameters.GetValue<ObjectType>(Dialog.New.Type)));
+                    IGameObject gameObject = _factory.CreateNew(dialogResult.Parameters.GetValue<ObjectType>(Dialog.New.Type));
                     if (gameObject != null)
                     {
                         _eventAggregator.GetEvent<OpenGameObjectEvent>().Publish(gameObject);
@@ -93,20 +93,18 @@ namespace NPC.Presenter.Windows.ViewModels
 
         private void Open()
         {
-            IDialogParameters parameters = new DialogParameters();
-            parameters.Add(Dialog.Title, "Open Game Object");
-            parameters.Add(Dialog.Selection.Source, _storage.Database);
-            parameters.Add(Dialog.Selection.Accept, "Open");
+            IDialogParameters parameters = new DialogParameters
+            {
+                { Dialog.Title, "Open Game Object" },
+                { Dialog.Selection.Source, _storage.Database },
+                { Dialog.Selection.Accept, "Open" }
+            };
 
             _dialogService.ShowDialog(Dialog.Selection.Name, parameters, dialogResult =>
             {
                 if (dialogResult.Result.GetValueOrDefault())
                 {
-                    foreach (IGameObject gameObject in
-                        _storage.Open(
-                            dialogResult.Parameters.GetValue<IEnumerable<IGameObjectMetadata>>(Dialog.Selection.SelectedItems)
-                                .Select(or => or.GetSource()))
-                            .Select(go => new GameObject(go)))
+                    foreach (IGameObject gameObject in _storage.Open(dialogResult.Parameters.GetValue<IEnumerable<IGameObjectMetadata>>(Dialog.Selection.SelectedItems)))
                     {
                         _eventAggregator.GetEvent<OpenGameObjectEvent>().Publish(gameObject);
                     }
@@ -141,9 +139,11 @@ namespace NPC.Presenter.Windows.ViewModels
 
         private void Import()
         {
-            var parameters = new DialogParameters();
-            parameters.Add(Dialog.Title, "Select export file");
-            parameters.Add(Dialog.File.Filter, "L5R Files (*.l5r)|*.l5r");
+            var parameters = new DialogParameters
+            {
+                { Dialog.Title, "Select export file" },
+                { Dialog.File.Filter, "L5R Files (*.l5r)|*.l5r" }
+            };
 
             _dialogService.ShowOpenDialog(parameters, dialogResult =>
             {
@@ -153,27 +153,31 @@ namespace NPC.Presenter.Windows.ViewModels
 
         private void Export()
         {
-            IDialogParameters parameters = new DialogParameters();
-            parameters.Add(Dialog.Title, "Export Game Objects");
-            parameters.Add(Dialog.Selection.Source, _storage.Database);
-            parameters.Add(Dialog.Selection.Accept, "Export");
+            IDialogParameters parameters = new DialogParameters
+            {
+                { Dialog.Title, "Export Game Objects" },
+                { Dialog.Selection.Source, _storage.Database },
+                { Dialog.Selection.Accept, "Export" }
+            };
 
             _dialogService.ShowDialog(Dialog.Selection.Name, parameters, dialogResult =>
             {
                 if (dialogResult.Result.GetValueOrDefault())
                 {
-                    ExportReferences(dialogResult.Parameters.GetValue<IEnumerable<GameObjectMetadata>>(Dialog.Selection.SelectedItems));
+                    ExportReferences(dialogResult.Parameters.GetValue<IEnumerable<IGameObjectMetadata>>(Dialog.Selection.SelectedItems));
                 }
             });
         }
 
         private void Print()
         {
-            var parameters = new DialogParameters();
-            parameters.Add(Dialog.Title, "Print Game Objects");
-            parameters.Add(Dialog.Print.Source, _storage.Database);
-            parameters.Add(Dialog.Print.Opener, (Func<IGameObjectReference, IGameObject>)(or => new GameObject(_storage.Open(or.GetSource()))));
-            parameters.Add(Dialog.Print.Parser, _textParser);
+            var parameters = new DialogParameters
+            {
+                { Dialog.Title, "Print Game Objects" },
+                { Dialog.Print.Source, _storage.Database },
+                { Dialog.Print.Opener, (Func<IGameObjectReference, IGameObject>)(or => _storage.Open(or)) },
+                { Dialog.Print.Parser, _textParser }
+            };
 
             _dialogService.ShowDialog(Dialog.Print.Name, parameters, dr => { });
         }
@@ -185,23 +189,25 @@ namespace NPC.Presenter.Windows.ViewModels
 
         private void About()
         {
-            var parameters = new DialogParameters();
-            parameters.Add(Dialog.Title, "About");
+            var parameters = new DialogParameters
+            {
+                { Dialog.Title, "About" }
+            };
 
             _dialogService.ShowDialog(Dialog.About.Name, parameters, dialogResults => { });
         }
 
         private void ExportReferences(IEnumerable<IGameObjectReference> selection)
         {
-            var parameters = new DialogParameters();
-            parameters.Add(Dialog.Title, "Select export file");
-            parameters.Add(Dialog.File.Filter, "L5R Files (*.l5r)|*.l5r");
+            var parameters = new DialogParameters
+            {
+                { Dialog.Title, "Select export file" },
+                { Dialog.File.Filter, "L5R Files (*.l5r)|*.l5r" }
+            };
 
             _dialogService.ShowSaveDialog(parameters, dialogResult =>
             {
-                _externalStorage.Export(selection
-                        .Select(go => go.GetSource()),
-                    dialogResult.Parameters.GetValue<string>(Dialog.File.Target));
+                _externalStorage.Export(selection, dialogResult.Parameters.GetValue<string>(Dialog.File.Target));
             });
         }
     }

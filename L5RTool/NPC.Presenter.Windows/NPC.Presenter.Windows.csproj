@@ -55,6 +55,7 @@
     <Compile Include="Behaviors\GameObjectPrintPreview.cs" />
     <Compile Include="Behaviors\OpenHyperlink.cs" />
     <Compile Include="Behaviors\PropagateInputBindings.cs" />
+    <Compile Include="Commands\ApplyGearTemplate.cs" />
     <Compile Include="Controls\ScriptFormatingToolbar.cs" />
     <Compile Include="Controls\BindingProxy.cs" />
     <Compile Include="Controls\PrintDocumentViewer.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="Converters\CancelEventArgsConverter.cs" />
     <Compile Include="Converters\NameFallbackConverter.cs" />
     <Compile Include="Converters\NameToImageConverter.cs" />
+    <Compile Include="Converters\SetWrapperConverter.cs" />
     <Compile Include="Converters\StackConverter.cs" />
     <Compile Include="Dialogs\BaseDialogViewModel.cs" />
     <Compile Include="Dialogs\Dialog.cs" />
@@ -71,25 +73,15 @@
     <Compile Include="Events\Events.cs" />
     <Compile Include="Events\SingleSubEvent.cs" />
     <Compile Include="Extensions\DialogServiceExtension.cs" />
-    <Compile Include="Extensions\GameObjectExtension.cs" />
     <Compile Include="Extensions\ParserExtensions.cs" />
-    <Compile Include="GameObjects\Ability.cs" />
-    <Compile Include="GameObjects\Advantage.cs" />
-    <Compile Include="GameObjects\Demeanor.cs" />
-    <Compile Include="GameObjects\Disadvantage.cs" />
-    <Compile Include="GameObjects\GameObject.cs" />
-    <Compile Include="GameObjects\GameObjectData.cs" />
-    <Compile Include="GameObjects\GameObjectReference.cs" />
-    <Compile Include="GameObjects\GameObjectMetadata.cs" />
-    <Compile Include="GameObjects\Gear.cs" />
+    <Compile Include="GameObjects\GameObjectEnums.cs" />
     <Compile Include="GameObjects\ObjectMetadataGroup.cs" />
-    <Compile Include="GameObjects\Trait.cs" />
     <Compile Include="Helpers\TreeHelper.cs" />
     <Compile Include="InitializationService.cs" />
     <Compile Include="Interaction\InvokeCommandAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RichText\RichTextFormatConverter.cs" />
-    <Compile Include="Templates\ElementTemplateSelector.cs" />
+    <Compile Include="Templates\EditorTemplateSelector.cs" />
+    <Compile Include="Templates\TreeViewTemplateSelector.cs" />
     <Compile Include="Viewers\AbilityViewer.cs" />
     <Compile Include="Viewers\DemeanorViewer.cs" />
     <Compile Include="Viewers\GameObjectViewer.cs" />
@@ -158,10 +150,6 @@
     <ProjectReference Include="..\CS.Utils\CS.Utils.csproj">
       <Project>{F23AE9C3-9B2C-4CBD-8DB1-55984B48EFC8}</Project>
       <Name>CS.Utils</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NPC.Business.Interface\NPC.Business.Interface.csproj">
-      <Project>{94A781D8-D813-4947-9F32-34D18576A8EA}</Project>
-      <Name>NPC.Business.Interface</Name>
     </ProjectReference>
     <ProjectReference Include="..\NPC.Common\NPC.Common.csproj">
       <Project>{00D97EDC-DB08-4EB3-86CA-B0EE48EAC84E}</Project>
@@ -246,11 +234,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\GameObjectMetadataViews.xaml">
+    <Page Include="Views\GameObjectTreeViews.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\GameObjectViews.xaml">
+    <Page Include="Views\GameObjectEditorTemplates.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -300,5 +288,6 @@
   <ItemGroup>
     <Resource Include="Icons\Toolbar\LeftIndent.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

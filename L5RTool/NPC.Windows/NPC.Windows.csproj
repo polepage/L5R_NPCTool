@@ -102,10 +102,6 @@
       <Project>{F23AE9C3-9B2C-4CBD-8DB1-55984B48EFC8}</Project>
       <Name>CS.Utils</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NPC.Business\NPC.Business.csproj">
-      <Project>{bda5edc0-7a1a-48ed-898d-cec15085b174}</Project>
-      <Name>NPC.Business</Name>
-    </ProjectReference>
     <ProjectReference Include="..\NPC.Data\NPC.Data.csproj">
       <Project>{1983a46d-bff4-4bad-8820-68fd2d5dfca2}</Project>
       <Name>NPC.Data</Name>
@@ -117,6 +113,10 @@
     <ProjectReference Include="..\NPC.Presenter.Windows\NPC.Presenter.Windows.csproj">
       <Project>{d39ccdb5-22e9-4899-a310-0f80434520dc}</Project>
       <Name>NPC.Presenter.Windows</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NPC.Presenter\NPC.Presenter.csproj">
+      <Project>{fe2208cd-b877-4589-895d-7b0c936c508d}</Project>
+      <Name>NPC.Presenter</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

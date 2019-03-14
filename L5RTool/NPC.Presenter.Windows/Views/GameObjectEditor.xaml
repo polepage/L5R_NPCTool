@@ -3,7 +3,6 @@
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:prism="http://prismlibrary.com/"
             xmlns:conv="clr-namespace:NPC.Presenter.Windows.Converters"
-            xmlns:templates="clr-namespace:NPC.Presenter.Windows.Templates"
             xmlns:controls="clr-namespace:NPC.Presenter.Windows.Controls"
             prism:ViewModelLocator.AutoWireViewModel="True"
             ItemsSource="{Binding GameObjects}"
@@ -11,7 +10,7 @@
     <TabControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="GameObjectViews.xaml"/>
+                <ResourceDictionary Source="GameObjectEditorTemplates.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <controls:BindingProxy x:Key="proxy" Data="{Binding}"/>
@@ -66,15 +65,7 @@
                     </Setter.Value>
                 </Setter>
 
-                <Setter Property="ContentTemplateSelector">
-                    <Setter.Value>
-                        <templates:ElementTemplateSelector DefaultTemplate="{StaticResource defaultEditTemplate}"
-                                                           DemeanorTemplate="{StaticResource demeanorEditTemplate}"
-                                                           TraitTemplate="{StaticResource traitEditTemplate}"
-                                                           AbilityTemplate="{StaticResource abilityEditTemplate}"
-                                                           GearTemplate="{StaticResource gearEditTemplate}"/>
-                    </Setter.Value>
-                </Setter>
+                <Setter Property="ContentTemplateSelector" Value="{StaticResource editorTemplateSelector}"/>
 
                 <Setter Property="ContextMenu">
                     <Setter.Value>

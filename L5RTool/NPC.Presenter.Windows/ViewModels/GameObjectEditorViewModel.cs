@@ -18,10 +18,10 @@ namespace NPC.Presenter.Windows.ViewModels
     {
         IEventAggregator _eventAggregator;
         IDialogService _dialogService;
-        Business.IStorage _storage;
-        Business.IFactory _factory;
+        IStorage _storage;
+        IFactory _factory;
 
-        public GameObjectEditorViewModel(IEventAggregator eventAggregator, IDialogService dialogService, Business.IStorage storage, Business.IFactory factory)
+        public GameObjectEditorViewModel(IEventAggregator eventAggregator, IDialogService dialogService, IStorage storage, IFactory factory)
         {
             _eventAggregator = eventAggregator;
             _eventAggregator.GetEvent<OpenGameObjectEvent>().Subscribe(GameObjectOpened);
@@ -129,10 +129,12 @@ namespace NPC.Presenter.Windows.ViewModels
                 return true;
             }
 
-            IDialogParameters parameters = new DialogParameters();
-            parameters.Add(Dialog.Title, "Unsaved Changes");
-            parameters.Add(Dialog.Save.Items, gameObjects.Where(go => go.IsDirty).ToList());
-            parameters.Add(Dialog.Save.Selector, (Action<IGameObject>)(go => SelectedObject = go));
+            IDialogParameters parameters = new DialogParameters
+            {
+                { Dialog.Title, "Unsaved Changes" },
+                { Dialog.Save.Items, gameObjects.Where(go => go.IsDirty).ToList() },
+                { Dialog.Save.Selector, (Action<IGameObject>)(go => SelectedObject = go) }
+            };
 
             bool result = false;
             _dialogService.ShowDialog(Dialog.Save.Name, parameters, dialogResult =>
@@ -140,7 +142,7 @@ namespace NPC.Presenter.Windows.ViewModels
                 result = dialogResult.Result.GetValueOrDefault();
                 if (dialogResult.Parameters.TryGetValue(Dialog.Save.NeedSave, out bool needSave) && needSave)
                 {
-                    _storage.Save(GameObjects.Where(o => o.IsDirty).Select(s => s.GetSource()));
+                    _storage.Save(GameObjects.Where(o => o.IsDirty));
                 }
             });
 
@@ -151,7 +153,7 @@ namespace NPC.Presenter.Windows.ViewModels
         {
             if (SelectedObject != null && SelectedObject.IsDirty)
             {
-                _storage.Save(SelectedObject.GetSource());
+                _storage.Save(SelectedObject);
             }
         }
 
@@ -159,7 +161,7 @@ namespace NPC.Presenter.Windows.ViewModels
         {
             if (GameObjects.Any(e => e.IsDirty))
             {
-                _storage.Save(GameObjects.Where(o => o.IsDirty).Select(s => s.GetSource()));
+                _storage.Save(GameObjects.Where(o => o.IsDirty));
             }
         }
 
@@ -167,7 +169,7 @@ namespace NPC.Presenter.Windows.ViewModels
         {
             if (SelectedObject != null)
             {
-                IGameObject copy = new GameObject(_factory.Duplicate(SelectedObject.GetSource()));
+                IGameObject copy = _factory.Duplicate(SelectedObject);
                 GameObjectOpened(copy);
             }
         }

@@ -13,7 +13,7 @@
     <tv:MultiSelectTreeView.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="GameObjectMetadataViews.xaml"/>
+                <ResourceDictionary Source="GameObjectTreeViews.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </tv:MultiSelectTreeView.Resources>
@@ -29,4 +29,10 @@
             <MenuItem Header="Export" Command="{Binding ExportCommand}"/>
         </ContextMenu>
     </tv:MultiSelectTreeView.ContextMenu>
+
+    <tv:MultiSelectTreeView.Style>
+        <Style TargetType="{x:Type tv:MultiSelectTreeView}">
+            <Setter Property="ItemTemplateSelector" Value="{StaticResource treeViewTemplateSelector}"/>
+        </Style>
+    </tv:MultiSelectTreeView.Style>
 </tv:MultiSelectTreeView>

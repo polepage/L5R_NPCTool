@@ -64,7 +64,7 @@ namespace NPC.Presenter.Windows.ViewModels
             Title = parameters.GetValue<string>(Dialog.Title);
 
             GameObjectGroups = EnumHelpers.GetValues<ObjectType>()
-                .Select(ot => new ObjectMetadataGroup(ot, parameters.GetValue<Business.IManifest>(Dialog.Print.Source).GameObjects));
+                .Select(ot => new ObjectMetadataGroup(ot, parameters.GetValue<IManifest>(Dialog.Print.Source).GameObjects));
 
             Func<IGameObjectReference, IGameObject> open = parameters.GetValue<Func<IGameObjectReference, IGameObject>>(Dialog.Print.Opener);
             DisplayedObjects = new CachedEnumerableWrapper<IGameObject, object>(

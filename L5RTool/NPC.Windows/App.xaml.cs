@@ -34,7 +34,7 @@ namespace NPC.Windows
         private void InitializeDependencies()
         {
             Data.InitializationService.Initialize(_container);
-            Business.InitializationService.Initialize(_container);
+            Presenter.InitializationService.Initialize(_container);
             Presenter.Windows.InitializationService.Initialize(_container, _container);
             Parser.InitializationService.Initialize(_container);
         }

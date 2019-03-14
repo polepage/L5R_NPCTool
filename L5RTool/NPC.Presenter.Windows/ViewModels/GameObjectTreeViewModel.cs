@@ -21,10 +21,10 @@ namespace NPC.Presenter.Windows.ViewModels
     {
         private IEventAggregator _eventAggregator;
         private IDialogService _dialogService;
-        private Business.IStorage _storage;
-        private Business.IFactory _factory;
+        private IStorage _storage;
+        private IFactory _factory;
 
-        public GameObjectTreeViewModel(IEventAggregator eventAggregator, IDialogService dialogService, Business.IStorage storage, Business.IFactory factory)
+        public GameObjectTreeViewModel(IEventAggregator eventAggregator, IDialogService dialogService, IStorage storage, IFactory factory)
         {
             _eventAggregator = eventAggregator;
             _dialogService = dialogService;
@@ -48,7 +48,7 @@ namespace NPC.Presenter.Windows.ViewModels
             set => SetProperty(ref _selectedItems, value);
         }
 
-        public bool IsReferenceSelected => _selectedItems.OfType<GameObjectMetadata>().Any();
+        public bool IsReferenceSelected => _selectedItems.OfType<IGameObjectMetadata>().Any();
 
         private DelegateCommand _openCommand;
         public ICommand OpenCommand => _openCommand ?? (_openCommand = new DelegateCommand(Open));
@@ -64,12 +64,7 @@ namespace NPC.Presenter.Windows.ViewModels
 
         private void Open()
         {
-            foreach (IGameObject gameObject in
-                _storage.Open(
-                        SelectedItems
-                            .OfType<IGameObjectMetadata>()
-                            .Select(or => or.GetSource()))
-                        .Select(go => new GameObject(go)))
+            foreach (IGameObject gameObject in _storage.Open(SelectedItems.OfType<IGameObjectMetadata>()))
             {
                 _eventAggregator.GetEvent<OpenGameObjectEvent>().Publish(gameObject);
             }
@@ -77,12 +72,7 @@ namespace NPC.Presenter.Windows.ViewModels
 
         private void Duplicate()
         {
-            foreach (IGameObject gameObject in
-                _factory.Duplicate(
-                    SelectedItems
-                        .OfType<IGameObjectMetadata>()
-                        .Select(or => or.GetSource()))
-                    .Select(go => new GameObject(go)))
+            foreach (IGameObject gameObject in _factory.Duplicate(SelectedItems.OfType<IGameObjectMetadata>()))
             {
                 _eventAggregator.GetEvent<OpenGameObjectEvent>().Publish(gameObject);
             }
@@ -106,16 +96,18 @@ namespace NPC.Presenter.Windows.ViewModels
                 confirmationContent = "The selected items" + confirmationContent;
             }
 
-            IDialogParameters parameters = new DialogParameters();
-            parameters.Add(Dialog.Title, "L5R NPC Creation Tool");
-            parameters.Add(Dialog.Confirmation.Content, confirmationContent);
+            IDialogParameters parameters = new DialogParameters
+            {
+                { Dialog.Title, "L5R NPC Creation Tool" },
+                { Dialog.Confirmation.Content, confirmationContent }
+            };
 
             _dialogService.ShowDialog(Dialog.Confirmation.Name, parameters, dialogResult =>
             {
                 if (dialogResult.Result.GetValueOrDefault())
                 {
                     _eventAggregator.GetEvent<ForceCloseGameObjects>().Publish(references);
-                    _storage.Delete(references.Select(r => r.GetSource()));
+                    _storage.Delete(references);
                 }
             });
         }

@@ -19,10 +19,16 @@
             <tv:MultiSelectTreeView.Resources>
                 <ResourceDictionary>
                     <ResourceDictionary.MergedDictionaries>
-                        <ResourceDictionary Source="GameObjectMetadataViews.xaml"/>
+                        <ResourceDictionary Source="GameObjectTreeViews.xaml"/>
                     </ResourceDictionary.MergedDictionaries>
                 </ResourceDictionary>
             </tv:MultiSelectTreeView.Resources>
+
+            <tv:MultiSelectTreeView.Style>
+                <Style TargetType="{x:Type tv:MultiSelectTreeView}">
+                    <Setter Property="ItemTemplateSelector" Value="{StaticResource treeViewTemplateSelector}"/>
+                </Style>
+            </tv:MultiSelectTreeView.Style>
         </tv:MultiSelectTreeView>
     </Grid>
 

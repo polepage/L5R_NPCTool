@@ -25,7 +25,7 @@ namespace NPC.Presenter.Windows.ViewModels
         private DelegateCommand _acceptCommand;
         public ICommand AcceptCommand => _acceptCommand ?? (_acceptCommand = new DelegateCommand(Accept));
 
-        public bool CanAccept => SelectedItems.OfType<GameObjectMetadata>().Any();
+        public bool CanAccept => SelectedItems.OfType<IGameObjectMetadata>().Any();
 
         private string _acceptText;
         public string AcceptText
@@ -55,7 +55,7 @@ namespace NPC.Presenter.Windows.ViewModels
             AcceptText = parameters.GetValue<string>(Dialog.Selection.Accept);
 
             GameObjectGroups = EnumHelpers.GetValues<ObjectType>()
-                .Select(ot => new ObjectMetadataGroup(ot, parameters.GetValue<Business.IManifest>(Dialog.Selection.Source).GameObjects));
+                .Select(ot => new ObjectMetadataGroup(ot, parameters.GetValue<IManifest>(Dialog.Selection.Source).GameObjects));
         }
 
         private void Accept()

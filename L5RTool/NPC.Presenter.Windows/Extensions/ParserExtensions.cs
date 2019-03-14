@@ -33,7 +33,7 @@ namespace NPC.Presenter.Windows.Extensions
             }
         }
 
-        public static ImageSource GetImageSource(this DiceIcons icons)
+        private static ImageSource GetImageSource(this DiceIcons icons)
         {
             return new BitmapImage(new Uri(@"pack://application:,,,/NPC.Presenter.Windows;component/Icons/Toolbar/" + icons.ToString() + @".png"));
         }
