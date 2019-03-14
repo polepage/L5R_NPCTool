@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behaviors\BindMultiSelection.cs" />
+    <Compile Include="Behaviors\BindReadonly.cs" />
     <Compile Include="Behaviors\DialogAwareClose.cs" />
     <Compile Include="Behaviors\GameObjectPrintPreview.cs" />
     <Compile Include="Behaviors\OpenHyperlink.cs" />

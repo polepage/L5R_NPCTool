@@ -25,6 +25,8 @@ namespace NPC.Presenter.Windows.ViewModels
         private DelegateCommand _acceptCommand;
         public ICommand AcceptCommand => _acceptCommand ?? (_acceptCommand = new DelegateCommand(Accept));
 
+        public ICommand SelectCommand => AcceptCommand;
+
         public bool CanAccept => SelectedItems.OfType<IGameObjectMetadata>().Any();
 
         private string _acceptText;

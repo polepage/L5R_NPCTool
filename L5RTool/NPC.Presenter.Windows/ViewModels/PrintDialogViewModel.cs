@@ -28,6 +28,13 @@ namespace NPC.Presenter.Windows.ViewModels
         private DelegateCommand _printCompleteCommand;
         public ICommand PrintCompleteCommand => _printCompleteCommand ?? (_printCompleteCommand = new DelegateCommand(PrintComplete));
 
+        private ICommand _selectCommand;
+        public ICommand SelectCommand
+        {
+            get => _selectCommand;
+            set => SetProperty(ref _selectCommand, value);
+        }
+
         private IEnumerable<ObjectMetadataGroup> _gameObjectGroups;
         public IEnumerable<ObjectMetadataGroup> GameObjectGroups
         {

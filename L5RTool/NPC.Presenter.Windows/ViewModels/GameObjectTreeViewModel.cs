@@ -50,8 +50,8 @@ namespace NPC.Presenter.Windows.ViewModels
 
         public bool IsReferenceSelected => _selectedItems.OfType<IGameObjectMetadata>().Any();
 
-        private DelegateCommand _openCommand;
-        public ICommand OpenCommand => _openCommand ?? (_openCommand = new DelegateCommand(Open));
+        private DelegateCommand _selectCommand;
+        public ICommand SelectCommand => _selectCommand ?? (_selectCommand = new DelegateCommand(Open));
 
         private DelegateCommand _duplicateCommand;
         public ICommand DuplicateCommand => _duplicateCommand ?? (_duplicateCommand = new DelegateCommand(Duplicate));

@@ -20,7 +20,7 @@
     <DataTemplate x:Key="metadataTemplate">
         <Grid IsHitTestVisible="True" Background="Transparent">
             <Grid.InputBindings>
-                <MouseBinding Gesture="LeftDoubleClick" Command="{Binding Data.OpenCommand, Source={StaticResource proxy}}"/>
+                <MouseBinding Gesture="LeftDoubleClick" Command="{Binding Data.SelectCommand, Source={StaticResource proxy}}"/>
             </Grid.InputBindings>
 
             <StackPanel Margin="2 2 10 2" Orientation="Horizontal">

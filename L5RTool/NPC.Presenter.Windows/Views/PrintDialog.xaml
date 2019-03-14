@@ -55,6 +55,7 @@
 
         <mb:Interaction.Behaviors>
             <b:GameObjectPrintPreview x:Name="previewBehavior" GameObjects="{Binding DisplayedObjects}" Parser="{Binding Parser}"/>
+            <b:BindReadonly From="{Binding RefreshCommand, ElementName=previewBehavior}" To="{Binding SelectCommand, Mode=OneWayToSource}"/>
         </mb:Interaction.Behaviors>
     </c:PrintDocumentViewer>
 </Grid>
