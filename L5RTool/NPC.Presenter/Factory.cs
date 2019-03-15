@@ -23,23 +23,19 @@ namespace NPC.Presenter
 
         public IGameObject Duplicate(IGameObjectReference reference)
         {
-            var go = reference as IGameObject;
-            if (go == null)
+            if (!(reference is IGameObject go))
             {
                 go = _storage.Open(reference as IGameObjectMetadata);
             }
 
-            return DuplicateObject(go);
+            var gameObject = _factory.Create(go.Type).CreatePresenter() as GameObject;
+            gameObject.CopyData(go);
+            return gameObject;
         }
 
         public IEnumerable<IGameObject> Duplicate(IEnumerable<IGameObjectReference> references)
         {
             return references.Select(r => Duplicate(r));
-        }
-
-        private IGameObject DuplicateObject(IGameObject targetObject)
-        {
-            return targetObject.CreateDuplicate(_factory);
         }
     }
 }

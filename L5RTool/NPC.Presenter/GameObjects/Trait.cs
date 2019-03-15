@@ -13,16 +13,6 @@ namespace NPC.Presenter.GameObjects
             _source = source;
         }
 
-        public Trait(T source, ITrait copySource)
-            : base (source, copySource)
-        {
-            _source = source;
-            Description = copySource.Description;
-            Ring = copySource.Ring;
-            SkillGroups.UnionWith(copySource.SkillGroups);
-            Spheres.UnionWith(copySource.Spheres);
-        }
-
         public string Description
         {
             get => _source.Description;
@@ -37,6 +27,18 @@ namespace NPC.Presenter.GameObjects
 
         public ISet<SkillGroup> SkillGroups => _source.SkillGroups;
         public ISet<TraitSphere> Spheres => _source.Spheres;
+
+        public override void CopyData(IGameObject copySource)
+        {
+            base.CopyData(copySource);
+            if (copySource is ITrait trait)
+            {
+                Description = trait.Description;
+                Ring = trait.Ring;
+                SkillGroups.UnionWith(trait.SkillGroups);
+                Spheres.UnionWith(trait.Spheres);
+            }
+        }
 
         protected override void RegisterBindings()
         {

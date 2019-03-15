@@ -10,17 +10,19 @@
             _source = source;
         }
 
-        public Ability(Data.GameObjects.IAbility source, IAbility copySource)
-            : base(source, copySource)
-        {
-            _source = source;
-            Content = copySource.Content;
-        }
-
         public string Content
         {
             get => _source.Content;
             set => _source.Content = value;
+        }
+
+        public override void CopyData(IGameObject copySource)
+        {
+            base.CopyData(copySource);
+            if (copySource is IAbility ability)
+            {
+                Content = ability.Content;
+            }
         }
 
         protected override void RegisterBindings()

@@ -11,15 +11,7 @@ namespace NPC.Presenter.GameObjects
         {
             _source = source;
         }
-
-        public Gear(Data.GameObjects.IGear source, IGear copySource)
-            : base(source, copySource)
-        {
-            _source = source;
-            Description = copySource.Description;
-            GearType = copySource.GearType;
-        }
-
+        
         public string Description
         {
             get => _source.Description;
@@ -30,6 +22,16 @@ namespace NPC.Presenter.GameObjects
         {
             get => _source.GearType;
             set => _source.GearType = value;
+        }
+
+        public override void CopyData(IGameObject copySource)
+        {
+            base.CopyData(copySource);
+            if (copySource is IGear gear)
+            {
+                Description = gear.Description;
+                GearType = gear.GearType;
+            }
         }
 
         protected override void RegisterBindings()

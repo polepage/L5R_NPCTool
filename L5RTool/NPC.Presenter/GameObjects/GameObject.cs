@@ -10,12 +10,6 @@ namespace NPC.Presenter.GameObjects
             Source = source;
         }
 
-        protected GameObject(Data.GameObjects.IGameObject source, IGameObject copySource)
-            : this(source)
-        {
-            Name = copySource.Name;
-        }
-
         public Data.GameObjects.IGameObject Source { get; }
 
         public ObjectType Type => Source.Type;
@@ -25,6 +19,11 @@ namespace NPC.Presenter.GameObjects
         {
             get => Source.Name;
             set => Source.Name = value;
+        }
+
+        public virtual void CopyData(IGameObject copySource)
+        {
+            Name = copySource.Name;
         }
 
         protected override void RegisterBindings()

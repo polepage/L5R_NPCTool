@@ -61,24 +61,5 @@ namespace NPC.Presenter.GameObjects
         {
             return new GameObjectMetadata(gameObject);
         }
-
-        public static IGameObject CreateDuplicate(this IGameObject gameObject, Data.IFactory dataFactory)
-        {
-            switch (gameObject)
-            {
-                case IDemeanor s:
-                    return new Demeanor(dataFactory.Create(s.Type) as Data.GameObjects.IDemeanor, s);
-                case IAdvantage s:
-                    return new Advantage(dataFactory.Create(s.Type) as Data.GameObjects.IAdvantage, s);
-                case IDisadvantage s:
-                    return new Disadvantage(dataFactory.Create(s.Type) as Data.GameObjects.IDisadvantage, s);
-                case IGear s:
-                    return new Gear(dataFactory.Create(s.Type) as Data.GameObjects.IGear, s);
-                case IAbility s:
-                    return new Ability(dataFactory.Create(s.Type) as Data.GameObjects.IAbility, s);
-                default:
-                    throw new ArgumentException("Create Presenter: Unknown type");
-            }
-        }
     }
 }

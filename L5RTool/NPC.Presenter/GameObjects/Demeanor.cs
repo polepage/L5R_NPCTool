@@ -10,19 +10,6 @@
             _source = source;
         }
 
-        public Demeanor(Data.GameObjects.IDemeanor source, IDemeanor copySource)
-            : base (source, copySource)
-        {
-            _source = source;
-            Air = copySource.Air;
-            Earth = copySource.Earth;
-            Fire = copySource.Fire;
-            Water = copySource.Water;
-            Void = copySource.Void;
-            Unmasking = copySource.Unmasking;
-            Description = copySource.Description;
-        }
-
         public int Air
         {
             get => _source.Air;
@@ -63,6 +50,21 @@
         {
             get => _source.Description;
             set => _source.Description = value;
+        }
+
+        public override void CopyData(IGameObject copySource)
+        {
+            base.CopyData(copySource);
+            if (copySource is IDemeanor demeanor)
+            {
+                Air = demeanor.Air;
+                Earth = demeanor.Earth;
+                Fire = demeanor.Fire;
+                Water = demeanor.Water;
+                Void = demeanor.Void;
+                Unmasking = demeanor.Unmasking;
+                Description = demeanor.Description;
+            }
         }
 
         protected override void RegisterBindings()
