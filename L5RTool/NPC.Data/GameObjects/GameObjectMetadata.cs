@@ -21,7 +21,7 @@ namespace NPC.Data.GameObjects
             set => SetProperty(ref _name, value);
         }
 
-        public static GameObjectMetadata FromXML(XElement xml)
+        public static GameObjectMetadata FromXml(XElement xml)
         {
             return new GameObjectMetadata(Guid.Parse(xml.Attribute("Id").Value),
                                           (ObjectType)Enum.Parse(typeof(ObjectType), xml.Attribute("Type").Value))
@@ -32,7 +32,7 @@ namespace NPC.Data.GameObjects
 
         public XElement CreateXML()
         {
-            return new XElement("Reference",
+            return new XElement(XmlTools.MetadataNode,
                                 new XAttribute("Type", Type),
                                 new XAttribute("Id", Id),
                                 Name);

@@ -6,21 +6,18 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
-using System.Windows.Media;
 
-namespace NPC.Presenter.Windows.Viewers
+namespace NPC.Presenter.Windows.Print
 {
-    class DemeanorViewer : GameObjectViewer
+    class DemeanorPrinter : BaseGameObjectPrinter
     {
-        public DemeanorViewer(IGameObject gameObject, double maxWidth, double maxHeight)
-            : base(gameObject, maxWidth, maxHeight)
+        public DemeanorPrinter(double maxWidth, double maxHeight)
+            : base(maxWidth, maxHeight)
         {
         }
 
-        protected override void CreateElements()
+        public IEnumerable<FrameworkElement> CreatePrintView(IDemeanor demeanor)
         {
-            var demeanor = (IDemeanor)GameObject.Data;
-
             bool hasModifier = demeanor.Air != 0 || demeanor.Earth != 0 || demeanor.Fire != 0 || demeanor.Water != 0 || demeanor.Void != 0;
             bool hasUnmasking = !string.IsNullOrWhiteSpace(demeanor.Unmasking);
             bool hasDescription = !string.IsNullOrWhiteSpace(demeanor.Description);
@@ -28,14 +25,7 @@ namespace NPC.Presenter.Windows.Viewers
             var grid = CreateGrid(BoolHelpers.CountTrue(hasModifier, hasUnmasking, hasDescription) + 1);
 
             int currentRow = 0;
-            var name = new TextBlock
-            {
-                Text = GameObject.Name,
-                FontSize = 20,
-                FontWeight = FontWeights.Bold,
-                TextWrapping = TextWrapping.Wrap,
-                FontFamily = new FontFamily(FontUri, "./#Linux Biolinum")
-            };
+            var name = CreateObjectName(demeanor.Name.Trim());
             Grid.SetRow(name, currentRow);
             grid.Children.Add(name);
             currentRow++;
@@ -103,7 +93,8 @@ namespace NPC.Presenter.Windows.Viewers
                 grid.Children.Add(unmasking);
             }
 
-            AddElement(grid);
+            DoMeasure(grid);
+            return new List<FrameworkElement> { grid };
         }
 
         private string GetModifierString(Ring ring, int modifier)

@@ -41,16 +41,16 @@ namespace NPC.Data
             return _collection.Remove(metadata);
         }
 
-        public XElement CreateXML()
+        public XElement CreateXml()
         {
             return new XElement("Database",
                                 _collection.Select(m => m.CreateXML()));
         }
 
-        public void LoadXML(XElement xml)
+        public void LoadXml(XElement xml)
         {
             _collection.Clear();
-            _collection.UnionWith(xml.Elements().Select(e => GameObjectMetadata.FromXML(e)));
+            _collection.UnionWith(xml.Elements().Select(e => e.LoadMetadata()));
         }
     }
 }

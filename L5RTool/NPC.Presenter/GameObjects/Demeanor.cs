@@ -1,77 +1,80 @@
 ﻿namespace NPC.Presenter.GameObjects
 {
-    class Demeanor: GameObjectData<Data.GameObjects.IDemeanor>, IDemeanor, ICopyTarget
+    class Demeanor: GameObject, IDemeanor
     {
-        public Demeanor(Data.GameObjects.IDemeanor demeanor)
-            : base(demeanor)
+        Data.GameObjects.IDemeanor _source;
+
+        public Demeanor(Data.GameObjects.IDemeanor source)
+            : base(source)
         {
+            _source = source;
+        }
+
+        public Demeanor(Data.GameObjects.IDemeanor source, IDemeanor copySource)
+            : base (source, copySource)
+        {
+            _source = source;
+            Air = copySource.Air;
+            Earth = copySource.Earth;
+            Fire = copySource.Fire;
+            Water = copySource.Water;
+            Void = copySource.Void;
+            Unmasking = copySource.Unmasking;
+            Description = copySource.Description;
         }
 
         public int Air
         {
-            get => DataObject.Air;
-            set => DataObject.Air = value;
+            get => _source.Air;
+            set => _source.Air = value;
         }
 
         public int Earth
         {
-            get => DataObject.Earth;
-            set => DataObject.Earth = value;
+            get => _source.Earth;
+            set => _source.Earth = value;
         }
 
         public int Fire
         {
-            get => DataObject.Fire;
-            set => DataObject.Fire = value;
+            get => _source.Fire;
+            set => _source.Fire = value;
         }
 
         public int Water
         {
-            get => DataObject.Water;
-            set => DataObject.Water = value;
+            get => _source.Water;
+            set => _source.Water = value;
         }
 
         public int Void
         {
-            get => DataObject.Void;
-            set => DataObject.Void = value;
+            get => _source.Void;
+            set => _source.Void = value;
         }
 
         public string Unmasking
         {
-            get => DataObject.Unmasking;
-            set => DataObject.Unmasking = value;
+            get => _source.Unmasking;
+            set => _source.Unmasking = value;
         }
 
         public string Description
         {
-            get => DataObject.Description;
-            set => DataObject.Description = value;
-        }
-
-        public void CopyData(IGameObjectData copySource)
-        {
-            if (copySource is IDemeanor demeanor)
-            {
-                Air = demeanor.Air;
-                Earth = demeanor.Earth;
-                Fire = demeanor.Fire;
-                Water = demeanor.Water;
-                Void = demeanor.Void;
-                Unmasking = demeanor.Unmasking;
-                Description = demeanor.Description;
-            }
+            get => _source.Description;
+            set => _source.Description = value;
         }
 
         protected override void RegisterBindings()
         {
-            AddBinding(nameof(DataObject.Air), nameof(Air));
-            AddBinding(nameof(DataObject.Earth), nameof(Earth));
-            AddBinding(nameof(DataObject.Fire), nameof(Fire));
-            AddBinding(nameof(DataObject.Water), nameof(Water));
-            AddBinding(nameof(DataObject.Void), nameof(Void));
-            AddBinding(nameof(DataObject.Unmasking), nameof(Unmasking));
-            AddBinding(nameof(DataObject.Description), nameof(Description));
+            base.RegisterBindings();
+            AddBinding(nameof(_source.Air), nameof(Air));
+            AddBinding(nameof(_source.Earth), nameof(Earth));
+            AddBinding(nameof(_source.Fire), nameof(Fire));
+            AddBinding(nameof(_source.Water), nameof(Water));
+            AddBinding(nameof(_source.Void), nameof(Void));
+            AddBinding(nameof(_source.Unmasking), nameof(Unmasking));
+            AddBinding(nameof(_source.Description), nameof(Description));
         }
     }
 }

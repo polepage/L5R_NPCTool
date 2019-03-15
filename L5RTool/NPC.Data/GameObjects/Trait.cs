@@ -8,13 +8,26 @@ using System.Xml.Linq;
 
 namespace NPC.Data.GameObjects
 {
-    abstract class Trait : GameObjectData, ITrait
+    abstract class Trait : GameObject, ITrait
     {
-        public Trait()
+        protected Trait(ObjectType type)
+            : base(type)
         {
             SkillGroups = new ObservableHashSet<SkillGroup>();
             Spheres = new ObservableHashSet<TraitSphere>();
+            InitializeCollectionEvents();
+        }
 
+        protected Trait(Guid id, ObjectType type)
+            : base(id, type)
+        {
+            SkillGroups = new ObservableHashSet<SkillGroup>();
+            Spheres = new ObservableHashSet<TraitSphere>();
+            InitializeCollectionEvents();
+        }
+
+        private void InitializeCollectionEvents()
+        {
             (SkillGroups as INotifyCollectionChanged).CollectionChanged += (sender, args) => IsDirty = true;
             (Spheres as INotifyCollectionChanged).CollectionChanged += (sender, args) => IsDirty = true;
         }
@@ -36,8 +49,24 @@ namespace NPC.Data.GameObjects
         public ISet<SkillGroup> SkillGroups { get; }
         public ISet<TraitSphere> Spheres { get; }
 
-        public override void LoadXML(XElement xml)
+        public override XElement CreateXml(bool external = false)
         {
+            var xml = base.CreateXml(external);
+            xml.Add(new XElement("TraitData",
+                                 new XElement("Description", Description),
+                                 new XElement("Ring", Ring),
+                                 new XElement("SkillGroups",
+                                              SkillGroups.Select(sg => new XElement("Item", sg))),
+                                 new XElement("Spheres",
+                                              Spheres.Select(s => new XElement("Item", s)))));
+
+            return xml;
+        }
+
+        protected override void LoadXml(XElement xml)
+        {
+            base.LoadXml(xml);
+
             XElement traitData = xml.Element("TraitData");
 
             Description = traitData.Element("Description").Value.Replace("\n", Environment.NewLine);
@@ -52,17 +81,6 @@ namespace NPC.Data.GameObjects
             {
                 Spheres.Add((TraitSphere)Enum.Parse(typeof(TraitSphere), sphere.Value));
             }
-        }
-
-        public override XElement CreateXML()
-        {
-            return new XElement("TraitData",
-                                new XElement("Description", Description),
-                                new XElement("Ring", Ring),
-                                new XElement("SkillGroups",
-                                             SkillGroups.Select(sg => new XElement("Item", sg))),
-                                new XElement("Spheres",
-                                             Spheres.Select(s => new XElement("Item", s))));
         }
     }
 }

@@ -4,8 +4,18 @@ using NPC.Common;
 
 namespace NPC.Data.GameObjects
 {
-    class Gear : GameObjectData, IGear
+    class Gear : GameObject, IGear
     {
+        public Gear()
+            : base(ObjectType.Ability)
+        {
+        }
+
+        private Gear(Guid id)
+            : base(id, ObjectType.Ability)
+        {
+        }
+
         private GearType _gearType;
         public GearType GearType
         {
@@ -20,15 +30,33 @@ namespace NPC.Data.GameObjects
             set => IsDirty |= SetProperty(ref _description, value);
         }
 
-        public override XElement CreateXML()
+        public static GameObject FromXml(XElement xml)
         {
-            return new XElement("GearData",
-                                new XElement("Description", Description),
-                                new XElement("GearType", GearType));
+            return FromXml(xml, t =>
+            {
+                if (t.type != ObjectType.Equipment)
+                {
+                    throw new ArgumentException("Gear.FromXml: xml is not an equipment.");
+                }
+
+                return t.id.HasValue ? new Gear(t.id.Value) : new Gear();
+            });
         }
 
-        public override void LoadXML(XElement xml)
+        public override XElement CreateXml(bool external = false)
         {
+            var xml = base.CreateXml(external);
+            xml.Add(new XElement("GearData",
+                                 new XElement("Description", Description),
+                                 new XElement("GearType", GearType)));
+
+            return xml;
+        }
+
+        protected override void LoadXml(XElement xml)
+        {
+            base.LoadXml(xml);
+
             XElement gearData = xml.Element("GearData");
 
             Description = gearData.Element("Description").Value.Replace("\n", Environment.NewLine);

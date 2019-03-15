@@ -1,10 +1,21 @@
-﻿using System;
+﻿using NPC.Common;
+using System;
 using System.Xml.Linq;
 
 namespace NPC.Data.GameObjects
 {
-    class Ability : GameObjectData, IAbility
+    class Ability : GameObject, IAbility
     {
+        public Ability()
+            : base(ObjectType.Ability)
+        {
+        }
+
+        private Ability(Guid id)
+            : base(id, ObjectType.Ability)
+        {
+        }
+
         private string _content;
         public string Content
         {
@@ -12,13 +23,30 @@ namespace NPC.Data.GameObjects
             set => IsDirty |= SetProperty(ref _content, value);
         }
 
-        public override XElement CreateXML()
+        public static GameObject FromXml(XElement xml)
         {
-            return new XElement("AbilityData", Content);
+            return FromXml(xml, t =>
+            {
+                if (t.type != ObjectType.Ability)
+                {
+                    throw new ArgumentException("Ability.FromXml: xml is not an ability.");
+                }
+
+                return t.id.HasValue ? new Ability(t.id.Value) : new Ability();
+            });
         }
 
-        public override void LoadXML(XElement xml)
+        public override XElement CreateXml(bool external = false)
         {
+            var xml = base.CreateXml(external);
+            xml.Add(new XElement("AbilityData", Content));
+
+            return xml;
+        }
+
+        protected override void LoadXml(XElement xml)
+        {
+            base.LoadXml(xml);
             Content = xml.Element("AbilityData").Value.Replace("\n", Environment.NewLine);
         }
     }

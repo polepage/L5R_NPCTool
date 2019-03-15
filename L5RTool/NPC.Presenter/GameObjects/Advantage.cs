@@ -6,5 +6,10 @@
             : base(trait)
         {
         }
+
+        public Advantage(Data.GameObjects.IAdvantage trait, IAdvantage copySource)
+            : base(trait, copySource)
+        {
+        }
     }
 }

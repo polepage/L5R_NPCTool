@@ -1,34 +1,28 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Xml.Linq;
 using NPC.Common;
 
 namespace NPC.Data.GameObjects
 {
-    class GameObject : GameObjectReference, IGameObject
+    abstract class GameObject : GameObjectReference, IGameObject
     {
-        private GameObjectData _data;
-
-        public GameObject(ObjectType type)
+        protected GameObject(ObjectType type)
             : this(Guid.NewGuid(), type)
         {
         }
 
-        private GameObject(Guid id, ObjectType type)
+        protected GameObject(Guid id, ObjectType type)
             : base(id)
         {
             Type = type;
-            _data = CreateData(type);
             Name = type.ToString();
-
-            _data.PropertyChanged += IsDirtyChanged;
         }
 
         private bool _isDirty = true;
         public bool IsDirty
         {
-            get => _isDirty | _data.IsDirty;
-            private set => SetProperty(ref _isDirty, value);
+            get => _isDirty;
+            protected set => SetProperty(ref _isDirty, value);
         }
 
         private string _name;
@@ -39,40 +33,22 @@ namespace NPC.Data.GameObjects
         }
 
         public ObjectType Type { get; }
-        public IGameObjectData Data => _data;
 
         public void ResetDirty()
         {
             IsDirty = false;
-            _data.ResetDirty();
         }
 
-        public static GameObject FromXML(XElement xml)
+        public virtual XElement CreateXml(bool external = false)
         {
-            var id = xml.Attribute("Id");
-
-            var gameObject = new GameObject(
-                id != null ? Guid.Parse(id.Value) : Guid.NewGuid(),
-                (ObjectType)Enum.Parse(typeof(ObjectType), xml.Attribute("Type").Value));
-
-            gameObject.Name = xml.Element("Name").Value.Replace("\n", Environment.NewLine);
-            gameObject._data.LoadXML(xml);
-
-            gameObject.ResetDirty();
-
-            return gameObject;
-        }
-
-        public XElement CreateXML(bool external = false)
-        {
-            var xml = new XElement("GameObject");
+            var xml = new XElement(XmlTools.GameObjectNode);
             if (!external)
             {
                 xml.Add(new XAttribute("Id", Id));
             }
+
             xml.Add(new XAttribute("Type", Type),
-                    new XElement("Name", Name),
-                    _data.CreateXML());
+                    new XElement("Name", Name));
 
             return xml;
         }
@@ -85,31 +61,28 @@ namespace NPC.Data.GameObjects
             };
         }
 
-        private void IsDirtyChanged(object sender, PropertyChangedEventArgs e)
+        protected static GameObject FromXml(XElement xml, Func<(Guid? id, ObjectType type), GameObject> creator)
         {
-            if (e.PropertyName == nameof(_data.IsDirty))
+            var idElement = xml.Attribute("Id");
+            Guid? id = null;
+            if (idElement != null)
             {
-                RaisePropertyChanged(nameof(IsDirty));
+                id = Guid.Parse(idElement.Value);
             }
+
+            var type = (ObjectType)Enum.Parse(typeof(ObjectType), xml.Attribute("Type").Value);
+
+            var gameObject = creator((id, type));
+            gameObject.LoadXml(xml);
+
+            gameObject.ResetDirty();
+
+            return gameObject;
         }
 
-        private GameObjectData CreateData(ObjectType type)
+        protected virtual void LoadXml(XElement xml)
         {
-            switch (type)
-            {
-                case ObjectType.Demeanor:
-                    return new Demeanor();
-                case ObjectType.Advantage:
-                    return new Advantage();
-                case ObjectType.Disadvantage:
-                    return new Disadvantage();
-                case ObjectType.Ability:
-                    return new Ability();
-                case ObjectType.Equipment:
-                    return new Gear();
-                default:
-                    throw new ArgumentOutOfRangeException("NPC.Data: Unknown object type.");
-            }
+            Name = xml.Element("Name").Value.Replace("\n", Environment.NewLine);
         }
     }
 }

@@ -3,43 +3,46 @@ using System.Collections.Generic;
 
 namespace NPC.Presenter.GameObjects
 {
-    abstract class Trait<T>: GameObjectData<T>, ITrait, ICopyTarget where T: Data.GameObjects.ITrait
+    abstract class Trait<T>: GameObject, ITrait where T: Data.GameObjects.ITrait
     {
-        public Trait(T trait)
-            : base(trait)
+        private T _source;
+
+        public Trait(T source)
+            : base(source)
         {
+            _source = source;
+        }
+
+        public Trait(T source, ITrait copySource)
+            : base (source, copySource)
+        {
+            _source = source;
+            Description = copySource.Description;
+            Ring = copySource.Ring;
+            SkillGroups.UnionWith(copySource.SkillGroups);
+            Spheres.UnionWith(copySource.Spheres);
         }
 
         public string Description
         {
-            get => DataObject.Description;
-            set => DataObject.Description = value;
+            get => _source.Description;
+            set => _source.Description = value;
         }
 
         public Ring Ring
         {
-            get => DataObject.Ring;
-            set => DataObject.Ring = value;
+            get => _source.Ring;
+            set => _source.Ring = value;
         }
 
-        public ISet<SkillGroup> SkillGroups => DataObject.SkillGroups;
-        public ISet<TraitSphere> Spheres => DataObject.Spheres;
-
-        public void CopyData(IGameObjectData copySource)
-        {
-            if (copySource is ITrait trait)
-            {
-                Description = trait.Description;
-                Ring = trait.Ring;
-                SkillGroups.UnionWith(trait.SkillGroups);
-                Spheres.UnionWith(trait.Spheres);
-            }
-        }
+        public ISet<SkillGroup> SkillGroups => _source.SkillGroups;
+        public ISet<TraitSphere> Spheres => _source.Spheres;
 
         protected override void RegisterBindings()
         {
-            AddBinding(nameof(DataObject.Description), nameof(Description));
-            AddBinding(nameof(DataObject.Ring), nameof(Ring));
+            base.RegisterBindings();
+            AddBinding(nameof(_source.Description), nameof(Description));
+            AddBinding(nameof(_source.Ring), nameof(Ring));
         }
     }
 }

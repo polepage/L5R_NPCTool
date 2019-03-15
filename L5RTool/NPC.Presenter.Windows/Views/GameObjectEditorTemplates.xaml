@@ -42,38 +42,38 @@
             <TextBlock Grid.Column="0" Grid.Row="1"
                        Text="Common Unmasking" VerticalAlignment="Center"/>
             <TextBox Grid.Column="1" Grid.Row="1" Margin="5 3"
-                     MaxLength="256" Text="{Binding Data.Unmasking}"/>
+                     MaxLength="256" Text="{Binding Unmasking}"/>
 
             <TextBlock Grid.Column="0" Grid.Row="2"
                        Text="Air Modifier" VerticalAlignment="Center"/>
             <tk:IntegerUpDown Grid.Column="1" Grid.Row="2" Margin="5 3" MaxWidth="64" HorizontalAlignment="Left"
-                              Minimum="-5" Maximum="5" Increment="1" Value="{Binding Data.Air}"/>
+                              Minimum="-5" Maximum="5" Increment="1" Value="{Binding Air}"/>
 
             <TextBlock Grid.Column="0" Grid.Row="3"
                        Text="Earth Modifier" VerticalAlignment="Center"/>
             <tk:IntegerUpDown Grid.Column="1" Grid.Row="3" Margin="5 3" MaxWidth="64" HorizontalAlignment="Left"
-                              Minimum="-5" Maximum="5" Increment="1" Value="{Binding Data.Earth}"/>
+                              Minimum="-5" Maximum="5" Increment="1" Value="{Binding Earth}"/>
 
             <TextBlock Grid.Column="0" Grid.Row="4"
                        Text="Fire Modifier" VerticalAlignment="Center"/>
             <tk:IntegerUpDown Grid.Column="1" Grid.Row="4" Margin="5 3" MaxWidth="64" HorizontalAlignment="Left"
-                              Minimum="-5" Maximum="5" Increment="1" Value="{Binding Data.Fire}"/>
+                              Minimum="-5" Maximum="5" Increment="1" Value="{Binding Fire}"/>
 
             <TextBlock Grid.Column="0" Grid.Row="5"
                        Text="Water Modifier" VerticalAlignment="Center"/>
             <tk:IntegerUpDown Grid.Column="1" Grid.Row="5" Margin="5 3" MaxWidth="64" HorizontalAlignment="Left"
-                              Minimum="-5" Maximum="5" Increment="1" Value="{Binding Data.Water}"/>
+                              Minimum="-5" Maximum="5" Increment="1" Value="{Binding Water}"/>
 
             <TextBlock Grid.Column="0" Grid.Row="6"
                        Text="Void Modifier" VerticalAlignment="Center"/>
             <tk:IntegerUpDown Grid.Column="1" Grid.Row="6" Margin="5 3" MaxWidth="64" HorizontalAlignment="Left"
-                              Minimum="-5" Maximum="5" Increment="1" Value="{Binding Data.Void}"/>
+                              Minimum="-5" Maximum="5" Increment="1" Value="{Binding Void}"/>
 
             <TextBlock Grid.Column="0" Grid.Row="7"
                        Text="Description" VerticalAlignment="Center"/>
             <TextBox Grid.Column="1" Grid.Row="7" Margin="5 3"
                      MinLines="3" AcceptsReturn="True" TextWrapping="Wrap"
-                     Text="{Binding Data.Description}"/>
+                     Text="{Binding Description}"/>
         </Grid>
     </DataTemplate>
 
@@ -99,7 +99,7 @@
             <TextBlock Grid.Column="0" Grid.Row="1"
                        Text="Ring" VerticalAlignment="Center"/>
             <ComboBox Grid.Column="1" Grid.Row="1" Margin="5 3" MaxWidth="64" HorizontalAlignment="Left"
-                      ItemsSource="{x:Static go:GameObjectEnums.Rings}" SelectedValue="{Binding Data.Ring}">
+                      ItemsSource="{x:Static go:GameObjectEnums.Rings}" SelectedValue="{Binding Ring}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <Image Source="{Binding Converter={StaticResource imageConverter}, ConverterParameter=Rings}"
@@ -113,20 +113,20 @@
             <c:TagSelector Grid.Column="1" Grid.Row="2" Margin="5 3"
                            Prompt="Add Skill Group"
                            ItemsSource="{x:Static go:GameObjectEnums.SkillGroups}"
-                           BindableSelectedItems="{Binding Data.SkillGroups, Converter={StaticResource skillGroupSetConverter}}"/>
+                           BindableSelectedItems="{Binding SkillGroups, Converter={StaticResource skillGroupSetConverter}}"/>
 
             <TextBlock Grid.Column="0" Grid.Row="3"
                        Text="Spheres" VerticalAlignment="Center"/>
             <c:TagSelector Grid.Column="1" Grid.Row="3" Margin="5 3"
                            Prompt="Add Sphere"
                            ItemsSource="{x:Static go:GameObjectEnums.Spheres}"
-                           BindableSelectedItems="{Binding Data.Spheres, Converter={StaticResource sphereSetConverter}}"/>
+                           BindableSelectedItems="{Binding Spheres, Converter={StaticResource sphereSetConverter}}"/>
 
             <TextBlock Grid.Column="0" Grid.Row="4"
                        Text="Description" VerticalAlignment="Center"/>
             <TextBox Grid.Column="1" Grid.Row="4" Margin="5 3"
                      MinLines="3" AcceptsReturn="True" TextWrapping="Wrap"
-                     Text="{Binding Data.Description, UpdateSourceTrigger=PropertyChanged}"/>
+                     Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
     </DataTemplate>
 
@@ -154,7 +154,7 @@
             </ToolBarTray>
             <TextBox Grid.Column="1" Grid.Row="2" Margin="5 0 5 3" x:Name="abilityContent"
                      MinLines="6" AcceptsReturn="True" TextWrapping="Wrap"
-                     Text="{Binding Data.Content, UpdateSourceTrigger=PropertyChanged}"/>
+                     Text="{Binding Content, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
     </DataTemplate>
     
@@ -179,15 +179,15 @@
                        Text="Type" VerticalAlignment="Center"/>
             <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" Margin="5 3" HorizontalAlignment="Left">
                 <ComboBox Width="128" VerticalAlignment="Center" Margin="0 0 5 0"
-                          ItemsSource="{x:Static go:GameObjectEnums.GearTypes}" SelectedValue="{Binding Data.GearType}"/>
+                          ItemsSource="{x:Static go:GameObjectEnums.GearTypes}" SelectedValue="{Binding GearType}"/>
                 <Button Content=" Apply Template " MinWidth="80" MinHeight="18" VerticalAlignment="Center"
-                        Command="{StaticResource applyGearTemplateCommand}" CommandParameter="{Binding Data}"/>
+                        Command="{StaticResource applyGearTemplateCommand}" CommandParameter="{Binding}"/>
             </StackPanel>
 
             <TextBlock Grid.Column="0" Grid.Row="2"
                        Text="Description" VerticalAlignment="Center"/>
             <TextBox Grid.Column="1" Grid.Row="2" Margin="5 3"
-                     Text="{Binding Data.Description, UpdateSourceTrigger=PropertyChanged}"/>
+                     Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
     </DataTemplate>
 

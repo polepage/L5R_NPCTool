@@ -1,6 +1,6 @@
 ﻿namespace NPC.Presenter.GameObjects
 {
-    public interface IDemeanor: IGameObjectData
+    public interface IDemeanor: IGameObject
     {
         int Air { get; set; }
         int Earth { get; set; }

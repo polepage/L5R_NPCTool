@@ -1,5 +1,4 @@
-﻿using NPC.Presenter.GameObjects;
-using System;
+﻿using System;
 
 namespace NPC.Presenter.GameObjects
 {
@@ -37,6 +36,49 @@ namespace NPC.Presenter.GameObjects
             }
 
             throw new ArgumentException("IGameObjectReference is not a GameObject or a GameObjectMetadata.");
+        }
+
+        public static IGameObject CreatePresenter(this Data.GameObjects.IGameObject gameObject)
+        {
+            switch (gameObject)
+            {
+                case Data.GameObjects.IDemeanor s:
+                    return new Demeanor(s);
+                case Data.GameObjects.IAdvantage s:
+                    return new Advantage(s);
+                case Data.GameObjects.IDisadvantage s:
+                    return new Disadvantage(s);
+                case Data.GameObjects.IGear s:
+                    return new Gear(s);
+                case Data.GameObjects.IAbility s:
+                    return new Ability(s);
+                default:
+                    throw new ArgumentException("Create Presenter: Unknown type");
+            }
+        }
+
+        public static IGameObjectMetadata CreatePresenter(this Data.GameObjects.IGameObjectMetadata gameObject)
+        {
+            return new GameObjectMetadata(gameObject);
+        }
+
+        public static IGameObject CreateDuplicate(this IGameObject gameObject, Data.IFactory dataFactory)
+        {
+            switch (gameObject)
+            {
+                case IDemeanor s:
+                    return new Demeanor(dataFactory.Create(s.Type) as Data.GameObjects.IDemeanor, s);
+                case IAdvantage s:
+                    return new Advantage(dataFactory.Create(s.Type) as Data.GameObjects.IAdvantage, s);
+                case IDisadvantage s:
+                    return new Disadvantage(dataFactory.Create(s.Type) as Data.GameObjects.IDisadvantage, s);
+                case IGear s:
+                    return new Gear(dataFactory.Create(s.Type) as Data.GameObjects.IGear, s);
+                case IAbility s:
+                    return new Ability(dataFactory.Create(s.Type) as Data.GameObjects.IAbility, s);
+                default:
+                    throw new ArgumentException("Create Presenter: Unknown type");
+            }
         }
     }
 }

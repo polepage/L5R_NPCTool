@@ -107,13 +107,13 @@ namespace NPC.Data
         {
             string path = Path.Combine(DatabaseFolder, GameObjectFolder, gameObject.Id + GameObjectExtension);
             Directory.CreateDirectory(Path.GetDirectoryName(path));
-            gameObject.CreateXML().Save(path);
+            gameObject.CreateXml().Save(path);
             gameObject.ResetDirty();
         }
 
         private GameObject OpenFile(string path)
         {
-            return GameObject.FromXML(XElement.Load(path));
+            return XElement.Load(path).LoadGameObject();
         }
 
         private void DeleteGameObject(GameObjectReference reference)
@@ -148,7 +148,7 @@ namespace NPC.Data
         {
             string path = Path.Combine(DatabaseFolder, DatabaseFile);
             Directory.CreateDirectory(Path.GetDirectoryName(path));
-            _database.CreateXML().Save(path);
+            _database.CreateXml().Save(path);
         }
 
         private void OpenDatabase()
@@ -156,7 +156,7 @@ namespace NPC.Data
             string path = Path.Combine(DatabaseFolder, DatabaseFile);
             if (File.Exists(path))
             {
-                _database.LoadXML(XElement.Load(path));
+                _database.LoadXml(XElement.Load(path));
             }
         }
 

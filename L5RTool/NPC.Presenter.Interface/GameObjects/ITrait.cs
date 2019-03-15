@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace NPC.Presenter.GameObjects
 {
-    public interface ITrait: IGameObjectData
+    public interface ITrait: IGameObject
     {
         string Description { get; set; }
         Ring Ring { get; set; }

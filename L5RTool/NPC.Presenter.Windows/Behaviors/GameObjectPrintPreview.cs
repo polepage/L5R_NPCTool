@@ -3,7 +3,7 @@ using Microsoft.Xaml.Behaviors;
 using NPC.Common;
 using NPC.Parser;
 using NPC.Presenter.GameObjects;
-using NPC.Presenter.Windows.Viewers;
+using NPC.Presenter.Windows.Print;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
@@ -68,6 +68,18 @@ namespace NPC.Presenter.Windows.Behaviors
         private readonly double _columnSpacing = 0.5 * 96;
         private readonly int _columnCount = 2;
 
+        private AbilityPrinter _abilityPrinter;
+        private AbilityPrinter AbilityPrinter => _abilityPrinter ?? (_abilityPrinter = new AbilityPrinter(_columnWidth, _pageHeight, Parser));
+
+        private DemeanorPrinter _demeanorPrinter;
+        private DemeanorPrinter DemeanorPrinter => _demeanorPrinter ?? (_demeanorPrinter = new DemeanorPrinter(_columnWidth, _pageHeight));
+
+        private GearPrinter _gearPrinter;
+        private GearPrinter GearPrinter => _gearPrinter ?? (_gearPrinter = new GearPrinter(_columnWidth, _pageHeight));
+
+        private TraitPrinter _traitPrinter;
+        private TraitPrinter TraitPrinter => _traitPrinter ?? (_traitPrinter = new TraitPrinter(_columnWidth, _pageHeight));
+
         protected override void OnAttached()
         {
             base.OnAttached();
@@ -107,12 +119,9 @@ namespace NPC.Presenter.Windows.Behaviors
                 FrameworkElement title = CreateTitle(type);
                 AddTitleToDocument(document, ref currentPage, title, elements.First().First(), ref currentHorizontalPosition, ref currentVerticalPosition, ref currentColumn);
 
-                foreach (GameObjectViewer viewer in elements)
+                foreach (FrameworkElement element in elements.SelectMany(s => s))
                 {
-                    foreach (FrameworkElement element in viewer)
-                    {
-                        AddToDocument(document, ref currentPage, element, ref currentHorizontalPosition, ref currentVerticalPosition, ref currentColumn);
-                    }
+                    AddToDocument(document, ref currentPage, element, ref currentHorizontalPosition, ref currentVerticalPosition, ref currentColumn);
                 }
             }
 
@@ -198,19 +207,18 @@ namespace NPC.Presenter.Windows.Behaviors
             return title;
         }
 
-        private GameObjectViewer CreateViewer(IGameObject gameObject)
+        private IEnumerable<FrameworkElement> CreateViewer(IGameObject gameObject)
         {
-            switch (gameObject.Type)
+            switch (gameObject)
             {
-                case ObjectType.Demeanor:
-                    return new DemeanorViewer(gameObject, _columnWidth, _pageHeight);
-                case ObjectType.Advantage:
-                case ObjectType.Disadvantage:
-                    return new TraitViewer(gameObject, _columnWidth, _pageHeight);
-                case ObjectType.Ability:
-                    return new AbilityViewer(gameObject, _columnWidth, _pageHeight, Parser);
-                case ObjectType.Equipment:
-                    return new GearViewer(gameObject, _columnWidth, _pageHeight);
+                case IDemeanor d:
+                    return DemeanorPrinter.CreatePrintView(d);
+                case ITrait t:
+                    return TraitPrinter.CreatePrintView(t);
+                case IAbility a:
+                    return AbilityPrinter.CreatePrintView(a);
+                case IGear g:
+                    return GearPrinter.CreatePrintView(g);
                 default:
                     throw new ArgumentException("Unkown object type.");
             }

@@ -18,7 +18,7 @@ namespace NPC.Presenter
 
         public IGameObject CreateNew(ObjectType type)
         {
-            return new GameObject(_factory.Create(type));
+            return _factory.Create(type).CreatePresenter();
         }
 
         public IGameObject Duplicate(IGameObjectReference reference)
@@ -39,7 +39,7 @@ namespace NPC.Presenter
 
         private IGameObject DuplicateObject(IGameObject targetObject)
         {
-            return new GameObject(_factory.Create(targetObject.Type), targetObject);
+            return targetObject.CreateDuplicate(_factory);
         }
     }
 }

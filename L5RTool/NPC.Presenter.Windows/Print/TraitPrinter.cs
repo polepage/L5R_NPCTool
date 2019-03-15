@@ -1,32 +1,24 @@
 ﻿using NPC.Presenter.GameObjects;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
-using System.Windows.Media;
 
-namespace NPC.Presenter.Windows.Viewers
+namespace NPC.Presenter.Windows.Print
 {
-    class TraitViewer: GameObjectViewer
+    class TraitPrinter : BaseGameObjectPrinter
     {
-        public TraitViewer(IGameObject gameObject, double maxWidth, double maxHeight)
-            : base(gameObject, maxWidth, maxHeight)
+        public TraitPrinter(double maxWidth, double maxHeight)
+            : base(maxWidth, maxHeight)
         {
         }
 
-        protected override void CreateElements()
+        public IEnumerable<FrameworkElement> CreatePrintView(ITrait trait)
         {
-            var trait = (ITrait)GameObject.Data;
             var grid = CreateGrid(string.IsNullOrWhiteSpace(trait.Description) ? 2 : 3);
 
-            var name = new TextBlock
-            {
-                Text = GameObject.Name + " (" + trait.Ring.ToString() + ")",
-                FontSize = 20,
-                FontWeight = FontWeights.Bold,
-                TextWrapping = TextWrapping.Wrap,
-                FontFamily = new FontFamily(FontUri, "./#Linux Biolinum")
-            };
+            var name = CreateObjectName(trait.Name + " (" + trait.Ring.ToString() + ")");
             Grid.SetRow(name, 0);
             grid.Children.Add(name);
 
@@ -60,7 +52,8 @@ namespace NPC.Presenter.Windows.Viewers
                 grid.Children.Add(description);
             }
 
-            AddElement(grid);
+            DoMeasure(grid);
+            return new List<FrameworkElement> { grid };
         }
     }
 }

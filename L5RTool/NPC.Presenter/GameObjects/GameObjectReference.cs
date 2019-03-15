@@ -6,7 +6,7 @@ namespace NPC.Presenter.GameObjects
     {
         Data.GameObjects.IGameObjectReference _source;
 
-        public GameObjectReference(Data.GameObjects.IGameObjectReference source)
+        protected GameObjectReference(Data.GameObjects.IGameObjectReference source)
             : base (source)
         {
             _source = source;

@@ -2,6 +2,7 @@
 using NPC.Parser.Structure;
 using NPC.Presenter.GameObjects;
 using NPC.Presenter.Windows.Extensions;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,32 +10,25 @@ using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace NPC.Presenter.Windows.Viewers
+namespace NPC.Presenter.Windows.Print
 {
-    class AbilityViewer : GameObjectViewer
+    class AbilityPrinter : BaseGameObjectPrinter
     {
-        public AbilityViewer(IGameObject gameObject, double maxWidth, double maxHeight, IParser parser)
-            : base(gameObject, parser, maxWidth, maxHeight)
+        private IParser _parser;
+
+        public AbilityPrinter(double maxWidth, double maxHeight, IParser parser)
+            : base(maxWidth, maxHeight)
         {
+            _parser = parser;
         }
 
-        protected override void CreateElements()
+        public IEnumerable<FrameworkElement> CreatePrintView(IAbility ability)
         {
-            var ability = (IAbility)GameObject.Data;
-
-            var parsedContent = Parser.Parse(ability.Content);
+            var parsedContent = _parser.Parse(ability.Content);
             var grid = CreateGrid(parsedContent.Count() + 1);
 
             int currentRow = 0;
-
-            var name = new TextBlock
-            {
-                Text = GameObject.Name,
-                FontSize = 20,
-                FontWeight = FontWeights.Bold,
-                TextWrapping = TextWrapping.Wrap,
-                FontFamily = new FontFamily(FontUri, "./#Linux Biolinum")
-            };
+            var name = CreateObjectName(ability.Name.Trim());
             Grid.SetRow(name, currentRow);
             grid.Children.Add(name);
             currentRow++;
@@ -47,7 +41,8 @@ namespace NPC.Presenter.Windows.Viewers
                 currentRow++;
             }
 
-            AddElement(grid);
+            DoMeasure(grid);
+            return new List<FrameworkElement> { grid };
         }
 
         private Grid CreateBlock(BlockElement block)

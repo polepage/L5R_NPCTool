@@ -1,10 +1,21 @@
-﻿using System;
+﻿using NPC.Common;
+using System;
 using System.Xml.Linq;
 
 namespace NPC.Data.GameObjects
 {
-    class Demeanor : GameObjectData, IDemeanor
+    class Demeanor : GameObject, IDemeanor
     {
+        public Demeanor()
+            : base(ObjectType.Ability)
+        {
+        }
+
+        private Demeanor(Guid id)
+            : base(id, ObjectType.Ability)
+        {
+        }
+
         private int _air;
         public int Air
         {
@@ -54,20 +65,38 @@ namespace NPC.Data.GameObjects
             set => IsDirty |= SetProperty(ref _description, value);
         }
 
-        public override XElement CreateXML()
+        public static GameObject FromXml(XElement xml)
         {
-            return new XElement("DemeanorData",
-                                new XElement("Air", Air),
-                                new XElement("Earth", Earth),
-                                new XElement("Fire", Fire),
-                                new XElement("Water", Water),
-                                new XElement("Void", Void),
-                                new XElement("Unmasking", Unmasking),
-                                new XElement("Description", Description));
+            return FromXml(xml, t =>
+            {
+                if (t.type != ObjectType.Demeanor)
+                {
+                    throw new ArgumentException("Demeanor.FromXml: xml is not a demeanor.");
+                }
+
+                return t.id.HasValue ? new Demeanor(t.id.Value) : new Demeanor();
+            });
         }
 
-        public override void LoadXML(XElement xml)
+        public override XElement CreateXml(bool external = false)
         {
+            var xml = base.CreateXml(external);
+            xml.Add(new XElement("DemeanorData",
+                                 new XElement("Air", Air),
+                                 new XElement("Earth", Earth),
+                                 new XElement("Fire", Fire),
+                                 new XElement("Water", Water),
+                                 new XElement("Void", Void),
+                                 new XElement("Unmasking", Unmasking),
+                                 new XElement("Description", Description)));
+
+            return xml;
+        }
+
+        protected override void LoadXml(XElement xml)
+        {
+            base.LoadXml(xml);
+
             XElement demeanorData = xml.Element("DemeanorData");
 
             Air = int.Parse(demeanorData.Element("Air").Value);

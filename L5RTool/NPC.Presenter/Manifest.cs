@@ -12,7 +12,7 @@ namespace NPC.Presenter
         {
             _collection = new RelayObservableHashSet<IGameObjectMetadata, Data.GameObjects.IGameObjectMetadata>(
                 database.GameObjects,
-                r => new GameObjectMetadata(r));
+                r => r.CreatePresenter());
         }
 
         public IEnumerable<IGameObjectMetadata> GameObjects => _collection;

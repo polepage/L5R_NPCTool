@@ -28,7 +28,7 @@ namespace NPC.Presenter
 
         public IGameObject Open(IGameObjectReference reference)
         {
-            return new GameObject(_storage.Open(reference.GetSource()));
+            return _storage.Open(reference.GetSource()).CreatePresenter();
         }
 
         public IEnumerable<IGameObject> Open(IEnumerable<IGameObjectReference> references)

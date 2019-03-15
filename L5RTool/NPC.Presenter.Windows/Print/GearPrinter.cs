@@ -1,31 +1,22 @@
 ﻿using NPC.Presenter.GameObjects;
-using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 
-namespace NPC.Presenter.Windows.Viewers
+namespace NPC.Presenter.Windows.Print
 {
-    class GearViewer : GameObjectViewer
+    class GearPrinter : BaseGameObjectPrinter
     {
-        public GearViewer(IGameObject gameObject, double maxWidth, double maxHeight)
-            : base(gameObject, maxWidth, maxHeight)
+        public GearPrinter(double maxWidth, double maxHeight)
+            : base(maxWidth, maxHeight)
         {
         }
 
-        protected override void CreateElements()
+        public IEnumerable<FrameworkElement> CreatePrintView(IGear gear)
         {
-            var gear = (IGear)GameObject.Data;
             var grid = CreateGrid(string.IsNullOrEmpty(gear.Description) ? 1 : 2);
 
-            var name = new TextBlock
-            {
-                Text = GameObject.Name + " (" + gear.GearType.ToString() + ")",
-                FontSize = 20,
-                FontWeight = FontWeights.Bold,
-                TextWrapping = TextWrapping.Wrap,
-                FontFamily = new FontFamily(FontUri, "./#Linux Biolinum")
-            };
+            var name = CreateObjectName(gear.Name.Trim() + " (" + gear.GearType.ToString() + ")");
             Grid.SetRow(name, 0);
             grid.Children.Add(name);
 
@@ -41,7 +32,8 @@ namespace NPC.Presenter.Windows.Viewers
                 grid.Children.Add(description);
             }
 
-            AddElement(grid);
+            DoMeasure(grid);
+            return new List<FrameworkElement> { grid };
         }
     }
 }

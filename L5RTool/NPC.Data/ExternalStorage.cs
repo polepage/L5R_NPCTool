@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
@@ -19,7 +18,7 @@ namespace NPC.Data
         public void Import(string target)
         {
             var xml = XElement.Load(target);
-            var gameObjects = xml.Elements().Select(x => GameObject.FromXML(x));
+            var gameObjects = xml.Elements().Select(x => x.LoadGameObject());
 
             _storage.Save(gameObjects.ToList());
         }
@@ -30,7 +29,7 @@ namespace NPC.Data
                                 .OfType<GameObject>()
                                 .Concat(references.OfType<GameObject>());
 
-            SaveExportedFile(new XElement("L5RFile", gameObjects.Select(go => go.CreateXML(true)).ToArray()), target);
+            SaveExportedFile(new XElement("L5RFile", gameObjects.Select(go => go.CreateXml(true)).ToArray()), target);
         }
 
         private void SaveExportedFile(XElement xml, string target)

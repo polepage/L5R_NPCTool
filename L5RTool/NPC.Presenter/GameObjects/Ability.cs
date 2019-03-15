@@ -1,29 +1,32 @@
 ﻿namespace NPC.Presenter.GameObjects
 {
-    class Ability : GameObjectData<Data.GameObjects.IAbility>, IAbility, ICopyTarget
+    class Ability : GameObject, IAbility
     {
-        public Ability(Data.GameObjects.IAbility ability)
-            : base(ability)
+        private Data.GameObjects.IAbility _source;
+
+        public Ability(Data.GameObjects.IAbility source)
+            : base(source)
         {
+            _source = source;
+        }
+
+        public Ability(Data.GameObjects.IAbility source, IAbility copySource)
+            : base(source, copySource)
+        {
+            _source = source;
+            Content = copySource.Content;
         }
 
         public string Content
         {
-            get => DataObject.Content;
-            set => DataObject.Content = value;
-        }
-
-        public void CopyData(IGameObjectData copySource)
-        {
-            if (copySource is IAbility ability)
-            {
-                Content = ability.Content;
-            }
+            get => _source.Content;
+            set => _source.Content = value;
         }
 
         protected override void RegisterBindings()
         {
-            AddBinding(nameof(DataObject.Content), nameof(Content));
+            base.RegisterBindings();
+            AddBinding(nameof(_source.Content), nameof(Content));
         }
     }
 }
