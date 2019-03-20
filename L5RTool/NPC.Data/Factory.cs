@@ -11,7 +11,7 @@ namespace NPC.Data
             switch (type)
             {
                 case ObjectType.Character:
-                    return null;
+                    return new Character();
                 case ObjectType.Demeanor:
                     return new Demeanor();
                 case ObjectType.Advantage:

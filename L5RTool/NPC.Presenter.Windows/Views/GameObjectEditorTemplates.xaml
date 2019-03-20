@@ -4,14 +4,18 @@
                     xmlns:c="clr-namespace:NPC.Presenter.Windows.Controls"
                     xmlns:go="clr-namespace:NPC.Presenter.Windows.GameObjects"
                     xmlns:conv="clr-namespace:NPC.Presenter.Windows.Converters"
+                    xmlns:common="clr-namespace:NPC.Common;assembly=NPC.Common"
+                    xmlns:proxy="clr-namespace:NPC.Presenter.Windows.Proxy"
                     xmlns:templates="clr-namespace:NPC.Presenter.Windows.Templates"
                     xmlns:commands="clr-namespace:NPC.Presenter.Windows.Commands"
                     xmlns:local="clr-namespace:NPC.Presenter.Windows.Views">
+    
     <conv:NameToImageConverter x:Key="imageConverter"/>
     <conv:SkillGroupSetConverter x:Key="skillGroupSetConverter"/>
     <conv:TraitSphereSetConverter x:Key="sphereSetConverter"/>
-
-    <commands:ApplyGearTemplate x:Key="applyGearTemplateCommand"/>
+    <conv:CharacterElementWrapperConverter x:Key="elementWrapperConvereter"/>
+    <conv:ScrollViewerSizeConverter x:Key="scrollViewerSizeConverter"/>
+    <BooleanToVisibilityConverter x:Key="visibilityConverter"/>
 
     <DataTemplate x:Key="defaultEditTemplate">
         <TextBlock Foreground="Red" Text="Error, unknown element type"/>
@@ -28,52 +32,48 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Column="0" Grid.Row="0"
-                       Text="Name" VerticalAlignment="Center"/>
-            <TextBox Grid.Column="1" Grid.Row="0" Margin="5 3"
-                     MaxLength="256" Text="{Binding Name}"/>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Name" VerticalAlignment="Center"/>
+            <TextBox Grid.Column="1" Grid.Row="0" Margin="5 3" MaxLength="256" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
 
-            <TextBlock Grid.Column="0" Grid.Row="1"
-                       Text="Common Unmasking" VerticalAlignment="Center"/>
-            <TextBox Grid.Column="1" Grid.Row="1" Margin="5 3"
-                     MaxLength="256" Text="{Binding Unmasking}"/>
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="Common Unmasking" VerticalAlignment="Center"/>
+            <TextBox Grid.Column="1" Grid.Row="1" Margin="5 3" MaxLength="256" Text="{Binding Unmasking, UpdateSourceTrigger=PropertyChanged}"/>
 
-            <TextBlock Grid.Column="0" Grid.Row="2"
-                       Text="Air Modifier" VerticalAlignment="Center"/>
-            <tk:IntegerUpDown Grid.Column="1" Grid.Row="2" Margin="5 3" MaxWidth="64" HorizontalAlignment="Left"
-                              Minimum="-5" Maximum="5" Increment="1" Value="{Binding Air}"/>
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="Modifiers" VerticalAlignment="Center"/>
+            <Grid Grid.Column="1" Grid.Row="2" Margin="5 3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Column="0" Grid.Row="3"
-                       Text="Earth Modifier" VerticalAlignment="Center"/>
-            <tk:IntegerUpDown Grid.Column="1" Grid.Row="3" Margin="5 3" MaxWidth="64" HorizontalAlignment="Left"
-                              Minimum="-5" Maximum="5" Increment="1" Value="{Binding Earth}"/>
+                <TextBlock Grid.Column="0" Margin="0 0 3 0" Text="Air:" VerticalAlignment="Center"/>
+                <tk:IntegerUpDown Grid.Column="1" MaxWidth="64" Minimum="-5" Maximum="5" Increment="1" Value="{Binding Air}"/>
 
-            <TextBlock Grid.Column="0" Grid.Row="4"
-                       Text="Fire Modifier" VerticalAlignment="Center"/>
-            <tk:IntegerUpDown Grid.Column="1" Grid.Row="4" Margin="5 3" MaxWidth="64" HorizontalAlignment="Left"
-                              Minimum="-5" Maximum="5" Increment="1" Value="{Binding Fire}"/>
+                <TextBlock Grid.Column="2" Margin="12 0 3 0" Text="Earth:" VerticalAlignment="Center"/>
+                <tk:IntegerUpDown Grid.Column="3" MaxWidth="64" Minimum="-5" Maximum="5" Increment="1" Value="{Binding Earth}"/>
 
-            <TextBlock Grid.Column="0" Grid.Row="5"
-                       Text="Water Modifier" VerticalAlignment="Center"/>
-            <tk:IntegerUpDown Grid.Column="1" Grid.Row="5" Margin="5 3" MaxWidth="64" HorizontalAlignment="Left"
-                              Minimum="-5" Maximum="5" Increment="1" Value="{Binding Water}"/>
+                <TextBlock Grid.Column="4" Margin="12 0 3 0" Text="Fire:" VerticalAlignment="Center"/>
+                <tk:IntegerUpDown Grid.Column="5" MaxWidth="64" Minimum="-5" Maximum="5" Increment="1" Value="{Binding Fire}"/>
 
-            <TextBlock Grid.Column="0" Grid.Row="6"
-                       Text="Void Modifier" VerticalAlignment="Center"/>
-            <tk:IntegerUpDown Grid.Column="1" Grid.Row="6" Margin="5 3" MaxWidth="64" HorizontalAlignment="Left"
-                              Minimum="-5" Maximum="5" Increment="1" Value="{Binding Void}"/>
+                <TextBlock Grid.Column="6" Margin="12 0 3 0" Text="Water:" VerticalAlignment="Center"/>
+                <tk:IntegerUpDown Grid.Column="7" MaxWidth="64" Minimum="-5" Maximum="5" Increment="1" Value="{Binding Water}"/>
 
-            <TextBlock Grid.Column="0" Grid.Row="7"
-                       Text="Description" VerticalAlignment="Center"/>
-            <TextBox Grid.Column="1" Grid.Row="7" Margin="5 3"
-                     MinLines="3" AcceptsReturn="True" TextWrapping="Wrap"
-                     Text="{Binding Description}"/>
+                <TextBlock Grid.Column="8" Margin="12 0 3 0" Text="Void:" VerticalAlignment="Center"/>
+                <tk:IntegerUpDown Grid.Column="9" MaxWidth="64" Minimum="-5" Maximum="5" Increment="1" Value="{Binding Void}"/>
+            </Grid>
+
+            <TextBlock Grid.Column="0" Grid.Row="3" Text="Description" VerticalAlignment="Center"/>
+            <TextBox Grid.Column="1" Grid.Row="3" Margin="5 3" MinLines="3" AcceptsReturn="True" TextWrapping="Wrap"
+                     Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
     </DataTemplate>
 
@@ -91,13 +91,10 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Column="0" Grid.Row="0"
-                       Text="Name" VerticalAlignment="Center"/>
-            <TextBox Grid.Column="1" Grid.Row="0" Margin="5 3"
-                     MaxLength="256" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Name" VerticalAlignment="Center"/>
+            <TextBox Grid.Column="1" Grid.Row="0" Margin="5 3" MaxLength="256" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
 
-            <TextBlock Grid.Column="0" Grid.Row="1"
-                       Text="Ring" VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="Ring" VerticalAlignment="Center"/>
             <ComboBox Grid.Column="1" Grid.Row="1" Margin="5 3" MaxWidth="64" HorizontalAlignment="Left"
                       ItemsSource="{x:Static go:GameObjectEnums.Rings}" SelectedValue="{Binding Ring}">
                 <ComboBox.ItemTemplate>
@@ -108,24 +105,18 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
 
-            <TextBlock Grid.Column="0" Grid.Row="2"
-                       Text="Skills" VerticalAlignment="Center"/>
-            <c:TagSelector Grid.Column="1" Grid.Row="2" Margin="5 3"
-                           Prompt="Add Skill Group"
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="Skills" VerticalAlignment="Center"/>
+            <c:TagSelector Grid.Column="1" Grid.Row="2" Margin="5 3" Prompt="Add Skill Group"
                            ItemsSource="{x:Static go:GameObjectEnums.SkillGroups}"
                            BindableSelectedItems="{Binding SkillGroups, Converter={StaticResource skillGroupSetConverter}}"/>
 
-            <TextBlock Grid.Column="0" Grid.Row="3"
-                       Text="Spheres" VerticalAlignment="Center"/>
-            <c:TagSelector Grid.Column="1" Grid.Row="3" Margin="5 3"
-                           Prompt="Add Sphere"
+            <TextBlock Grid.Column="0" Grid.Row="3" Text="Spheres" VerticalAlignment="Center"/>
+            <c:TagSelector Grid.Column="1" Grid.Row="3" Margin="5 3" Prompt="Add Sphere"
                            ItemsSource="{x:Static go:GameObjectEnums.Spheres}"
                            BindableSelectedItems="{Binding Spheres, Converter={StaticResource sphereSetConverter}}"/>
 
-            <TextBlock Grid.Column="0" Grid.Row="4"
-                       Text="Description" VerticalAlignment="Center"/>
-            <TextBox Grid.Column="1" Grid.Row="4" Margin="5 3"
-                     MinLines="3" AcceptsReturn="True" TextWrapping="Wrap"
+            <TextBlock Grid.Column="0" Grid.Row="4" Text="Description" VerticalAlignment="Center"/>
+            <TextBox Grid.Column="1" Grid.Row="4" Margin="5 3" MinLines="3" AcceptsReturn="True" TextWrapping="Wrap"
                      Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
     </DataTemplate>
@@ -142,24 +133,24 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Column="0" Grid.Row="0"
-                       Text="Name" VerticalAlignment="Center"/>
-            <TextBox Grid.Column="1" Grid.Row="0" Margin="5 3"
-                     MaxLength="256" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Name" VerticalAlignment="Center"/>
+            <TextBox Grid.Column="1" Grid.Row="0" Margin="5 3" MaxLength="256" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
 
-            <TextBlock Grid.Column="0" Grid.Row="1" Grid.RowSpan="2"
-                       Text="Content" VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Text="Content" VerticalAlignment="Center"/>
             <ToolBarTray Grid.Column="1" Grid.Row="1" Margin="5 3 5 1">
                 <local:AbilityEditToolbar Target="{Binding ElementName=abilityContent}"/>
             </ToolBarTray>
-            <TextBox Grid.Column="1" Grid.Row="2" Margin="5 0 5 3" x:Name="abilityContent"
-                     MinLines="6" AcceptsReturn="True" TextWrapping="Wrap"
+            <TextBox Grid.Column="1" Grid.Row="2" Margin="5 0 5 3" x:Name="abilityContent" MinLines="6" AcceptsReturn="True" TextWrapping="Wrap"
                      Text="{Binding Content, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
     </DataTemplate>
     
     <DataTemplate x:Key="gearEditTemplate">
         <Grid>
+            <Grid.Resources>
+                <commands:ApplyGearTemplate Gear="{Binding}" x:Key="applyGearTemplateCommand"/>
+            </Grid.Resources>
+            
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
@@ -170,29 +161,432 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Column="0" Grid.Row="0"
-                       Text="Name" VerticalAlignment="Center"/>
-            <TextBox Grid.Column="1" Grid.Row="0" Margin="5 3"
-                     MaxLength="256" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Name" VerticalAlignment="Center"/>
+            <TextBox Grid.Column="1" Grid.Row="0" Margin="5 3" MaxLength="256" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
 
-            <TextBlock Grid.Column="0" Grid.Row="1"
-                       Text="Type" VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="Type" VerticalAlignment="Center"/>
             <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" Margin="5 3" HorizontalAlignment="Left">
                 <ComboBox Width="128" VerticalAlignment="Center" Margin="0 0 5 0"
                           ItemsSource="{x:Static go:GameObjectEnums.GearTypes}" SelectedValue="{Binding GearType}"/>
                 <Button Content=" Apply Template " MinWidth="80" MinHeight="18" VerticalAlignment="Center"
-                        Command="{StaticResource applyGearTemplateCommand}" CommandParameter="{Binding}"/>
+                        Command="{StaticResource applyGearTemplateCommand}"/>
             </StackPanel>
 
-            <TextBlock Grid.Column="0" Grid.Row="2"
-                       Text="Description" VerticalAlignment="Center"/>
-            <TextBox Grid.Column="1" Grid.Row="2" Margin="5 3"
-                     Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="Description" VerticalAlignment="Center"/>
+            <TextBox Grid.Column="1" Grid.Row="2" Margin="5 3" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="weaponEditTemplate">
+        <Grid>
+            <Grid.Resources>
+                <commands:ApplyGearTemplate Gear="{Binding}" x:Key="applyGearTemplateCommand"/>
+            </Grid.Resources>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Name" VerticalAlignment="Center"/>
+            <TextBox Grid.Column="1" Grid.Row="0" Margin="5 3" MaxLength="256" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="Type" VerticalAlignment="Center"/>
+            <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" Margin="5 3" HorizontalAlignment="Left">
+                <ComboBox Width="128" VerticalAlignment="Center" Margin="0 0 5 0" IsEnabled="False"
+                          ItemsSource="{x:Static go:GameObjectEnums.GearTypes}" SelectedValue="{x:Static common:GearType.Weapon}"/>
+                <Button Content=" Apply Template " MinWidth="80" MinHeight="18" VerticalAlignment="Center"
+                        Command="{StaticResource applyGearTemplateCommand}"/>
+            </StackPanel>
+
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="Description" VerticalAlignment="Center"/>
+            <TextBox Grid.Column="1" Grid.Row="2" Margin="5 3" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"/>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="characterElementTemplate">
+        <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="5" Padding="2" Margin="4 3">
+            <Grid>
+                <Grid.Resources>
+                    <proxy:CharacterElementStorage ElementType="{Binding ElementType}" x:Key="elementStorage"/>
+                </Grid.Resources>
+                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Horizontal" Margin="3" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Margin="0 0 5 0" VerticalAlignment="Center"
+                            CommandParameter="{Binding Element}" ToolTip="Apply Existing"
+                            Command="{Binding Data.CopyTemplateCommand, Source={StaticResource elementStorage}}">
+                        <Button.Content>
+                            <Image Source="pack://application:,,,/NPC.Presenter.Windows;component/Icons/System/OpenItem.png"
+                                   MaxWidth="24" MaxHeight="24" Margin="1.5"/>
+                        </Button.Content>
+                    </Button>
+                    <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" VerticalAlignment="Center"
+                            CommandParameter="{Binding Element}" ToolTip="Open in new Tab"
+                            Command="{Binding Data.OpenTabCommand, Source={StaticResource elementStorage}}">
+                        <Button.Content>
+                            <Image Source="pack://application:,,,/NPC.Presenter.Windows;component/Icons/System/CreateTab.png"
+                                   MaxWidth="24" MaxHeight="24" Margin="1.5"/>
+                        </Button.Content>
+                    </Button>
+                </StackPanel>
+                
+                <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Margin="3" VerticalAlignment="Top" HorizontalAlignment="Right"
+                        Command="{Binding RemoveCommand, RelativeSource={RelativeSource AncestorType=c:CharacterElementPresenter}}"
+                        CommandParameter="{Binding Element}">
+                    <Button.Content>
+                        <Path Margin="1.5" Stroke="#FF606060" StrokeThickness="1.5" StrokeStartLineCap="Square" StrokeEndLineCap="Square"
+                              VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="Uniform" 
+                              Data="M 0,0 L 8,8 M 0,8 L 8,0"/>
+                    </Button.Content>
+                </Button>
+                <ContentControl ContentTemplate="{Binding ElementTemplate, RelativeSource={RelativeSource AncestorType=c:CharacterElementPresenter}}"
+                                Content="{Binding Element}" Grid.Row="1"/>
+            </Grid>
+        </Border>
+    </DataTemplate>
+
+    <DataTemplate x:Key="advantageElementTemplate">
+        <ContentControl ContentTemplate="{StaticResource characterElementTemplate}"
+                        Content="{Binding Converter={StaticResource elementWrapperConvereter}, ConverterParameter={x:Static go:CharacterElement.Advantage}}"/>
+    </DataTemplate>
+
+    <DataTemplate x:Key="disadvantageElementTemplate">
+        <ContentControl ContentTemplate="{StaticResource characterElementTemplate}"
+                        Content="{Binding Converter={StaticResource elementWrapperConvereter}, ConverterParameter={x:Static go:CharacterElement.Disadvantage}}"/>
+    </DataTemplate>
+
+    <DataTemplate x:Key="weaponElementTemplate">
+        <ContentControl ContentTemplate="{StaticResource characterElementTemplate}"
+                        Content="{Binding Converter={StaticResource elementWrapperConvereter}, ConverterParameter={x:Static go:CharacterElement.FavoredWeapon}}"/>
+    </DataTemplate>
+
+    <DataTemplate x:Key="equippedGearElementTemplate">
+        <ContentControl ContentTemplate="{StaticResource characterElementTemplate}"
+                        Content="{Binding Converter={StaticResource elementWrapperConvereter}, ConverterParameter={x:Static go:CharacterElement.EquippedGear}}"/>
+    </DataTemplate>
+
+    <DataTemplate x:Key="otherGearElementTemplate">
+        <ContentControl ContentTemplate="{StaticResource characterElementTemplate}"
+                        Content="{Binding Converter={StaticResource elementWrapperConvereter}, ConverterParameter={x:Static go:CharacterElement.OtherGear}}"/>
+    </DataTemplate>
+    
+    <DataTemplate x:Key="abilityElementTemplate">
+        <ContentControl ContentTemplate="{StaticResource characterElementTemplate}"
+                        Content="{Binding Converter={StaticResource elementWrapperConvereter}, ConverterParameter={x:Static go:CharacterElement.Ability}}"/>
+    </DataTemplate>
+
+    <DataTemplate x:Key="characterEditTemplate">
+        <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
+            <Grid Grid.IsSharedSizeScope="True">
+                <Grid.MaxWidth>
+                    <MultiBinding Converter="{StaticResource scrollViewerSizeConverter}"
+                                  ConverterParameter="{x:Static SystemParameters.VerticalScrollBarWidth}">
+                        <Binding Path="ActualWidth" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Grid}"/>
+                        <Binding Path="ComputedVerticalScrollBarVisibility" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ScrollViewer}"/>
+                    </MultiBinding>
+                </Grid.MaxWidth>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="Name" VerticalAlignment="Center"/>
+                <TextBox Grid.Column="1" Grid.Row="0" Margin="5 3" MaxLength="256" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="Description" VerticalAlignment="Center"/>
+                <TextBox Grid.Column="1" Grid.Row="1" Margin="5 3" MinLines="3" AcceptsReturn="True" TextWrapping="Wrap"
+                    Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Grid.Column="0" Grid.Row="2" Text="Type" VerticalAlignment="Center"/>
+                <ComboBox Grid.Column="1" Grid.Row="2" Width="128" VerticalAlignment="Center" Margin="5 3" HorizontalAlignment="Left"
+                    ItemsSource="{x:Static go:GameObjectEnums.CharacterTypes}" SelectedValue="{Binding CharacterType}"/>
+
+                <TextBlock Grid.Column="0" Grid.Row="3" Text="Rank" VerticalAlignment="Center"/>
+                <Grid Grid.Column="1" Grid.Row="3" Margin="5 3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Title0"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Value0"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Title1"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Value1"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Margin="0 0 3 0" Text="Combat:" VerticalAlignment="Center"/>
+                    <tk:IntegerUpDown Grid.Column="1" MaxWidth="64" Minimum="0" Maximum="99" Increment="1" Value="{Binding CombatConflictRank}"/>
+
+                    <TextBlock Grid.Column="2" Margin="12 0 3 0" Text="Intrigue:" VerticalAlignment="Center"/>
+                    <tk:IntegerUpDown Grid.Column="3" MaxWidth="64" Minimum="0" Maximum="99" Increment="1" Value="{Binding IntrigueConflictRank}"/>
+                </Grid>
+
+                <TextBlock Grid.Column="0" Grid.Row="4" Text="Rings" VerticalAlignment="Center"/>
+                <Grid Grid.Column="1" Grid.Row="4" Margin="5 3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Title0"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Value0"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Title1"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Value1"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Title2"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Value2"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Title3"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Value3"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Title4"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Value4"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Margin="0 0 3 0" Text="Air:" VerticalAlignment="Center"/>
+                    <tk:IntegerUpDown Grid.Column="1" MaxWidth="64" Minimum="1" Maximum="10" Increment="1" Value="{Binding Air}"/>
+
+                    <TextBlock Grid.Column="2" Margin="12 0 3 0" Text="Earth:" VerticalAlignment="Center"/>
+                    <tk:IntegerUpDown Grid.Column="3" MaxWidth="64" Minimum="1" Maximum="10" Increment="1" Value="{Binding Earth}"/>
+
+                    <TextBlock Grid.Column="4" Margin="12 0 3 0" Text="Fire:" VerticalAlignment="Center"/>
+                    <tk:IntegerUpDown Grid.Column="5" MaxWidth="64" Minimum="1" Maximum="10" Increment="1" Value="{Binding Fire}"/>
+
+                    <TextBlock Grid.Column="6" Margin="12 0 3 0" Text="Water:" VerticalAlignment="Center"/>
+                    <tk:IntegerUpDown Grid.Column="7" MaxWidth="64" Minimum="1" Maximum="10" Increment="1" Value="{Binding Water}"/>
+
+                    <TextBlock Grid.Column="8" Margin="12 0 3 0" Text="Void:" VerticalAlignment="Center"/>
+                    <tk:IntegerUpDown Grid.Column="9" MaxWidth="64" Minimum="0" Maximum="10" Increment="1" Value="{Binding Void}"/>
+                </Grid>
+
+                <TextBlock Grid.Column="0" Grid.Row="5" Text="Skills" VerticalAlignment="Center"/>
+                <Grid Grid.Column="1" Grid.Row="5" Margin="5 3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Title0"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Value0"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Title1"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Value1"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Title2"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Value2"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Title3"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Value3"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Title4"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Value4"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Margin="0 0 3 0" Text="Artisan:" VerticalAlignment="Center"/>
+                    <tk:IntegerUpDown Grid.Column="1" MaxWidth="64" Minimum="0" Maximum="10" Increment="1" Value="{Binding Artisan}"/>
+
+                    <TextBlock Grid.Column="2" Margin="12 0 3 0" Text="Martial:" VerticalAlignment="Center"/>
+                    <tk:IntegerUpDown Grid.Column="3" MaxWidth="64" Minimum="0" Maximum="10" Increment="1" Value="{Binding Martial}"/>
+
+                    <TextBlock Grid.Column="4" Margin="12 0 3 0" Text="Scholar:" VerticalAlignment="Center"/>
+                    <tk:IntegerUpDown Grid.Column="5" MaxWidth="64" Minimum="0" Maximum="10" Increment="1" Value="{Binding Scholar}"/>
+
+                    <TextBlock Grid.Column="6" Margin="12 0 3 0" Text="Social:" VerticalAlignment="Center"/>
+                    <tk:IntegerUpDown Grid.Column="7" MaxWidth="64" Minimum="0" Maximum="10" Increment="1" Value="{Binding Social}"/>
+
+                    <TextBlock Grid.Column="8" Margin="12 0 3 0" Text="Trade:" VerticalAlignment="Center"/>
+                    <tk:IntegerUpDown Grid.Column="9" MaxWidth="64" Minimum="0" Maximum="10" Increment="1" Value="{Binding Trade}"/>
+                </Grid>
+
+                <TextBlock Grid.Column="0" Grid.Row="6" Text="Personal" VerticalAlignment="Center"/>
+                <Grid Grid.Column="1" Grid.Row="6" Margin="5 3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Title0"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Value0"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Title1"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Value1"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Title2"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Value2"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Title3"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Value3"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Margin="0 0 3 0" Text="Endurance:" VerticalAlignment="Center"/>
+                    <tk:IntegerUpDown Grid.Column="1" MaxWidth="64" Minimum="1" Maximum="50" Increment="1" Value="{Binding Endurance}"/>
+
+                    <TextBlock Grid.Column="2" Margin="12 0 3 0" Text="Composure:" VerticalAlignment="Center"/>
+                    <tk:IntegerUpDown Grid.Column="3" MaxWidth="64" Minimum="0" Maximum="50" Increment="1" Value="{Binding Composure}"/>
+
+                    <TextBlock Grid.Column="4" Margin="12 0 3 0" Text="Focus:" VerticalAlignment="Center"/>
+                    <tk:IntegerUpDown Grid.Column="5" MaxWidth="64" Minimum="1" Maximum="20" Increment="1" Value="{Binding Focus}"/>
+
+                    <TextBlock Grid.Column="6" Margin="12 0 3 0" Text="Vigilance:" VerticalAlignment="Center"/>
+                    <tk:IntegerUpDown Grid.Column="7" MaxWidth="64" Minimum="1" Maximum="20" Increment="1" Value="{Binding Vigilance}"/>
+                </Grid>
+
+                <TextBlock Grid.Column="0" Grid.Row="7" Grid.RowSpan="2" Text="Societal" VerticalAlignment="Center"/>
+                <CheckBox Grid.Column="1" Grid.Row="7" Margin="5 3" Content="Has Societal Values" IsChecked="{Binding HasSocietalValues}"/>
+                <Grid Grid.Column="1" Grid.Row="8" Margin="5 3 5 13" Visibility="{Binding HasSocietalValues, Converter={StaticResource visibilityConverter}}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Title0"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Value0"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Title1"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Value1"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Title2"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Value2"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Margin="0 0 3 0" Text="Honor:" VerticalAlignment="Center"/>
+                    <tk:IntegerUpDown Grid.Column="1" MaxWidth="64" Minimum="0" Maximum="99" Increment="1" Value="{Binding Honor}"/>
+
+                    <TextBlock Grid.Column="2" Margin="12 0 3 0" Text="Glory:" VerticalAlignment="Center"/>
+                    <tk:IntegerUpDown Grid.Column="3" MaxWidth="64" Minimum="0" Maximum="99" Increment="1" Value="{Binding Glory}"/>
+
+                    <TextBlock Grid.Column="4" Margin="12 0 3 0" Text="Status:" VerticalAlignment="Center"/>
+                    <tk:IntegerUpDown Grid.Column="5" MaxWidth="64" Minimum="0" Maximum="99" Increment="1" Value="{Binding Status}"/>
+                </Grid>
+
+                <Expander Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="9" Header="Demeanor">
+                    <Grid>
+                        <Grid.Resources>
+                            <proxy:CharacterElementStorage ElementType="{x:Static go:CharacterElement.Demeanor}" x:Key="demeanorStorage"/>
+                        </Grid.Resources>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Orientation="Horizontal" Margin="3" HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Margin="0 0 5 0" VerticalAlignment="Center"
+                        CommandParameter="{Binding Demeanor}" ToolTip="Apply Existing"
+                        Command="{Binding Data.CopyTemplateCommand, Source={StaticResource demeanorStorage}}">
+                                <Button.Content>
+                                    <Image Source="pack://application:,,,/NPC.Presenter.Windows;component/Icons/System/OpenItem.png"
+                                MaxWidth="24" MaxHeight="24" Margin="1.5"/>
+                                </Button.Content>
+                            </Button>
+                            <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" VerticalAlignment="Center"
+                        CommandParameter="{Binding Demeanor}" ToolTip="Open in new Tab"
+                        Command="{Binding Data.OpenTabCommand, Source={StaticResource demeanorStorage}}">
+                                <Button.Content>
+                                    <Image Source="pack://application:,,,/NPC.Presenter.Windows;component/Icons/System/CreateTab.png"
+                                MaxWidth="24" MaxHeight="24" Margin="1.5"/>
+                                </Button.Content>
+                            </Button>
+                        </StackPanel>
+
+                        <ContentControl Grid.Row="1" Margin="0 0 0 8"
+                                    ContentTemplate="{StaticResource demeanorEditTemplate}" Content="{Binding Demeanor}"/>
+                    </Grid>
+                </Expander>
+
+                <Expander Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="10" Header="Advantages">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <c:CharacterElementPresenter x:Name="advantagePresenter" ItemTemplate="{StaticResource advantageElementTemplate}"
+                                                    ItemsSource="{Binding Advantages}" ElementTemplate="{StaticResource traitEditTemplate}"
+                                                    Character="{Binding}" ElementType="Advantage"/>
+                        <Button Grid.Row="1" Content="Add Advantage" Margin="8" Height="24" HorizontalAlignment="Stretch"
+                            Command="{Binding AddCommand, ElementName=advantagePresenter}"/>
+                    </Grid>
+                </Expander>
+
+                <Expander Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="11" Header="Disadvantages">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <c:CharacterElementPresenter x:Name="disadvantagePresenter" ItemTemplate="{StaticResource disadvantageElementTemplate}"
+                                                    ItemsSource="{Binding Disadvantages}" ElementTemplate="{StaticResource traitEditTemplate}"
+                                                    Character="{Binding}" ElementType="Disadvantage"/>
+                        <Button Grid.Row="1" Content="Add Disadvantage" Margin="8" Height="24" HorizontalAlignment="Stretch"
+                            Command="{Binding AddCommand, ElementName=disadvantagePresenter}"/>
+                    </Grid>
+                </Expander>
+
+                <Expander Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="12" Header="Favored Weapons">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <c:CharacterElementPresenter x:Name="weaponPresenter" ItemTemplate="{StaticResource weaponElementTemplate}"
+                                                    ItemsSource="{Binding FavoredWeapons}" ElementTemplate="{StaticResource weaponEditTemplate}"
+                                                    Character="{Binding}" ElementType="FavoredWeapon"/>
+                        <Button Grid.Row="1" Content="Add Favored Weapon" Margin="8" Height="24" HorizontalAlignment="Stretch"
+                            Command="{Binding AddCommand, ElementName=weaponPresenter}"/>
+                    </Grid>
+                </Expander>
+
+                <Expander Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="13" Header="Equipped Gear">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <c:CharacterElementPresenter x:Name="equippedGearPresenter" ItemTemplate="{StaticResource equippedGearElementTemplate}"
+                                                    ItemsSource="{Binding EquippedGear}" ElementTemplate="{StaticResource gearEditTemplate}"
+                                                    Character="{Binding}" ElementType="EquippedGear"/>
+                        <Button Grid.Row="1" Content="Add Equipped Gear" Margin="8" Height="24" HorizontalAlignment="Stretch"
+                            Command="{Binding AddCommand, ElementName=equippedGearPresenter}"/>
+                    </Grid>
+                </Expander>
+
+                <Expander Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="14" Header="Other Gear">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <c:CharacterElementPresenter x:Name="otherGearPresenter" ItemTemplate="{StaticResource otherGearElementTemplate}"
+                                                    ItemsSource="{Binding OtherGear}" ElementTemplate="{StaticResource gearEditTemplate}"
+                                                    Character="{Binding}" ElementType="OtherGear"/>
+                        <Button Grid.Row="1" Content="Add Gear" Margin="8" Height="24" HorizontalAlignment="Stretch"
+                            Command="{Binding AddCommand, ElementName=otherGearPresenter}"/>
+                    </Grid>
+                </Expander>
+
+                <Expander Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="15" Header="Abilities">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <c:CharacterElementPresenter x:Name="abilityPresenter" ItemTemplate="{StaticResource abilityElementTemplate}"
+                                                    ItemsSource="{Binding Abilities}" ElementTemplate="{StaticResource abilityEditTemplate}"
+                                                    Character="{Binding}" ElementType="Ability"/>
+                        <Button Grid.Row="1" Content="Add Ability" Margin="8" Height="24" HorizontalAlignment="Stretch"
+                            Command="{Binding AddCommand, ElementName=abilityPresenter}"/>
+                    </Grid>
+                </Expander>
+            </Grid>
+        </ScrollViewer>
     </DataTemplate>
 
     <templates:EditorTemplateSelector x:Key="editorTemplateSelector"
                                       DefaultTemplate="{StaticResource defaultEditTemplate}"
+                                      CharacterTemplate="{StaticResource characterEditTemplate}"
                                       DemeanorTemplate="{StaticResource demeanorEditTemplate}"
                                       TraitTemplate="{StaticResource traitEditTemplate}"
                                       AbilityTemplate="{StaticResource abilityEditTemplate}"

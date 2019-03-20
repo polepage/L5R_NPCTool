@@ -7,12 +7,12 @@ namespace NPC.Data.GameObjects
     class Demeanor : GameObject, IDemeanor
     {
         public Demeanor()
-            : base(ObjectType.Ability)
+            : base(ObjectType.Demeanor)
         {
         }
 
         private Demeanor(Guid id)
-            : base(id, ObjectType.Ability)
+            : base(id, ObjectType.Demeanor)
         {
         }
 
@@ -65,9 +65,9 @@ namespace NPC.Data.GameObjects
             set => IsDirty |= SetProperty(ref _description, value);
         }
 
-        public static GameObject FromXml(XElement xml)
+        public static Demeanor FromXml(XElement xml)
         {
-            return FromXml(xml, t =>
+            return (Demeanor)FromXml(xml, t =>
             {
                 if (t.type != ObjectType.Demeanor)
                 {

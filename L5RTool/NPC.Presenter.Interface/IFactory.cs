@@ -10,5 +10,7 @@ namespace NPC.Presenter
 
         IGameObject Duplicate(IGameObjectReference reference);
         IEnumerable<IGameObject> Duplicate(IEnumerable<IGameObjectReference> references);
+
+        void CopyTo(IGameObject target, IGameObjectReference source);
     }
 }

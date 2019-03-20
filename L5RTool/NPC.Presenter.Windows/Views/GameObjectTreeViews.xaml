@@ -1,10 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:c="clr-namespace:NPC.Presenter.Windows.Controls"
+                    xmlns:binding="clr-namespace:NPC.Presenter.Windows.Binding"
                     xmlns:template="clr-namespace:NPC.Presenter.Windows.Templates"
                     xmlns:conv="clr-namespace:NPC.Presenter.Windows.Converters">
 
-    <c:BindingProxy x:Key="proxy" Data="{Binding}"/>
+    <binding:BindingProxy x:Key="proxy" Data="{Binding}"/>
 
     <conv:NameToImageConverter x:Key="imageConverter"/>
     <BooleanToVisibilityConverter x:Key="visibilityConverter"/>

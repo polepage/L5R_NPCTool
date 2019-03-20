@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace NPC.Presenter.Windows.Controls
+namespace NPC.Presenter.Windows.Binding
 {
     class BindingProxy : Freezable
     {

@@ -16,9 +16,9 @@ namespace NPC.Data.GameObjects
         {
         }
 
-        public static GameObject FromXml(XElement xml)
+        public static Disadvantage FromXml(XElement xml)
         {
-            return FromXml(xml, t =>
+            return (Disadvantage)FromXml(xml, t =>
             {
                 if (t.type != ObjectType.Disadvantage)
                 {

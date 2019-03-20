@@ -21,7 +21,7 @@ namespace NPC.Data
             switch (type)
             {
                 case ObjectType.Character:
-                    return null;
+                    return Character.FromXml(xml);
                 case ObjectType.Demeanor:
                     return Demeanor.FromXml(xml);
                 case ObjectType.Advantage:

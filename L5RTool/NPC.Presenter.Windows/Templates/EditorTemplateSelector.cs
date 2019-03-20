@@ -8,6 +8,7 @@ namespace NPC.Presenter.Windows.Templates
     class EditorTemplateSelector: DataTemplateSelector
     {
         public DataTemplate DefaultTemplate { get; set; }
+        public DataTemplate CharacterTemplate { get; set; }
         public DataTemplate DemeanorTemplate { get; set; }
         public DataTemplate TraitTemplate { get; set; }
         public DataTemplate AbilityTemplate { get; set; }
@@ -19,6 +20,8 @@ namespace NPC.Presenter.Windows.Templates
             {
                 switch (gameObject.Type)
                 {
+                    case ObjectType.Character:
+                        return CharacterTemplate;
                     case ObjectType.Demeanor:
                         return DemeanorTemplate;
                     case ObjectType.Advantage:

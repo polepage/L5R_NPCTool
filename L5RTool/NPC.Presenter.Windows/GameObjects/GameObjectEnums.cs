@@ -10,5 +10,6 @@ namespace NPC.Presenter.Windows.GameObjects
         public static IEnumerable<SkillGroup> SkillGroups => EnumHelpers.GetValues<SkillGroup>();
         public static IEnumerable<TraitSphere> Spheres => EnumHelpers.GetValues<TraitSphere>();
         public static IEnumerable<GearType> GearTypes => EnumHelpers.GetValues<GearType>();
+        public static IEnumerable<CharacterType> CharacterTypes => EnumHelpers.GetValues<CharacterType>();
     }
 }

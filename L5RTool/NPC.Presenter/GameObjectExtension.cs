@@ -42,6 +42,8 @@ namespace NPC.Presenter.GameObjects
         {
             switch (gameObject)
             {
+                case Data.GameObjects.ICharacter s:
+                    return new Character(s);
                 case Data.GameObjects.IDemeanor s:
                     return new Demeanor(s);
                 case Data.GameObjects.IAdvantage s:

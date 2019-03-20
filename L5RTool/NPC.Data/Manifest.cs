@@ -21,13 +21,19 @@ namespace NPC.Data
         {
             if (_collection.FirstOrDefault(or => or.Equals(metadata)) is GameObjectMetadata existing)
             {
+                bool modified = false;
                 if (existing.Name != metadata.Name)
                 {
                     existing.Name = metadata.Name;
-                    return true;
+                    modified = true;
+                }
+                if (existing.Keywords.SequenceEqual(metadata.Keywords))
+                {
+                    existing.UpdateKeywords(metadata.Keywords);
+                    modified = true;
                 }
 
-                return false;
+                return modified;
             }
             else
             {

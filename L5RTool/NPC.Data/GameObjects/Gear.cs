@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Xml.Linq;
 using NPC.Common;
 
@@ -7,12 +8,12 @@ namespace NPC.Data.GameObjects
     class Gear : GameObject, IGear
     {
         public Gear()
-            : base(ObjectType.Ability)
+            : base(ObjectType.Equipment)
         {
         }
 
         private Gear(Guid id)
-            : base(id, ObjectType.Ability)
+            : base(id, ObjectType.Equipment)
         {
         }
 
@@ -30,9 +31,9 @@ namespace NPC.Data.GameObjects
             set => IsDirty |= SetProperty(ref _description, value);
         }
 
-        public static GameObject FromXml(XElement xml)
+        public static Gear FromXml(XElement xml)
         {
-            return FromXml(xml, t =>
+            return (Gear)FromXml(xml, t =>
             {
                 if (t.type != ObjectType.Equipment)
                 {
@@ -61,6 +62,14 @@ namespace NPC.Data.GameObjects
 
             Description = gearData.Element("Description").Value.Replace("\n", Environment.NewLine);
             GearType = (GearType)Enum.Parse(typeof(GearType), gearData.Element("GearType").Value);
+        }
+
+        protected override IEnumerable<string> ExtractKeywords()
+        {
+            return new List<string>(base.ExtractKeywords())
+            {
+                GearType.ToString()
+            };
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using NPC.Common;
 using NPC.Presenter.GameObjects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -36,6 +37,21 @@ namespace NPC.Presenter
         public IEnumerable<IGameObject> Duplicate(IEnumerable<IGameObjectReference> references)
         {
             return references.Select(r => Duplicate(r));
+        }
+
+        public void CopyTo(IGameObject target, IGameObjectReference source)
+        {
+            if (!(source is IGameObject go))
+            {
+                go = _storage.Open(source as IGameObjectMetadata);
+            }
+
+            if (target.Type != go.Type)
+            {
+                throw new ArgumentException("Target and Source are not of the same type.");
+            }
+
+            (target as GameObject)?.CopyData(go);
         }
     }
 }

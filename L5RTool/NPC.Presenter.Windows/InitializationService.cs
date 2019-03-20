@@ -1,4 +1,7 @@
-﻿using NPC.Presenter.Windows.Dialogs;
+﻿using NPC.Presenter.Windows.Binding;
+using NPC.Presenter.Windows.Dialogs;
+using NPC.Presenter.Windows.Proxy;
+using NPC.Presenter.Windows.Proxy.Data;
 using NPC.Presenter.Windows.ViewModels;
 using NPC.Presenter.Windows.Views;
 using Prism.Ioc;
@@ -20,6 +23,7 @@ namespace NPC.Presenter.Windows
             container.RegisterDialog<ConfirmationDialog, ConfirmationDialogViewModel>(Dialog.Confirmation.Name);
             container.RegisterDialog<PrintDialog, PrintDialogViewModel>(Dialog.Print.Name);
             container.RegisterDialog<AboutDialog, AboutDialogViewModel>(Dialog.About.Name);
+            container.RegisterDialog<CharacterElementDialog, CharacterElementDialogViewModel>(Dialog.CharacterElementSelection.Name);
 
             container.Register<MainWindowViewModel>();
             container.Register<MainMenuViewModel>();
@@ -32,6 +36,10 @@ namespace NPC.Presenter.Windows
             ViewModelLocationProvider.Register<GameObjectEditor>(() => provider.Resolve<GameObjectEditorViewModel>());
             ViewModelLocationProvider.Register<GameObjectTree>(() => provider.Resolve<GameObjectTreeViewModel>());
             ViewModelLocationProvider.Register<AbilityEditToolbar>(() => provider.Resolve<AbilityEditToolbarViewModel>());
+
+            container.Register<CharacterElementStorage>();
+
+            ProxyDataLocator.Register<CharacterElementStorage>(() => provider.Resolve<CharacterElementStorageData>());
         }
     }
 }

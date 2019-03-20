@@ -1,4 +1,5 @@
-﻿using NPC.Common;
+﻿using System.Collections.Generic;
+using NPC.Common;
 
 namespace NPC.Presenter.GameObjects
 {
@@ -14,6 +15,8 @@ namespace NPC.Presenter.GameObjects
 
         public ObjectType Type => Source.Type;
         public string Name => Source.Name;
+
+        public IEnumerable<string> Keywords => Source.Keywords;
 
         protected override void RegisterBindings()
         {

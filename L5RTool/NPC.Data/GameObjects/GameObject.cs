@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Xml.Linq;
 using NPC.Common;
 
@@ -55,7 +56,7 @@ namespace NPC.Data.GameObjects
 
         public GameObjectMetadata ExtractMetadata()
         {
-            return new GameObjectMetadata(Id, Type)
+            return new GameObjectMetadata(Id, Type, ExtractKeywords())
             {
                 Name = Name
             };
@@ -83,6 +84,11 @@ namespace NPC.Data.GameObjects
         protected virtual void LoadXml(XElement xml)
         {
             Name = xml.Element("Name").Value.Replace("\n", Environment.NewLine);
+        }
+
+        protected virtual IEnumerable<string> ExtractKeywords()
+        {
+            return new List<string>();
         }
     }
 }

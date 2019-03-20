@@ -5,13 +5,13 @@
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
             xmlns:prism="http://prismlibrary.com/"
             xmlns:conv="clr-namespace:NPC.Presenter.Windows.Converters"
-            xmlns:c="clr-namespace:NPC.Presenter.Windows.Controls"
+            xmlns:binding="clr-namespace:NPC.Presenter.Windows.Binding"
             mc:Ignorable="d" 
             prism:ViewModelLocator.AutoWireViewModel="True"
             Width="300">
 
     <StackPanel.Resources>
-        <c:BindingProxy x:Key="proxy" Data="{Binding}"/>
+        <binding:BindingProxy x:Key="proxy" Data="{Binding}"/>
         
         <conv:NameToImageConverter x:Key="imageConverter"/>
     </StackPanel.Resources>

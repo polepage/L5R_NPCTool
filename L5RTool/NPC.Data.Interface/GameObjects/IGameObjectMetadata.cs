@@ -1,5 +1,5 @@
 ﻿using NPC.Common;
-using System.ComponentModel;
+using System.Collections.Generic;
 
 namespace NPC.Data.GameObjects
 {
@@ -7,5 +7,6 @@ namespace NPC.Data.GameObjects
     {
         ObjectType Type { get; }
         string Name { get; }
+        IEnumerable<string> Keywords { get; }
     }
 }

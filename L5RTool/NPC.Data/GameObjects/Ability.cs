@@ -23,9 +23,9 @@ namespace NPC.Data.GameObjects
             set => IsDirty |= SetProperty(ref _content, value);
         }
 
-        public static GameObject FromXml(XElement xml)
+        public static Ability FromXml(XElement xml)
         {
-            return FromXml(xml, t =>
+            return (Ability)FromXml(xml, t =>
             {
                 if (t.type != ObjectType.Ability)
                 {

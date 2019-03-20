@@ -50,5 +50,14 @@
         {
             public static readonly string Name = "aboutdialog";
         }
+
+        public static class CharacterElementSelection
+        {
+            public static readonly string Name = "characterelementselection";
+            public static readonly string Source = "Source";
+            public static readonly string Opener = "Opener";
+            public static readonly string Parser = "Parser";
+            public static readonly string Selection = "Selection";
+        }
     }
 }

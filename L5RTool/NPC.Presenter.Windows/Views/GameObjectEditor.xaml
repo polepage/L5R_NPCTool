@@ -3,7 +3,7 @@
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:prism="http://prismlibrary.com/"
             xmlns:conv="clr-namespace:NPC.Presenter.Windows.Converters"
-            xmlns:controls="clr-namespace:NPC.Presenter.Windows.Controls"
+            xmlns:binding="clr-namespace:NPC.Presenter.Windows.Binding"
             prism:ViewModelLocator.AutoWireViewModel="True"
             ItemsSource="{Binding GameObjects}"
             SelectedValue="{Binding SelectedObject}">
@@ -13,7 +13,7 @@
                 <ResourceDictionary Source="GameObjectEditorTemplates.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
-            <controls:BindingProxy x:Key="proxy" Data="{Binding}"/>
+            <binding:BindingProxy x:Key="proxy" Data="{Binding}"/>
 
             <BooleanToVisibilityConverter x:Key="visibilityConverter"/>
             <conv:NameToImageConverter x:Key="imageConverter"/>

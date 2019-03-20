@@ -1,7 +1,7 @@
 ﻿using NPC.Common;
 using System.Collections.Generic;
 
-namespace NPC.Data.GameObjects
+namespace NPC.Presenter.GameObjects
 {
     public interface ICharacter: IGameObject
     {

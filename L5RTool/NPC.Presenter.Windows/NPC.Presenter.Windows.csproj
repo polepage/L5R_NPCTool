@@ -56,9 +56,16 @@
     <Compile Include="Behaviors\GameObjectPrintPreview.cs" />
     <Compile Include="Behaviors\OpenHyperlink.cs" />
     <Compile Include="Behaviors\PropagateInputBindings.cs" />
+    <Compile Include="Binding\ProxyDataLocator.cs" />
+    <Compile Include="Controls\CharacterElementPreviewer.cs" />
+    <Compile Include="Converters\CharacterElementWrapperConverter.cs" />
+    <Compile Include="Converters\ScrollViewerSizeConverter.cs" />
+    <Compile Include="Proxy\CharacterElementStorage.cs" />
     <Compile Include="Commands\ApplyGearTemplate.cs" />
+    <Compile Include="Controls\CharacterElementPresenter.cs" />
+    <Compile Include="Binding\ExternalBindingProxy.cs" />
     <Compile Include="Controls\ScriptFormatingToolbar.cs" />
-    <Compile Include="Controls\BindingProxy.cs" />
+    <Compile Include="Binding\BindingProxy.cs" />
     <Compile Include="Controls\PrintDocumentViewer.cs" />
     <Compile Include="Controls\TagSelector.cs" />
     <Compile Include="Converters\CancelEventArgsConverter.cs" />
@@ -75,6 +82,7 @@
     <Compile Include="Events\SingleSubEvent.cs" />
     <Compile Include="Extensions\DialogServiceExtension.cs" />
     <Compile Include="Extensions\ParserExtensions.cs" />
+    <Compile Include="GameObjects\CharacterElement.cs" />
     <Compile Include="GameObjects\GameObjectEnums.cs" />
     <Compile Include="GameObjects\ObjectMetadataGroup.cs" />
     <Compile Include="Helpers\TreeHelper.cs" />
@@ -86,10 +94,12 @@
     <Compile Include="Print\GearPrinter.cs" />
     <Compile Include="Print\TraitPrinter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Proxy\Data\CharacterElementStorageData.cs" />
     <Compile Include="Templates\EditorTemplateSelector.cs" />
     <Compile Include="Templates\TreeViewTemplateSelector.cs" />
     <Compile Include="ViewModels\AbilityEditToolbarViewModel.cs" />
     <Compile Include="ViewModels\AboutDialogViewModel.cs" />
+    <Compile Include="ViewModels\CharacterElementDialogViewModel.cs" />
     <Compile Include="ViewModels\ConfirmationDialogViewModel.cs" />
     <Compile Include="ViewModels\PrintDialogViewModel.cs" />
     <Compile Include="ViewModels\SaveDialogViewModel.cs" />
@@ -104,6 +114,9 @@
     </Compile>
     <Compile Include="Views\AboutDialog.xaml.cs">
       <DependentUpon>AboutDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CharacterElementDialog.xaml.cs">
+      <DependentUpon>CharacterElementDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ConfirmationDialog.xaml.cs">
       <DependentUpon>ConfirmationDialog.xaml</DependentUpon>
@@ -215,6 +228,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\CharacterElementDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ConfirmationDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -274,8 +291,8 @@
   <ItemGroup>
     <Resource Include="Icons\Toolbar\ExplodingSuccess.png" />
     <Resource Include="Icons\Toolbar\Opportunity.png" />
-    <Resource Include="Icons\Toolbar\RingDie.png" />
-    <Resource Include="Icons\Toolbar\SkillDie.png" />
+    <Resource Include="Icons\Toolbar\RingDice.png" />
+    <Resource Include="Icons\Toolbar\SkillDice.png" />
     <Resource Include="Icons\Toolbar\Strife.png" />
     <Resource Include="Icons\Toolbar\Success.png" />
   </ItemGroup>
@@ -289,6 +306,11 @@
   <ItemGroup>
     <Resource Include="Icons\Toolbar\LeftIndent.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Icons\System\OpenItem.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\System\CreateTab.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

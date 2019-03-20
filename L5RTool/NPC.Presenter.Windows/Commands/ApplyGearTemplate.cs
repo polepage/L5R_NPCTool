@@ -1,36 +1,53 @@
 ﻿using NPC.Common;
 using NPC.Presenter.GameObjects;
 using System;
+using System.Windows;
 using System.Windows.Input;
 
 namespace NPC.Presenter.Windows.Commands
 {
-    class ApplyGearTemplate : ICommand
+    class ApplyGearTemplate : Freezable, ICommand
     {
+        public static readonly DependencyProperty GearProperty =
+            DependencyProperty.Register("Gear",
+                                        typeof(IGear),
+                                        typeof(ApplyGearTemplate));
+
+        public IGear Gear
+        {
+            get => (IGear)GetValue(GearProperty);
+            set => SetValue(GearProperty, value);
+        }
+
         public event EventHandler CanExecuteChanged;
 
         public bool CanExecute(object parameter)
         {
-            return parameter is IGear;
+            return Gear != null;
         }
 
         public void Execute(object parameter)
         {
-            if (parameter is IGear gear)
+            if (Gear != null)
             {
-                switch (gear.GearType)
+                switch (Gear.GearType)
                 {
                     case GearType.Armor:
-                        gear.Description = "Physical X, Supernatural Y";
+                        Gear.Description = "Physical X, Supernatural Y";
                         break;
                     case GearType.Weapon:
-                        gear.Description = "Range X, Damage Y, Deadliness Z";
+                        Gear.Description = "Range X, Damage Y, Deadliness Z";
                         break;
                     default:
-                        gear.Description = "";
+                        Gear.Description = "";
                         break;
                 }
             }
+        }
+
+        protected override Freezable CreateInstanceCore()
+        {
+            return new ApplyGearTemplate();
         }
 
         private void OnCanExecuteChanged()
