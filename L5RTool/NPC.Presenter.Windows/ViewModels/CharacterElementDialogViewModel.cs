@@ -11,6 +11,7 @@ namespace NPC.Presenter.Windows.ViewModels
 {
     class CharacterElementDialogViewModel: BaseDialogViewModel
     {
+        private Dictionary<IGameObjectReference, IGameObject> _cache;
         private Func<IGameObjectReference, IGameObject> _opener;
 
         private DelegateCommand _acceptCommand;
@@ -58,6 +59,8 @@ namespace NPC.Presenter.Windows.ViewModels
             Title = parameters.GetValue<string>(Dialog.Title);
 
             _opener = parameters.GetValue<Func<IGameObjectReference, IGameObject>>(Dialog.CharacterElementSelection.Opener);
+            _cache = new Dictionary<IGameObjectReference, IGameObject>();
+
             Parser = parameters.GetValue<IParser>(Dialog.CharacterElementSelection.Parser);
 
             AvailableElements = parameters.GetValue<IEnumerable<IGameObjectMetadata>>(Dialog.CharacterElementSelection.Source);
@@ -65,7 +68,7 @@ namespace NPC.Presenter.Windows.ViewModels
 
         private void OnSelectionChanged()
         {
-            SelectedObject = SelectedItem != null ? _opener(SelectedItem) : null;
+            SelectedObject = SelectedItem != null ? Open(SelectedItem) : null;
             RaisePropertyChanged(nameof(CanAccept));
         }
 
@@ -78,6 +81,19 @@ namespace NPC.Presenter.Windows.ViewModels
 
                 RaiseRequestClose(result);
             }
+        }
+
+        private IGameObject Open(IGameObjectMetadata reference)
+        {
+            if (_cache.TryGetValue(reference, out IGameObject gameObject))
+            {
+                return gameObject;
+            }
+
+            gameObject = _opener(reference);
+            _cache.Add(reference, gameObject);
+
+            return gameObject;
         }
     }
 }

@@ -60,6 +60,7 @@
     <Compile Include="Controls\CharacterElementPreviewer.cs" />
     <Compile Include="Converters\CharacterElementWrapperConverter.cs" />
     <Compile Include="Converters\ScrollViewerSizeConverter.cs" />
+    <Compile Include="Print\CharacterPrinter.cs" />
     <Compile Include="Proxy\CharacterElementStorage.cs" />
     <Compile Include="Commands\ApplyGearTemplate.cs" />
     <Compile Include="Controls\CharacterElementPresenter.cs" />
@@ -311,6 +312,10 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\System\CreateTab.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Conflict\Intrigue.png" />
+    <Resource Include="Icons\Conflict\Military.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -80,6 +80,9 @@ namespace NPC.Presenter.Windows.Behaviors
         private TraitPrinter _traitPrinter;
         private TraitPrinter TraitPrinter => _traitPrinter ?? (_traitPrinter = new TraitPrinter(_columnWidth, _pageHeight));
 
+        private CharacterPrinter _characterPrinter;
+        private CharacterPrinter CharacterPrinter => _characterPrinter ?? (_characterPrinter = new CharacterPrinter(_columnWidth, _pageHeight, Parser));
+
         protected override void OnAttached()
         {
             base.OnAttached();
@@ -211,6 +214,8 @@ namespace NPC.Presenter.Windows.Behaviors
         {
             switch (gameObject)
             {
+                case ICharacter c:
+                    return CharacterPrinter.CreatePrintPreview(c);
                 case IDemeanor d:
                     return DemeanorPrinter.CreatePrintView(d);
                 case ITrait t:

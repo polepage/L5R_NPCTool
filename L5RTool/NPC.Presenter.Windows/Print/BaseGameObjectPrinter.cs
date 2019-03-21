@@ -18,12 +18,12 @@ namespace NPC.Presenter.Windows.Print
         protected double MaxWidth { get; }
         protected double MaxHeight { get; }
 
-        protected Grid CreateGrid(int rows)
+        protected Grid CreateGrid(int rows, double bottom = 12.0)
         {
             var grid = new Grid
             {
                 Width = MaxWidth,
-                Margin = new Thickness(0, 0, 0, 12)
+                Margin = new Thickness(0, 0, 0, bottom)
             };
 
             for (int i = 0; i < rows; i++)
