@@ -57,13 +57,15 @@
     <Compile Include="Behaviors\OpenHyperlink.cs" />
     <Compile Include="Behaviors\PropagateInputBindings.cs" />
     <Compile Include="Binding\ProxyDataLocator.cs" />
+    <Compile Include="Controls\TemplateElementPresenter.cs" />
+    <Compile Include="Controls\CharacterElementPresenter.cs" />
     <Compile Include="Controls\CharacterElementPreviewer.cs" />
     <Compile Include="Converters\CharacterElementWrapperConverter.cs" />
     <Compile Include="Converters\ScrollViewerSizeConverter.cs" />
     <Compile Include="Print\CharacterPrinter.cs" />
     <Compile Include="Proxy\CharacterElementStorage.cs" />
     <Compile Include="Commands\ApplyGearTemplate.cs" />
-    <Compile Include="Controls\CharacterElementPresenter.cs" />
+    <Compile Include="Controls\CompositeObjectPresenter.cs" />
     <Compile Include="Binding\ExternalBindingProxy.cs" />
     <Compile Include="Controls\ScriptFormatingToolbar.cs" />
     <Compile Include="Binding\BindingProxy.cs" />

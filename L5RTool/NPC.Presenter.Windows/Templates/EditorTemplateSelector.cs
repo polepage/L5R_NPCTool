@@ -13,6 +13,7 @@ namespace NPC.Presenter.Windows.Templates
         public DataTemplate TraitTemplate { get; set; }
         public DataTemplate AbilityTemplate { get; set; }
         public DataTemplate GearTemplate { get; set; }
+        public DataTemplate TemplateTemplate { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
@@ -31,6 +32,8 @@ namespace NPC.Presenter.Windows.Templates
                         return AbilityTemplate;
                     case ObjectType.Equipment:
                         return GearTemplate;
+                    case ObjectType.Template:
+                        return TemplateTemplate;
                     default:
                         break;
                 }

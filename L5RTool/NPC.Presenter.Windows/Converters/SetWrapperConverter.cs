@@ -31,4 +31,5 @@ namespace NPC.Presenter.Windows.Converters
     // There is no generic in xaml
     class SkillGroupSetConverter: SetWrapperConverter<SkillGroup> { }
     class TraitSphereSetConverter : SetWrapperConverter<TraitSphere> { }
+    class AbilityTypeSetConverter : SetWrapperConverter<AbilityType> { }
 }

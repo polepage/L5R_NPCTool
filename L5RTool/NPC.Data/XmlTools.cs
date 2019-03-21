@@ -32,6 +32,8 @@ namespace NPC.Data
                     return Ability.FromXml(xml);
                 case ObjectType.Equipment:
                     return Gear.FromXml(xml);
+                case ObjectType.Template:
+                    return Template.FromXml(xml);
                 default:
                     throw new ArgumentException("Load GameObject: xml GameObject unknown type.");
             }

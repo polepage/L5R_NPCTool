@@ -355,12 +355,12 @@ namespace NPC.Data.GameObjects
                                  CreateSocietalXml(),
                                  CreatePersonalXml(),
                                  new XElement("Demeanor", _demeanor.CreateXml(true)),
-                                 new XElement("Advantages", _advantages.Select(a => a.CreateXml(true))),
-                                 new XElement("Disadvantages", _disadvantages.Select(d => d.CreateXml(true))),
-                                 new XElement("FavoredWeapons", _favoredWeapons.Select(fw => fw.CreateXml(true))),
-                                 new XElement("EquippedGear", _equipedGear.Select(eg => eg.CreateXml(true))),
-                                 new XElement("OtherGear", _otherGear.Select(og => og.CreateXml(true))),
-                                 new XElement("Abilities", _abilities.Select(a => a.CreateXml(true)))));
+                                 CreateCollection("Advantages", _advantages),
+                                 CreateCollection("Disadvantages", _disadvantages),
+                                 CreateCollection("FavoredWeapons", _favoredWeapons),
+                                 CreateCollection("EquippedGear", _equipedGear),
+                                 CreateCollection("OtherGear", _otherGear),
+                                 CreateCollection("Abilities", _abilities)));
             return xml;
         }
 
@@ -380,36 +380,13 @@ namespace NPC.Data.GameObjects
             LoadPersonalXml(characterData);
 
             _demeanor = GameObjects.Demeanor.FromXml(characterData.Element("Demeanor").Elements().First());
-            
-            foreach (XElement element in characterData.Element("Advantages").Elements())
-            {
-                _advantages.Add(Advantage.FromXml(element));
-            }
 
-            foreach (XElement element in characterData.Element("Disadvantages").Elements())
-            {
-                _disadvantages.Add(Disadvantage.FromXml(element));
-            }
-
-            foreach (XElement element in characterData.Element("FavoredWeapons").Elements())
-            {
-                _favoredWeapons.Add(Gear.FromXml(element));
-            }
-
-            foreach (XElement element in characterData.Element("EquippedGear").Elements())
-            {
-                _equipedGear.Add(Gear.FromXml(element));
-            }
-
-            foreach (XElement element in characterData.Element("OtherGear").Elements())
-            {
-                _otherGear.Add(Gear.FromXml(element));
-            }
-
-            foreach (XElement element in characterData.Element("Abilities").Elements())
-            {
-                _abilities.Add(Ability.FromXml(element));
-            }
+            LoadCollection(characterData, "Advantages", _advantages, x => Advantage.FromXml(x));
+            LoadCollection(characterData, "Disadvantages", _disadvantages, x => Disadvantage.FromXml(x));
+            LoadCollection(characterData, "FavoredWeapons", _favoredWeapons, x => Gear.FromXml(x));
+            LoadCollection(characterData, "EquippedGear", _equipedGear, x => Gear.FromXml(x));
+            LoadCollection(characterData, "OtherGear", _otherGear, x => Gear.FromXml(x));
+            LoadCollection(characterData, "Abilities", _abilities, x => Ability.FromXml(x));
         }
 
         private XElement CreateConflictRanksXml()
@@ -515,6 +492,19 @@ namespace NPC.Data.GameObjects
             Composure = int.Parse(personalData.Element("Composure").Value);
             Focus = int.Parse(personalData.Element("Focus").Value);
             Vigilance = int.Parse(personalData.Element("Vigilance").Value);
+        }
+
+        private XElement CreateCollection(string name, IEnumerable<GameObject> collection)
+        {
+            return new XElement(name, collection.Select(go => go.CreateXml(true)));
+        }
+
+        private void LoadCollection<T>(XElement xml, string name, ICollection<T> collection, Func<XElement, T> loader)
+        {
+            foreach (XElement element in xml.Element(name).Elements())
+            {
+                collection.Add(loader(element));
+            }
         }
     }
 }

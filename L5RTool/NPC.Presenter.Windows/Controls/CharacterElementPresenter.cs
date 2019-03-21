@@ -1,13 +1,10 @@
 ﻿using NPC.Presenter.GameObjects;
 using NPC.Presenter.Windows.GameObjects;
-using Prism.Commands;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace NPC.Presenter.Windows.Controls
 {
-    class CharacterElementPresenter: ItemsControl
+    class CharacterElementPresenter: CompositeObjectPresenter
     {
         #region Character
         public static readonly DependencyProperty CharacterProperty =
@@ -22,71 +19,7 @@ namespace NPC.Presenter.Windows.Controls
         }
         #endregion
 
-        #region ElementTemplate
-        public static readonly DependencyProperty ElementTemplateProperty =
-            DependencyProperty.Register("ElementTemplate",
-                                        typeof(DataTemplate),
-                                        typeof(CharacterElementPresenter));
-
-        public DataTemplate ElementTemplate
-        {
-            get => (DataTemplate)GetValue(ElementTemplateProperty);
-            set => SetValue(ElementTemplateProperty, value);
-        }
-        #endregion
-
-        #region Type
-        public static readonly DependencyProperty ElementTypeProperty =
-            DependencyProperty.Register("ElementType",
-                                        typeof(CharacterElement),
-                                        typeof(CharacterElementPresenter));
-
-        public CharacterElement ElementType
-        {
-            get => (CharacterElement)GetValue(ElementTypeProperty);
-            set => SetValue(ElementTypeProperty, value);
-        }
-        #endregion
-
-        #region Add Command
-        private static readonly DependencyPropertyKey AddCommandPropertyKey =
-            DependencyProperty.RegisterReadOnly("AddCommand",
-                                                typeof(ICommand),
-                                                typeof(CharacterElementPresenter),
-                                                new PropertyMetadata());
-
-        public static readonly DependencyProperty AddCommandProperty = AddCommandPropertyKey.DependencyProperty;
-
-        public ICommand AddCommand
-        {
-            get => (ICommand)GetValue(AddCommandProperty);
-            private set => SetValue(AddCommandPropertyKey, value);
-        }
-        #endregion
-
-        #region Remove Command
-        private static readonly DependencyPropertyKey RemoveCommandPropertyKey =
-            DependencyProperty.RegisterReadOnly("RemoveCommand",
-                                                typeof(ICommand),
-                                                typeof(CharacterElementPresenter),
-                                                new PropertyMetadata());
-
-        public static readonly DependencyProperty RemoveCommandProperty = RemoveCommandPropertyKey.DependencyProperty;
-
-        public ICommand RemoveCommand
-        {
-            get => (ICommand)GetValue(RemoveCommandProperty);
-            private set => SetValue(RemoveCommandPropertyKey, value);
-        }
-        #endregion
-
-        public CharacterElementPresenter()
-        {
-            AddCommand = new DelegateCommand(AddElement);
-            RemoveCommand = new DelegateCommand<IGameObject>(RemoveElement);
-        }
-
-        private void AddElement()
+        protected override void AddElement()
         {
             switch (ElementType)
             {
@@ -113,7 +46,7 @@ namespace NPC.Presenter.Windows.Controls
             }
         }
 
-        private void RemoveElement(IGameObject element)
+        protected override void RemoveElement(IGameObject element)
         {
             switch (ElementType)
             {

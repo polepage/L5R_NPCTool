@@ -265,10 +265,10 @@ namespace NPC.Data.GameObjects
             LoadConflictRanksXml(templateData);
             LoadRingsXml(templateData);
             LoadSkillsXml(templateData);
-            AdvantageRemplacements = LoadAdditionList(xml, "Advantages", _suggestedAdvantages, x => Advantage.FromXml(x));
-            DisadvantageRemplacements = LoadAdditionList(xml, "Disadvantages", _suggestedDisadvantages, x => Disadvantage.FromXml(x));
-            AbilityAdditions = LoadAdditionList(xml, "AbilityTypes", _abilityTypes, x => (AbilityType)Enum.Parse(typeof(AbilityType), x.Value));
-            LoadCollection(xml, "Demeanors", _suggestedDemeanors, x => Demeanor.FromXml(x));
+            AdvantageRemplacements = LoadAdditionList(templateData, "Advantages", _suggestedAdvantages, x => Advantage.FromXml(x));
+            DisadvantageRemplacements = LoadAdditionList(templateData, "Disadvantages", _suggestedDisadvantages, x => Disadvantage.FromXml(x));
+            AbilityAdditions = LoadAdditionList(templateData, "AbilityTypes", _abilityTypes, x => (AbilityType)Enum.Parse(typeof(AbilityType), x.Value));
+            LoadCollection(templateData, "Demeanors", _suggestedDemeanors, x => Demeanor.FromXml(x));
         }
 
         private XElement CreateConflictRanksXml()

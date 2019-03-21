@@ -13,6 +13,7 @@
     <conv:NameToImageConverter x:Key="imageConverter"/>
     <conv:SkillGroupSetConverter x:Key="skillGroupSetConverter"/>
     <conv:TraitSphereSetConverter x:Key="sphereSetConverter"/>
+    <conv:AbilityTypeSetConverter x:Key="abilityTypeSetConverter"/>
     <conv:CharacterElementWrapperConverter x:Key="elementWrapperConvereter"/>
     <conv:ScrollViewerSizeConverter x:Key="scrollViewerSizeConverter"/>
     <BooleanToVisibilityConverter x:Key="visibilityConverter"/>
@@ -214,7 +215,7 @@
         </Grid>
     </DataTemplate>
 
-    <DataTemplate x:Key="characterElementTemplate">
+    <DataTemplate x:Key="borderedElementTemplate">
         <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="5" Padding="2" Margin="4 3">
             <Grid>
                 <Grid.Resources>
@@ -246,7 +247,7 @@
                 </StackPanel>
                 
                 <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Margin="3" VerticalAlignment="Top" HorizontalAlignment="Right"
-                        Command="{Binding RemoveCommand, RelativeSource={RelativeSource AncestorType=c:CharacterElementPresenter}}"
+                        Command="{Binding RemoveCommand, RelativeSource={RelativeSource AncestorType=c:CompositeObjectPresenter}}"
                         CommandParameter="{Binding Element}">
                     <Button.Content>
                         <Path Margin="1.5" Stroke="#FF606060" StrokeThickness="1.5" StrokeStartLineCap="Square" StrokeEndLineCap="Square"
@@ -254,40 +255,45 @@
                               Data="M 0,0 L 8,8 M 0,8 L 8,0"/>
                     </Button.Content>
                 </Button>
-                <ContentControl ContentTemplate="{Binding ElementTemplate, RelativeSource={RelativeSource AncestorType=c:CharacterElementPresenter}}"
+                <ContentControl ContentTemplate="{Binding ElementTemplate, RelativeSource={RelativeSource AncestorType=c:CompositeObjectPresenter}}"
                                 Content="{Binding Element}" Grid.Row="1"/>
             </Grid>
         </Border>
     </DataTemplate>
 
     <DataTemplate x:Key="advantageElementTemplate">
-        <ContentControl ContentTemplate="{StaticResource characterElementTemplate}"
+        <ContentControl ContentTemplate="{StaticResource borderedElementTemplate}"
                         Content="{Binding Converter={StaticResource elementWrapperConvereter}, ConverterParameter={x:Static go:CharacterElement.Advantage}}"/>
     </DataTemplate>
 
     <DataTemplate x:Key="disadvantageElementTemplate">
-        <ContentControl ContentTemplate="{StaticResource characterElementTemplate}"
+        <ContentControl ContentTemplate="{StaticResource borderedElementTemplate}"
                         Content="{Binding Converter={StaticResource elementWrapperConvereter}, ConverterParameter={x:Static go:CharacterElement.Disadvantage}}"/>
     </DataTemplate>
 
     <DataTemplate x:Key="weaponElementTemplate">
-        <ContentControl ContentTemplate="{StaticResource characterElementTemplate}"
+        <ContentControl ContentTemplate="{StaticResource borderedElementTemplate}"
                         Content="{Binding Converter={StaticResource elementWrapperConvereter}, ConverterParameter={x:Static go:CharacterElement.FavoredWeapon}}"/>
     </DataTemplate>
 
     <DataTemplate x:Key="equippedGearElementTemplate">
-        <ContentControl ContentTemplate="{StaticResource characterElementTemplate}"
+        <ContentControl ContentTemplate="{StaticResource borderedElementTemplate}"
                         Content="{Binding Converter={StaticResource elementWrapperConvereter}, ConverterParameter={x:Static go:CharacterElement.EquippedGear}}"/>
     </DataTemplate>
 
     <DataTemplate x:Key="otherGearElementTemplate">
-        <ContentControl ContentTemplate="{StaticResource characterElementTemplate}"
+        <ContentControl ContentTemplate="{StaticResource borderedElementTemplate}"
                         Content="{Binding Converter={StaticResource elementWrapperConvereter}, ConverterParameter={x:Static go:CharacterElement.OtherGear}}"/>
     </DataTemplate>
     
     <DataTemplate x:Key="abilityElementTemplate">
-        <ContentControl ContentTemplate="{StaticResource characterElementTemplate}"
+        <ContentControl ContentTemplate="{StaticResource borderedElementTemplate}"
                         Content="{Binding Converter={StaticResource elementWrapperConvereter}, ConverterParameter={x:Static go:CharacterElement.Ability}}"/>
+    </DataTemplate>
+
+    <DataTemplate x:Key="demeanorElementTemplate">
+        <ContentControl ContentTemplate="{StaticResource borderedElementTemplate}"
+                        Content="{Binding Converter={StaticResource elementWrapperConvereter}, ConverterParameter={x:Static go:CharacterElement.Demeanor}}"/>
     </DataTemplate>
 
     <DataTemplate x:Key="characterEditTemplate">
@@ -589,11 +595,198 @@
         </ScrollViewer>
     </DataTemplate>
 
+    <DataTemplate x:Key="templateEditTemplate">
+        <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
+            <Grid Grid.IsSharedSizeScope="True">
+                <Grid.MaxWidth>
+                    <MultiBinding Converter="{StaticResource scrollViewerSizeConverter}"
+                                  ConverterParameter="{x:Static SystemParameters.VerticalScrollBarWidth}">
+                        <Binding Path="ActualWidth" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Grid}"/>
+                        <Binding Path="ComputedVerticalScrollBarVisibility" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ScrollViewer}"/>
+                    </MultiBinding>
+                </Grid.MaxWidth>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="Name" VerticalAlignment="Center"/>
+                <TextBox Grid.Column="1" Grid.Row="0" Margin="5 3" MaxLength="256" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="Rank Modifiers" VerticalAlignment="Center"/>
+                <Grid Grid.Column="1" Grid.Row="1" Margin="5 3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Title0"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Value0"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Title1"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Value1"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Margin="0 0 3 0" Text="Combat:" VerticalAlignment="Center"/>
+                    <tk:IntegerUpDown Grid.Column="1" MaxWidth="64" Minimum="0" Maximum="10" Increment="1" Value="{Binding CombatConflictRank}"/>
+
+                    <TextBlock Grid.Column="2" Margin="12 0 3 0" Text="Intrigue:" VerticalAlignment="Center"/>
+                    <tk:IntegerUpDown Grid.Column="3" MaxWidth="64" Minimum="0" Maximum="10" Increment="1" Value="{Binding IntrigueConflictRank}"/>
+                </Grid>
+
+                <TextBlock Grid.Column="0" Grid.Row="2" Text="Rings Modifiers" VerticalAlignment="Center"/>
+                <Grid Grid.Column="1" Grid.Row="2" Margin="5 3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Title0"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Value0"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Title1"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Value1"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Title2"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Value2"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Title3"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Value3"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Title4"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Value4"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Margin="0 0 3 0" Text="Air:" VerticalAlignment="Center"/>
+                    <tk:IntegerUpDown Grid.Column="1" MaxWidth="64" Minimum="0" Maximum="5" Increment="1" Value="{Binding Air}"/>
+
+                    <TextBlock Grid.Column="2" Margin="12 0 3 0" Text="Earth:" VerticalAlignment="Center"/>
+                    <tk:IntegerUpDown Grid.Column="3" MaxWidth="64" Minimum="0" Maximum="5" Increment="1" Value="{Binding Earth}"/>
+
+                    <TextBlock Grid.Column="4" Margin="12 0 3 0" Text="Fire:" VerticalAlignment="Center"/>
+                    <tk:IntegerUpDown Grid.Column="5" MaxWidth="64" Minimum="0" Maximum="5" Increment="1" Value="{Binding Fire}"/>
+
+                    <TextBlock Grid.Column="6" Margin="12 0 3 0" Text="Water:" VerticalAlignment="Center"/>
+                    <tk:IntegerUpDown Grid.Column="7" MaxWidth="64" Minimum="0" Maximum="5" Increment="1" Value="{Binding Water}"/>
+
+                    <TextBlock Grid.Column="8" Margin="12 0 3 0" Text="Void:" VerticalAlignment="Center"/>
+                    <tk:IntegerUpDown Grid.Column="9" MaxWidth="64" Minimum="0" Maximum="5" Increment="1" Value="{Binding Void}"/>
+                </Grid>
+
+                <TextBlock Grid.Column="0" Grid.Row="3" Text="Skill Modifiers" VerticalAlignment="Center"/>
+                <Grid Grid.Column="1" Grid.Row="3" Margin="5 3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Title0"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Value0"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Title1"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Value1"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Title2"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Value2"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Title3"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Value3"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Title4"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Value4"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Margin="0 0 3 0" Text="Artisan:" VerticalAlignment="Center"/>
+                    <tk:IntegerUpDown Grid.Column="1" MaxWidth="64" Minimum="0" Maximum="5" Increment="1" Value="{Binding Artisan}"/>
+
+                    <TextBlock Grid.Column="2" Margin="12 0 3 0" Text="Martial:" VerticalAlignment="Center"/>
+                    <tk:IntegerUpDown Grid.Column="3" MaxWidth="64" Minimum="0" Maximum="5" Increment="1" Value="{Binding Martial}"/>
+
+                    <TextBlock Grid.Column="4" Margin="12 0 3 0" Text="Scholar:" VerticalAlignment="Center"/>
+                    <tk:IntegerUpDown Grid.Column="5" MaxWidth="64" Minimum="0" Maximum="5" Increment="1" Value="{Binding Scholar}"/>
+
+                    <TextBlock Grid.Column="6" Margin="12 0 3 0" Text="Social:" VerticalAlignment="Center"/>
+                    <tk:IntegerUpDown Grid.Column="7" MaxWidth="64" Minimum="0" Maximum="5" Increment="1" Value="{Binding Social}"/>
+
+                    <TextBlock Grid.Column="8" Margin="12 0 3 0" Text="Trade:" VerticalAlignment="Center"/>
+                    <tk:IntegerUpDown Grid.Column="9" MaxWidth="64" Minimum="0" Maximum="5" Increment="1" Value="{Binding Trade}"/>
+                </Grid>
+
+                <Separator Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" HorizontalAlignment="Stretch" Margin="5 3"/>
+
+                <TextBlock Grid.Column="0" Grid.Row="5" Text="Ability Count" VerticalAlignment="Center"/>
+                <tk:IntegerUpDown Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" Margin="5 3" MaxWidth="100"
+                                  Minimum="0" Maximum="5" Increment="1" Value="{Binding AbilityAdditions}"/>
+
+                <TextBlock Grid.Column="0" Grid.Row="6" Text="Ability Types" VerticalAlignment="Center"/>
+                <c:TagSelector Grid.Column="1" Grid.Row="6" Margin="5 3 5 8" Prompt="Add Ability Type"
+                           ItemsSource="{x:Static go:GameObjectEnums.AbilityTypes}"
+                           BindableSelectedItems="{Binding AbilityTypes, Converter={StaticResource abilityTypeSetConverter}}"/>
+
+                <Expander Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7" Header="Suggested Advantages">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Grid.Row="0" Text="Count" VerticalAlignment="Center"/>
+                        <tk:IntegerUpDown Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Margin="5 3" MaxWidth="100"
+                                          Minimum="0" Maximum="5" Increment="1" Value="{Binding AdvantageRemplacements}"/>
+
+                        <c:TemplateElementPresenter x:Name="suggestedAdvantagePresenter" ItemTemplate="{StaticResource advantageElementTemplate}"
+                                                    ItemsSource="{Binding SuggestedAdvantages}" ElementTemplate="{StaticResource traitEditTemplate}"
+                                                    CharacterTemplate="{Binding}" ElementType="Advantage" Grid.Row="1" Grid.ColumnSpan="2"/>
+                        <Button Grid.Row="2" Grid.ColumnSpan="2" Content="Add Advantage" Margin="8" Height="24" HorizontalAlignment="Stretch"
+                            Command="{Binding AddCommand, ElementName=suggestedAdvantagePresenter}"/>
+                    </Grid>
+                </Expander>
+
+                <Expander Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="8" Header="Suggested Disadvantages">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Grid.Row="0" Text="Count" VerticalAlignment="Center"/>
+                        <tk:IntegerUpDown Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Margin="5 3" MaxWidth="100"
+                                          Minimum="0" Maximum="5" Increment="1" Value="{Binding DisadvantageRemplacements}"/>
+
+                        <c:TemplateElementPresenter x:Name="suggestedDisadvantagePresenter" ItemTemplate="{StaticResource disadvantageElementTemplate}"
+                                                    ItemsSource="{Binding SuggestedDisadvantages}" ElementTemplate="{StaticResource traitEditTemplate}"
+                                                    CharacterTemplate="{Binding}" ElementType="Disadvantage" Grid.Row="1" Grid.ColumnSpan="2"/>
+                        <Button Grid.Row="2" Grid.ColumnSpan="2" Content="Add Disadvantage" Margin="8" Height="24" HorizontalAlignment="Stretch"
+                                Command="{Binding AddCommand, ElementName=suggestedDisadvantagePresenter}"/>
+                    </Grid>
+                </Expander>
+
+                <Expander Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="9" Header="Suggested Demeanors">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <c:TemplateElementPresenter x:Name="suggestedDemeanorPresenter" ItemTemplate="{StaticResource demeanorElementTemplate}"
+                                                    ItemsSource="{Binding SuggestedDemeanors}" ElementTemplate="{StaticResource demeanorEditTemplate}"
+                                                    CharacterTemplate="{Binding}" ElementType="Demeanor"/>
+                        <Button Grid.Row="1" Content="Add Demeanor" Margin="8" Height="24" HorizontalAlignment="Stretch"
+                                Command="{Binding AddCommand, ElementName=suggestedDemeanorPresenter}"/>
+                    </Grid>
+                </Expander>
+            </Grid>
+        </ScrollViewer>
+    </DataTemplate>
+
     <templates:EditorTemplateSelector x:Key="editorTemplateSelector"
                                       DefaultTemplate="{StaticResource defaultEditTemplate}"
                                       CharacterTemplate="{StaticResource characterEditTemplate}"
                                       DemeanorTemplate="{StaticResource demeanorEditTemplate}"
                                       TraitTemplate="{StaticResource traitEditTemplate}"
                                       AbilityTemplate="{StaticResource abilityEditTemplate}"
-                                      GearTemplate="{StaticResource gearEditTemplate}"/>
+                                      GearTemplate="{StaticResource gearEditTemplate}"
+                                      TemplateTemplate="{StaticResource templateEditTemplate}"/>
 </ResourceDictionary>
