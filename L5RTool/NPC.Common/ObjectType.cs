@@ -2,7 +2,6 @@
 {
     public enum ObjectType
     {
-        Encounter,
         Character,
         Demeanor,
         Advantage,
