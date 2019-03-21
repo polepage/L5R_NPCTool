@@ -16,6 +16,13 @@ namespace NPC.Data.GameObjects
         {
         }
 
+        private AbilityType _abilityType;
+        public AbilityType AbilityType
+        {
+            get => _abilityType;
+            set => IsDirty |= SetProperty(ref _abilityType, value);
+        }
+
         private string _content;
         public string Content
         {
@@ -39,7 +46,9 @@ namespace NPC.Data.GameObjects
         public override XElement CreateXml(bool external = false)
         {
             var xml = base.CreateXml(external);
-            xml.Add(new XElement("AbilityData", Content));
+            xml.Add(new XElement("AbilityData",
+                                 new XElement("AbilityType", AbilityType),
+                                 new XElement("Content", Content)));
 
             return xml;
         }
@@ -47,7 +56,11 @@ namespace NPC.Data.GameObjects
         protected override void LoadXml(XElement xml)
         {
             base.LoadXml(xml);
-            Content = xml.Element("AbilityData").Value.Replace("\n", Environment.NewLine);
+
+            XElement abilityData = xml.Element("AbilityData");
+
+            AbilityType = (AbilityType)Enum.Parse(typeof(AbilityType), abilityData.Element("AbilityType").Value);
+            Content = abilityData.Element("Content").Value.Replace("\n", Environment.NewLine);
         }
     }
 }

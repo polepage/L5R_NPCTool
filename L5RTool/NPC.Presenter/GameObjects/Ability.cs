@@ -1,4 +1,6 @@
-﻿namespace NPC.Presenter.GameObjects
+﻿using NPC.Common;
+
+namespace NPC.Presenter.GameObjects
 {
     class Ability : GameObject, IAbility
     {
@@ -8,6 +10,12 @@
             : base(source)
         {
             _source = source;
+        }
+
+        public AbilityType AbilityType
+        {
+            get => _source.AbilityType;
+            set => _source.AbilityType = value;
         }
 
         public string Content
@@ -21,6 +29,7 @@
             base.CopyData(copySource);
             if (copySource is IAbility ability)
             {
+                AbilityType = ability.AbilityType;
                 Content = ability.Content;
             }
         }
@@ -28,6 +37,7 @@
         protected override void RegisterBindings()
         {
             base.RegisterBindings();
+            AddBinding(nameof(_source.AbilityType), nameof(AbilityType));
             AddBinding(nameof(_source.Content), nameof(Content));
         }
     }
