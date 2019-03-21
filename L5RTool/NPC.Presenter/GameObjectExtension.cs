@@ -54,6 +54,8 @@ namespace NPC.Presenter.GameObjects
                     return new Gear(s);
                 case Data.GameObjects.IAbility s:
                     return new Ability(s);
+                case Data.GameObjects.ITemplate s:
+                    return new Template(s);
                 default:
                     throw new ArgumentException("Create Presenter: Unknown type");
             }

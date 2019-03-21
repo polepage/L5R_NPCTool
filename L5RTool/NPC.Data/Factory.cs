@@ -22,6 +22,8 @@ namespace NPC.Data
                     return new Ability();
                 case ObjectType.Equipment:
                     return new Gear();
+                case ObjectType.Template:
+                    return new Template();
                 default:
                     throw new ArgumentException("Create GameObject: unknown type.");
             }

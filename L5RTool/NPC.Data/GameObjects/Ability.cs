@@ -1,5 +1,6 @@
 ﻿using NPC.Common;
 using System;
+using System.Collections.Generic;
 using System.Xml.Linq;
 
 namespace NPC.Data.GameObjects
@@ -61,6 +62,14 @@ namespace NPC.Data.GameObjects
 
             AbilityType = (AbilityType)Enum.Parse(typeof(AbilityType), abilityData.Element("AbilityType").Value);
             Content = abilityData.Element("Content").Value.Replace("\n", Environment.NewLine);
+        }
+
+        protected override IEnumerable<string> ExtractKeywords()
+        {
+            return new List<string>(base.ExtractKeywords())
+            {
+                AbilityType.ToString()
+            };
         }
     }
 }
