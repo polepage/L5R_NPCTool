@@ -83,6 +83,9 @@ namespace NPC.Presenter.Windows.Behaviors
         private CharacterPrinter _characterPrinter;
         private CharacterPrinter CharacterPrinter => _characterPrinter ?? (_characterPrinter = new CharacterPrinter(_columnWidth, _pageHeight, Parser));
 
+        private TemplatePrinter _templatePrinter;
+        private TemplatePrinter TemplatePrinter => _templatePrinter ?? (_templatePrinter = new TemplatePrinter(_columnWidth, _pageHeight));
+
         protected override void OnAttached()
         {
             base.OnAttached();
@@ -224,6 +227,8 @@ namespace NPC.Presenter.Windows.Behaviors
                     return AbilityPrinter.CreatePrintView(a);
                 case IGear g:
                     return GearPrinter.CreatePrintView(g);
+                case ITemplate t:
+                    return TemplatePrinter.CreatePrintView(t);
                 default:
                     throw new ArgumentException("Unkown object type.");
             }

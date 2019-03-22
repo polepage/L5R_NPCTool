@@ -3,12 +3,12 @@
     public enum AbilityType
     {
         Generic,
-        Kata,
-        Shuji,
         Invocation,
+        Kata,
         Kiho,
-        Ninjutsu,
         Maho,
-        Ritual
+        Ninjutsu,
+        Ritual,
+        Shuji
     }
 }

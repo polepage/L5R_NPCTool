@@ -63,6 +63,7 @@
     <Compile Include="Converters\CharacterElementWrapperConverter.cs" />
     <Compile Include="Converters\ScrollViewerSizeConverter.cs" />
     <Compile Include="Print\CharacterPrinter.cs" />
+    <Compile Include="Print\TemplatePrinter.cs" />
     <Compile Include="Proxy\CharacterElementStorage.cs" />
     <Compile Include="Commands\ApplyGearTemplate.cs" />
     <Compile Include="Controls\CompositeObjectPresenter.cs" />
