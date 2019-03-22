@@ -3,11 +3,11 @@ using System.Windows;
 
 namespace NPC.Presenter.Windows.Proxy
 {
-    class CharacterElementStorage : ExternalBindingProxy
+    class ApplyCharacterTemplate : ExternalBindingProxy
     {
         protected override Freezable CreateInstanceCore()
         {
-            return new CharacterElementStorage();
+            return new ApplyCharacterTemplate();
         }
     }
 }

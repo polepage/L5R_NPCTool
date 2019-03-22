@@ -56,6 +56,7 @@
     <Compile Include="Behaviors\GameObjectPrintPreview.cs" />
     <Compile Include="Behaviors\OpenHyperlink.cs" />
     <Compile Include="Behaviors\PropagateInputBindings.cs" />
+    <Compile Include="Binding\BindingLink.cs" />
     <Compile Include="Binding\ProxyDataLocator.cs" />
     <Compile Include="Controls\TemplateElementPresenter.cs" />
     <Compile Include="Controls\CharacterElementPresenter.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Converters\ScrollViewerSizeConverter.cs" />
     <Compile Include="Print\CharacterPrinter.cs" />
     <Compile Include="Print\TemplatePrinter.cs" />
+    <Compile Include="Proxy\ApplyCharacterTemplate.cs" />
     <Compile Include="Proxy\CharacterElementStorage.cs" />
     <Compile Include="Commands\ApplyGearTemplate.cs" />
     <Compile Include="Controls\CompositeObjectPresenter.cs" />
@@ -98,11 +100,13 @@
     <Compile Include="Print\GearPrinter.cs" />
     <Compile Include="Print\TraitPrinter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Proxy\Data\ApplyCharacterTemplateData.cs" />
     <Compile Include="Proxy\Data\CharacterElementStorageData.cs" />
     <Compile Include="Templates\EditorTemplateSelector.cs" />
     <Compile Include="Templates\TreeViewTemplateSelector.cs" />
     <Compile Include="ViewModels\AbilityEditToolbarViewModel.cs" />
     <Compile Include="ViewModels\AboutDialogViewModel.cs" />
+    <Compile Include="ViewModels\ApplyTemplateDialogViewModel.cs" />
     <Compile Include="ViewModels\CharacterElementDialogViewModel.cs" />
     <Compile Include="ViewModels\ConfirmationDialogViewModel.cs" />
     <Compile Include="ViewModels\PrintDialogViewModel.cs" />
@@ -118,6 +122,9 @@
     </Compile>
     <Compile Include="Views\AboutDialog.xaml.cs">
       <DependentUpon>AboutDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ApplyTemplateDialog.xaml.cs">
+      <DependentUpon>ApplyTemplateDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CharacterElementDialog.xaml.cs">
       <DependentUpon>CharacterElementDialog.xaml</DependentUpon>
@@ -232,6 +239,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ApplyTemplateDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\CharacterElementDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -319,6 +330,9 @@
   <ItemGroup>
     <Resource Include="Icons\Conflict\Intrigue.png" />
     <Resource Include="Icons\Conflict\Military.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\System\ApplyTemplate.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

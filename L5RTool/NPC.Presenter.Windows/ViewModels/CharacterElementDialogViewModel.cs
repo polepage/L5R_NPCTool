@@ -3,7 +3,6 @@ using NPC.Presenter.GameObjects;
 using NPC.Presenter.Windows.Dialogs;
 using Prism.Commands;
 using Prism.Services.Dialogs;
-using System;
 using System.Collections.Generic;
 using System.Windows.Input;
 
@@ -11,18 +10,19 @@ namespace NPC.Presenter.Windows.ViewModels
 {
     class CharacterElementDialogViewModel: BaseDialogViewModel
     {
+        private IStorage _storage;
         private Dictionary<IGameObjectReference, IGameObject> _cache;
-        private Func<IGameObjectReference, IGameObject> _opener;
+
+        public CharacterElementDialogViewModel(IStorage storage, IParser parser)
+        {
+            _storage = storage;
+            Parser = parser;
+        }
 
         private DelegateCommand _acceptCommand;
         public ICommand AcceptCommand => _acceptCommand ?? (_acceptCommand = new DelegateCommand(Accept));
 
-        private IParser _parser;
-        public IParser Parser
-        {
-            get => _parser;
-            private set => SetProperty(ref _parser, value);
-        }
+        public IParser Parser { get; }
 
         private IGameObject _selectedObject;
         public IGameObject SelectedObject
@@ -58,10 +58,7 @@ namespace NPC.Presenter.Windows.ViewModels
             base.OnDialogOpened(parameters);
             Title = parameters.GetValue<string>(Dialog.Title);
 
-            _opener = parameters.GetValue<Func<IGameObjectReference, IGameObject>>(Dialog.CharacterElementSelection.Opener);
             _cache = new Dictionary<IGameObjectReference, IGameObject>();
-
-            Parser = parameters.GetValue<IParser>(Dialog.CharacterElementSelection.Parser);
 
             AvailableElements = parameters.GetValue<IEnumerable<IGameObjectMetadata>>(Dialog.CharacterElementSelection.Source);
         }
@@ -90,7 +87,7 @@ namespace NPC.Presenter.Windows.ViewModels
                 return gameObject;
             }
 
-            gameObject = _opener(reference);
+            gameObject = _storage.Open(reference);
             _cache.Add(reference, gameObject);
 
             return gameObject;

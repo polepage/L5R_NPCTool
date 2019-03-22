@@ -1,5 +1,4 @@
 ﻿using NPC.Common;
-using NPC.Parser;
 using NPC.Presenter.GameObjects;
 using NPC.Presenter.Windows.Dialogs;
 using NPC.Presenter.Windows.Events;
@@ -8,7 +7,6 @@ using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
@@ -19,15 +17,13 @@ namespace NPC.Presenter.Windows.Proxy.Data
     {
         private IFactory _factory;
         private IStorage _storage;
-        private IParser _parser;
         private IDialogService _dialogService;
         private IEventAggregator _eventAggregator;
 
-        public CharacterElementStorageData(IFactory factory, IStorage storage, IParser parser, IDialogService dialogService, IEventAggregator eventAggregator)
+        public CharacterElementStorageData(IFactory factory, IStorage storage, IDialogService dialogService, IEventAggregator eventAggregator)
         {
             _factory = factory;
             _storage = storage;
-            _parser = parser;
             _dialogService = dialogService;
             _eventAggregator = eventAggregator;
         }
@@ -45,9 +41,7 @@ namespace NPC.Presenter.Windows.Proxy.Data
             var parameters = new DialogParameters
             {
                 { Dialog.Title, "Select Item" },
-                { Dialog.CharacterElementSelection.Source, GetAvailableElements() },
-                { Dialog.CharacterElementSelection.Opener, (Func<IGameObjectReference, IGameObject>)(or => _storage.Open(or)) },
-                { Dialog.CharacterElementSelection.Parser, _parser }
+                { Dialog.CharacterElementSelection.Source, GetAvailableElements() }
             };
 
             _dialogService.ShowDialog(Dialog.CharacterElementSelection.Name, parameters, dialogResult =>

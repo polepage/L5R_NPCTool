@@ -18,18 +18,16 @@ namespace NPC.Presenter.Windows.ViewModels
     {
         private IEventAggregator _eventAggregator;
         private IDialogService _dialogService;
-        private IParser _textParser;
         private IFactory _factory;
         private IStorage _storage;
         private IExternalStorage _externalStorage;
 
-        public MainMenuViewModel(IEventAggregator eventAggregator, IDialogService dialogService, IParser parser, IFactory factory, IStorage storage, IExternalStorage externalStorage)
+        public MainMenuViewModel(IEventAggregator eventAggregator, IDialogService dialogService, IFactory factory, IStorage storage, IExternalStorage externalStorage)
         {
             _eventAggregator = eventAggregator;
             _eventAggregator.GetEvent<ExportGameObjectsEvent>().Subscribe(ExportReferences);
 
             _dialogService = dialogService;
-            _textParser = parser;
             _factory = factory;
             _storage = storage;
             _externalStorage = externalStorage;
@@ -96,7 +94,6 @@ namespace NPC.Presenter.Windows.ViewModels
             IDialogParameters parameters = new DialogParameters
             {
                 { Dialog.Title, "Open Game Object" },
-                { Dialog.Selection.Source, _storage.Database },
                 { Dialog.Selection.Accept, "Open" }
             };
 
@@ -147,7 +144,10 @@ namespace NPC.Presenter.Windows.ViewModels
 
             _dialogService.ShowOpenDialog(parameters, dialogResult =>
             {
-                _externalStorage.Import(dialogResult.Parameters.GetValue<string>(Dialog.File.Target));
+                if (dialogResult.Result.GetValueOrDefault())
+                {
+                    _externalStorage.Import(dialogResult.Parameters.GetValue<string>(Dialog.File.Target));
+                }
             });
         }
 
@@ -156,7 +156,6 @@ namespace NPC.Presenter.Windows.ViewModels
             IDialogParameters parameters = new DialogParameters
             {
                 { Dialog.Title, "Export Game Objects" },
-                { Dialog.Selection.Source, _storage.Database },
                 { Dialog.Selection.Accept, "Export" }
             };
 
@@ -173,10 +172,7 @@ namespace NPC.Presenter.Windows.ViewModels
         {
             var parameters = new DialogParameters
             {
-                { Dialog.Title, "Print Game Objects" },
-                { Dialog.Print.Source, _storage.Database },
-                { Dialog.Print.Opener, (Func<IGameObjectReference, IGameObject>)(or => _storage.Open(or)) },
-                { Dialog.Print.Parser, _textParser }
+                { Dialog.Title, "Print Game Objects" }
             };
 
             _dialogService.ShowDialog(Dialog.Print.Name, parameters, dr => { });

@@ -6,7 +6,6 @@ using NPC.Presenter.GameObjects;
 using NPC.Presenter.Windows.Dialogs;
 using Prism.Commands;
 using Prism.Services.Dialogs;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,8 +17,13 @@ namespace NPC.Presenter.Windows.ViewModels
 {
     class PrintDialogViewModel: BaseDialogViewModel
     {
-        public PrintDialogViewModel()
+        private IStorage _storage;
+
+        public PrintDialogViewModel(IStorage storage, IParser parser)
         {
+            _storage = storage;
+            Parser = parser;
+
             var collection = new ObservableCollection<object>();
             collection.CollectionChanged += SelectionChanged;
             SelectedItems = collection;
@@ -58,12 +62,7 @@ namespace NPC.Presenter.Windows.ViewModels
             set => SetProperty(ref _displayedObjects, value);
         }
 
-        private IParser _parser;
-        public IParser Parser
-        {
-            get => _parser;
-            private set => SetProperty(ref _parser, value);
-        }
+        public IParser Parser { get; }
 
         public override void OnDialogOpened(IDialogParameters parameters)
         {
@@ -71,12 +70,11 @@ namespace NPC.Presenter.Windows.ViewModels
             Title = parameters.GetValue<string>(Dialog.Title);
 
             GameObjectGroups = EnumHelpers.GetValues<ObjectType>()
-                .Select(ot => new ObjectMetadataGroup(ot, parameters.GetValue<IManifest>(Dialog.Print.Source).GameObjects));
+                .Select(ot => new ObjectMetadataGroup(ot, _storage.Database.GameObjects));
 
-            Func<IGameObjectReference, IGameObject> open = parameters.GetValue<Func<IGameObjectReference, IGameObject>>(Dialog.Print.Opener);
             DisplayedObjects = new CachedEnumerableWrapper<IGameObject, object>(
              SelectedItems as IEnumerable<object>,
-             o => open((IGameObjectReference)o),
+             o => _storage.Open((IGameObjectReference)o),
              (o, go) => ((IGameObjectReference)o).Equals(go),
              o => o is IGameObjectReference,
              (go1, go2) =>
@@ -89,8 +87,6 @@ namespace NPC.Presenter.Windows.ViewModels
 
                  return eq;
              });
-
-            Parser = parameters.GetValue<IParser>(Dialog.Print.Parser);
         }
 
         private void SelectionChanged(object sender, NotifyCollectionChangedEventArgs e)

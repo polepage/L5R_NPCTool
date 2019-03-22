@@ -24,12 +24,7 @@ namespace NPC.Presenter.Windows
             container.RegisterDialog<PrintDialog, PrintDialogViewModel>(Dialog.Print.Name);
             container.RegisterDialog<AboutDialog, AboutDialogViewModel>(Dialog.About.Name);
             container.RegisterDialog<CharacterElementDialog, CharacterElementDialogViewModel>(Dialog.CharacterElementSelection.Name);
-
-            container.Register<MainWindowViewModel>();
-            container.Register<MainMenuViewModel>();
-            container.Register<GameObjectEditorViewModel>();
-            container.Register<GameObjectTreeViewModel>();
-            container.Register<AbilityEditToolbarViewModel>();
+            container.RegisterDialog<ApplyTemplateDialog, ApplyTemplateDialogViewModel>(Dialog.ApplyTemplate.Name);
 
             ViewModelLocationProvider.Register<MainWindow>(() => provider.Resolve<MainWindowViewModel>());
             ViewModelLocationProvider.Register<MainMenu>(() => provider.Resolve<MainMenuViewModel>());
@@ -37,9 +32,17 @@ namespace NPC.Presenter.Windows
             ViewModelLocationProvider.Register<GameObjectTree>(() => provider.Resolve<GameObjectTreeViewModel>());
             ViewModelLocationProvider.Register<AbilityEditToolbar>(() => provider.Resolve<AbilityEditToolbarViewModel>());
 
-            container.Register<CharacterElementStorage>();
+            ViewModelLocationProvider.Register<NewDialog>(() => provider.Resolve<NewDialogViewModel>());
+            ViewModelLocationProvider.Register<SelectionDialog>(() => provider.Resolve<SelectionDialogViewModel>());
+            ViewModelLocationProvider.Register<SaveDialog>(() => provider.Resolve<SaveDialogViewModel>());
+            ViewModelLocationProvider.Register<ConfirmationDialog>(() => provider.Resolve<ConfirmationDialogViewModel>());
+            ViewModelLocationProvider.Register<PrintDialog>(() => provider.Resolve<PrintDialogViewModel>());
+            ViewModelLocationProvider.Register<AboutDialog>(() => provider.Resolve<AboutDialog>());
+            ViewModelLocationProvider.Register<CharacterElementDialog>(() => provider.Resolve<CharacterElementDialogViewModel>());
+            ViewModelLocationProvider.Register<ApplyTemplateDialog>(() => provider.Resolve<ApplyTemplateDialogViewModel>());
 
             ProxyDataLocator.Register<CharacterElementStorage>(() => provider.Resolve<CharacterElementStorageData>());
+            ProxyDataLocator.Register<ApplyCharacterTemplate>(() => provider.Resolve<ApplyCharacterTemplateData>());
         }
     }
 }

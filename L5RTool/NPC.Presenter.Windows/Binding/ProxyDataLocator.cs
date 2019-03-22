@@ -18,11 +18,11 @@ namespace NPC.Presenter.Windows.Binding
             _factories.Add(type, factory);
         }
 
-        public static T Resolve<T>(object target)
+        public static object Resolve(object target)
         {
             if (_factories.TryGetValue(target.GetType().ToString(), out var factory))
             {
-                return (T)factory();
+                return factory();
             }
 
             throw new ArgumentException($"Type {target.GetType().ToString()} was not registered");

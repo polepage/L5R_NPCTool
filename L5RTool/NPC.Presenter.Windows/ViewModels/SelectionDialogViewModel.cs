@@ -15,8 +15,12 @@ namespace NPC.Presenter.Windows.ViewModels
 {
     class SelectionDialogViewModel : BaseDialogViewModel
     {
-        public SelectionDialogViewModel()
+        private IStorage _storage;
+
+        public SelectionDialogViewModel(IStorage storage)
         {
+            _storage = storage;
+
             var collection = new ObservableCollection<object>();
             collection.CollectionChanged += SelectionChanged;
             SelectedItems = collection;
@@ -57,7 +61,7 @@ namespace NPC.Presenter.Windows.ViewModels
             AcceptText = parameters.GetValue<string>(Dialog.Selection.Accept);
 
             GameObjectGroups = EnumHelpers.GetValues<ObjectType>()
-                .Select(ot => new ObjectMetadataGroup(ot, parameters.GetValue<IManifest>(Dialog.Selection.Source).GameObjects));
+                .Select(ot => new ObjectMetadataGroup(ot, _storage.Database.GameObjects));
         }
 
         private void Accept()

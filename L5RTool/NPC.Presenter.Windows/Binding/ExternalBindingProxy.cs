@@ -2,19 +2,19 @@
 
 namespace NPC.Presenter.Windows.Binding
 {
-    abstract class ExternalBindingProxy<T> : Freezable
+    abstract class ExternalBindingProxy : Freezable
     {
         private static readonly DependencyPropertyKey DataPropertyKey =
             DependencyProperty.RegisterReadOnly("Data",
-                                                typeof(T),
-                                                typeof(ExternalBindingProxy<T>),
+                                                typeof(object),
+                                                typeof(ExternalBindingProxy),
                                                 new PropertyMetadata());
 
         public static readonly DependencyProperty DataProperty = DataPropertyKey.DependencyProperty;
 
-        public T Data
+        public object Data
         {
-            get => (T)GetValue(DataProperty);
+            get => GetValue(DataProperty);
             private set => SetValue(DataPropertyKey, value);
         }
 
@@ -25,7 +25,7 @@ namespace NPC.Presenter.Windows.Binding
 
         private void GetData()
         {
-            Data = ProxyDataLocator.Resolve<T>(this);
+            Data = ProxyDataLocator.Resolve(this);
         }
     }
 }
