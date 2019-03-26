@@ -47,7 +47,8 @@ namespace NPC.Data.GameObjects
         public override XElement CreateXml(bool external = false)
         {
             var xml = base.CreateXml(external);
-            xml.Add(new XElement("GearData",
+            xml.Add(new XAttribute(XmlTools.Version, "xml_1.0"),
+                    new XElement("GearData",
                                  new XElement("Description", Description),
                                  new XElement("GearType", GearType)));
 

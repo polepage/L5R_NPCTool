@@ -50,6 +50,7 @@ namespace NPC.Data
         public XElement CreateXml()
         {
             return new XElement("Database",
+                                new XAttribute(XmlTools.Version, "xml_1.0"),
                                 _collection.Select(m => m.CreateXML()));
         }
 

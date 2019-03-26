@@ -52,7 +52,8 @@ namespace NPC.Data.GameObjects
         public override XElement CreateXml(bool external = false)
         {
             var xml = base.CreateXml(external);
-            xml.Add(new XElement("TraitData",
+            xml.Add(new XAttribute(XmlTools.Version, "xml_1.0"),
+                    new XElement("TraitData",
                                  new XElement("Description", Description),
                                  new XElement("Ring", Ring),
                                  new XElement("SkillGroups",

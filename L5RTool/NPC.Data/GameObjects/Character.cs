@@ -359,7 +359,8 @@ namespace NPC.Data.GameObjects
         public override XElement CreateXml(bool external = false)
         {
             var xml = base.CreateXml(external);
-            xml.Add(new XElement("CharacterData",
+            xml.Add(new XAttribute(XmlTools.Version, "xml_1.0"),
+                    new XElement("CharacterData",
                                  new XElement("CharacterType", CharacterType),
                                  new XElement("Description", Description),
                                  CreateConflictRanksXml(),

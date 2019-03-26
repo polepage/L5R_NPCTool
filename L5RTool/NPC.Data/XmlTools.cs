@@ -9,6 +9,7 @@ namespace NPC.Data
     {
         public static readonly string GameObjectNode = "GameObject";
         public static readonly string MetadataNode = "Reference";
+        public static readonly string Version = "Version";
 
         public static GameObject LoadGameObject(this XElement xml)
         {
