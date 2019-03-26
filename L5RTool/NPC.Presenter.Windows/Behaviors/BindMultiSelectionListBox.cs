@@ -3,16 +3,15 @@ using System.Collections;
 using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 
 namespace NPC.Presenter.Windows.Behaviors
 {
-    class BindMultiSelection: Behavior<MultiSelector>
+    class BindMultiSelectionListBox: Behavior<ListBox>
     {
         public static readonly DependencyProperty SelectedItemsProperty =
             DependencyProperty.Register("SelectedItems",
                                         typeof(IList),
-                                        typeof(BindMultiSelection),
+                                        typeof(BindMultiSelectionListBox),
                                         new PropertyMetadata(OnSelectedItemsChanged));
 
         public IList SelectedItems
@@ -24,7 +23,7 @@ namespace NPC.Presenter.Windows.Behaviors
         private static readonly DependencyPropertyKey IsSelectorObserverSubscribedPropertyKey =
             DependencyProperty.RegisterReadOnly("IsSelectorObserverSubscribed",
                                                 typeof(bool),
-                                                typeof(BindMultiSelection),
+                                                typeof(BindMultiSelectionListBox),
                                                 new PropertyMetadata());
 
         private static readonly DependencyProperty IsSelectorObserverSubscribedProperty = IsSelectorObserverSubscribedPropertyKey.DependencyProperty;
@@ -54,7 +53,7 @@ namespace NPC.Presenter.Windows.Behaviors
 
         private static void OnSelectedItemsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (!(d is BindMultiSelection behavior))
+            if (!(d is BindMultiSelectionListBox behavior))
             {
                 return;
             }

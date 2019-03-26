@@ -5,16 +5,8 @@
       xmlns:prism="http://prismlibrary.com/"
       xmlns:b="clr-namespace:NPC.Presenter.Windows.Behaviors"
       prism:ViewModelLocator.AutoWireViewModel="True"
-      Width="400" Margin="10">
-
-    <Grid.RowDefinitions>
-        <RowDefinition Height="Auto"/>
-        <RowDefinition Height="Auto"/>
-        <RowDefinition Height="Auto"/>
-        <RowDefinition Height="Auto"/>
-        <RowDefinition Height="Auto"/>
-        <RowDefinition Height="Auto"/>
-    </Grid.RowDefinitions>
+      Width="400" Margin="10"
+      b:GridTools.Rows=";;;;;">
 
     <TextBlock Grid.Row="0" Margin="0 0 0 10" TextWrapping="Wrap" Text="{Binding Version}"/>
     

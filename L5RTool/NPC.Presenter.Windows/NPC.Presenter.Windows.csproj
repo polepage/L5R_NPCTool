@@ -50,18 +50,25 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behaviors\BindMultiSelectionListBox.cs" />
     <Compile Include="Behaviors\BindMultiSelection.cs" />
     <Compile Include="Behaviors\BindReadonly.cs" />
     <Compile Include="Behaviors\DialogAwareClose.cs" />
     <Compile Include="Behaviors\GameObjectPrintPreview.cs" />
+    <Compile Include="Behaviors\GridTools.cs" />
     <Compile Include="Behaviors\OpenHyperlink.cs" />
     <Compile Include="Behaviors\PropagateInputBindings.cs" />
     <Compile Include="Binding\BindingLink.cs" />
     <Compile Include="Binding\ProxyDataLocator.cs" />
+    <Compile Include="Controls\AbilityListPresenter.cs" />
+    <Compile Include="Controls\ShortTraitTextBlock.cs" />
     <Compile Include="Controls\TemplateElementPresenter.cs" />
     <Compile Include="Controls\CharacterElementPresenter.cs" />
     <Compile Include="Controls\CharacterElementPreviewer.cs" />
+    <Compile Include="Controls\TemplateModifiersPresenter.cs" />
     <Compile Include="Converters\CharacterElementWrapperConverter.cs" />
+    <Compile Include="Converters\FormatStringConverter.cs" />
+    <Compile Include="Converters\NegateConverter.cs" />
     <Compile Include="Converters\ScrollViewerSizeConverter.cs" />
     <Compile Include="Print\CharacterPrinter.cs" />
     <Compile Include="Print\TemplatePrinter.cs" />

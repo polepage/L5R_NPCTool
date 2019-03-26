@@ -254,9 +254,11 @@ namespace NPC.Data.GameObjects
         public IEnumerable<IAbility> Abilities => _abilities;
 
         // Methods
-        public void AddAdvantage()
+        public IAdvantage AddAdvantage()
         {
-            _advantages.Add(new Advantage());
+            var advantage = new Advantage();
+            _advantages.Add(advantage);
+            return advantage;
         }
 
         public void RemoveAdvantage(IAdvantage advantage)
@@ -264,9 +266,11 @@ namespace NPC.Data.GameObjects
             RemoveElement(_advantages, advantage);
         }
 
-        public void AddDisadvantage()
+        public IDisadvantage AddDisadvantage()
         {
-            _disadvantages.Add(new Disadvantage());
+            var disadvantage = new Disadvantage();
+            _disadvantages.Add(disadvantage);
+            return disadvantage;
         }
 
         public void RemoveDisadvantage(IDisadvantage disadvantage)
@@ -274,12 +278,15 @@ namespace NPC.Data.GameObjects
             RemoveElement(_disadvantages, disadvantage);
         }
 
-        public void AddFavoredWeapon()
+        public IGear AddFavoredWeapon()
         {
-            _favoredWeapons.Add(new Gear
+            var weapon = new Gear
             {
                 GearType = GearType.Weapon
-            });
+            };
+
+            _favoredWeapons.Add(weapon);
+            return weapon;
         }
 
         public void RemoveFavoredWeapon(IGear gear)
@@ -287,9 +294,11 @@ namespace NPC.Data.GameObjects
             RemoveElement(_favoredWeapons, gear);
         }
 
-        public void AddEquipedGear()
+        public IGear AddEquipedGear()
         {
-            _equipedGear.Add(new Gear());
+            var gear = new Gear();
+            _equipedGear.Add(gear);
+            return gear;
         }
 
         public void RemoveEquipedGear(IGear gear)
@@ -297,9 +306,11 @@ namespace NPC.Data.GameObjects
             RemoveElement(_equipedGear, gear);
         }
 
-        public void AddOtherGear()
+        public IGear AddOtherGear()
         {
-            _otherGear.Add(new Gear());
+            var gear = new Gear();
+            _otherGear.Add(gear);
+            return gear;
         }
 
         public void RemoveOtherGear(IGear gear)
@@ -307,9 +318,11 @@ namespace NPC.Data.GameObjects
             RemoveElement(_otherGear, gear);
         }
 
-        public void AddAbility()
+        public IAbility AddAbility()
         {
-            _abilities.Add(new Ability());
+            var ability = new Ability();
+            _abilities.Add(ability);
+            return ability;
         }
 
         public void RemoveAbility(IAbility ability)

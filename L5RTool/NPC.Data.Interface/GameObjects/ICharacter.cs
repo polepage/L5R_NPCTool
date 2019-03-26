@@ -43,22 +43,22 @@ namespace NPC.Data.GameObjects
 
         IEnumerable<IAbility> Abilities { get; }
 
-        void AddAdvantage();
+        IAdvantage AddAdvantage();
         void RemoveAdvantage(IAdvantage advantage);
 
-        void AddDisadvantage();
+        IDisadvantage AddDisadvantage();
         void RemoveDisadvantage(IDisadvantage disadvantage);
 
-        void AddFavoredWeapon();
+        IGear AddFavoredWeapon();
         void RemoveFavoredWeapon(IGear gear);
 
-        void AddEquipedGear();
+        IGear AddEquipedGear();
         void RemoveEquipedGear(IGear gear);
 
-        void AddOtherGear();
+        IGear AddOtherGear();
         void RemoveOtherGear(IGear gear);
 
-        void AddAbility();
+        IAbility AddAbility();
         void RemoveAbility(IAbility ability);
     }
 }

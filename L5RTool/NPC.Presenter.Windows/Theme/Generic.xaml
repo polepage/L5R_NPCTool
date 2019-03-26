@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:c="clr-namespace:NPC.Presenter.Windows.Controls"
+                    xmlns:b="clr-namespace:NPC.Presenter.Windows.Behaviors"
                     xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
 
     <Style x:Key="FocusVisual">
@@ -167,12 +168,7 @@
     </Style>
 
     <ControlTemplate x:Key="tagSelectorTemplate" TargetType="{x:Type c:TagSelector}">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            
+        <Grid b:GridTools.Columns=";">
             <ItemsControl Grid.Column="0" VerticalAlignment="Center"
                           ItemsSource="{TemplateBinding CurrentSelection}">
                 <ItemsControl.ItemsPanel>

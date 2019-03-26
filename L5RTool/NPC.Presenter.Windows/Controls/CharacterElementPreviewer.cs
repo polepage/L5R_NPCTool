@@ -49,6 +49,9 @@ namespace NPC.Presenter.Windows.Controls
         private TraitPrinter _traitPrinter;
         private TraitPrinter TraitPrinter => _traitPrinter ?? (_traitPrinter = new TraitPrinter(ActualWidth, double.PositiveInfinity));
 
+        private TemplatePrinter _templatePrinter;
+        public TemplatePrinter TemplatePrinter => _templatePrinter ?? (_templatePrinter = new TemplatePrinter(ActualWidth, double.PositiveInfinity));
+
         private static void OnGameObjectChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             (sender as CharacterElementPreviewer)?.UpdatePreview();
@@ -90,6 +93,8 @@ namespace NPC.Presenter.Windows.Controls
                     return GearPrinter.CreatePrintView(g);
                 case IAbility a:
                     return AbilityPrinter.CreatePrintView(a);
+                case ITemplate t:
+                    return TemplatePrinter.CreatePrintView(t);
                 default:
                     return null;
             }

@@ -8,7 +8,7 @@ namespace NPC.Presenter.Windows.Binding
             DependencyProperty.Register("Source",
                                         typeof(object),
                                         typeof(BindingLink),
-                                        new PropertyMetadata());
+                                        new PropertyMetadata(OnSourceChanged));
 
         public static readonly DependencyProperty TargetProperty =
             DependencyProperty.Register("Target",

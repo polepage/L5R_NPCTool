@@ -6,14 +6,7 @@
             prism:ViewModelLocator.AutoWireViewModel="True"
             Width="300">
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="250"/>
-        </Grid.RowDefinitions>
-
+    <Grid Height="250">
         <tv:MultiSelectTreeView ItemsSource="{Binding GameObjectGroups}" SelectedItems="{Binding SelectedItems}"
                                 BorderBrush="Transparent">
             <tv:MultiSelectTreeView.Resources>

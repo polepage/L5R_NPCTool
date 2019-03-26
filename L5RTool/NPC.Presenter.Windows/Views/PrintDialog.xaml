@@ -7,18 +7,14 @@
       xmlns:c="clr-namespace:NPC.Presenter.Windows.Controls"
       xmlns:b="clr-namespace:NPC.Presenter.Windows.Behaviors"
       prism:ViewModelLocator.AutoWireViewModel="True"
-      Width="1064" Height="600">
+      Width="1064" Height="600"
+      b:GridTools.Rows="*;">
 
     <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" MinWidth="200"/>
         <ColumnDefinition Width="3"/>
         <ColumnDefinition Width="*" MinWidth="400"/>
     </Grid.ColumnDefinitions>
-
-    <Grid.RowDefinitions>
-        <RowDefinition Height="*"/>
-        <RowDefinition Height="Auto"/>
-    </Grid.RowDefinitions>
 
     <tv:MultiSelectTreeView ItemsSource="{Binding GameObjectGroups}" SelectedItems="{Binding SelectedItems}"
                             BorderBrush="Transparent" Grid.Column="0">

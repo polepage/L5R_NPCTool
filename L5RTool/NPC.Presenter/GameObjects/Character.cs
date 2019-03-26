@@ -163,34 +163,34 @@ namespace NPC.Presenter.GameObjects
         public IEnumerable<IGear> OtherGear { get; }
         public IEnumerable<IAbility> Abilities { get; }
 
-        public void AddAbility()
+        public IAbility AddAbility()
         {
-            _source.AddAbility();
+            return (IAbility)_source.AddAbility().CreatePresenter();
         }
 
-        public void AddAdvantage()
+        public IAdvantage AddAdvantage()
         {
-            _source.AddAdvantage();
+            return (IAdvantage)_source.AddAdvantage().CreatePresenter();
         }
 
-        public void AddDisadvantage()
+        public IDisadvantage AddDisadvantage()
         {
-            _source.AddDisadvantage();
+            return (IDisadvantage)_source.AddDisadvantage().CreatePresenter();
         }
 
-        public void AddEquipedGear()
+        public IGear AddEquipedGear()
         {
-            _source.AddEquipedGear();
+            return (IGear)_source.AddEquipedGear().CreatePresenter();
         }
 
-        public void AddFavoredWeapon()
+        public IGear AddFavoredWeapon()
         {
-            _source.AddFavoredWeapon();
+            return (IGear)_source.AddFavoredWeapon().CreatePresenter();
         }
 
-        public void AddOtherGear()
+        public IGear AddOtherGear()
         {
-            _source.AddOtherGear();
+            return (IGear)_source.AddOtherGear().CreatePresenter();
         }
 
         public void RemoveAbility(IAbility ability)
@@ -223,6 +223,57 @@ namespace NPC.Presenter.GameObjects
             _source.RemoveOtherGear(gear.GetSource() as Data.GameObjects.IGear);
         }
 
+        public void ApplyTemplate(ITemplate template,
+                                  IEnumerable<IAdvantage> removedAdvantages, IEnumerable<IAdvantage> newAdvantages,
+                                  IEnumerable<IDisadvantage> removedDisadvantages, IEnumerable<IDisadvantage> newDisadvantages,
+                                  IEnumerable<IAbility> newAbilities, IDemeanor newDemeanor)
+        {
+            CombatConflictRank += template.CombatConflictRank;
+            IntrigueConflictRank += template.IntrigueConflictRank;
+
+            Air += template.Air;
+            Earth += template.Earth;
+            Fire += template.Fire;
+            Water += template.Water;
+            Void += template.Void;
+
+            Artisan += template.Artisan;
+            Martial += template.Martial;
+            Scholar += template.Scholar;
+            Social += template.Social;
+            Trade += template.Trade;
+
+            foreach (var advantage in removedAdvantages)
+            {
+                RemoveAdvantage(advantage);
+            }
+
+            foreach (var advantage in newAdvantages)
+            {
+                var newAdvantage = (Advantage)AddAdvantage();
+                newAdvantage.CopyData(advantage);
+            }
+
+            foreach (var disadvantage in removedDisadvantages)
+            {
+                RemoveDisadvantage(disadvantage);
+            }
+
+            foreach (var disadvantage in newDisadvantages)
+            {
+                var newDisadvantage = (Disadvantage)AddDisadvantage();
+                newDisadvantage.CopyData(disadvantage);
+            }
+
+            foreach (var ability in newAbilities)
+            {
+                var newAbility = (Ability)AddAbility();
+                newAbility.CopyData(ability);
+            }
+
+            (Demeanor as Demeanor)?.CopyData(newDemeanor);
+        }
+
         public override void CopyData(IGameObject copySource)
         {
             base.CopyData(copySource);
@@ -253,47 +304,41 @@ namespace NPC.Presenter.GameObjects
 
                 (Demeanor as Demeanor).CopyData(character.Demeanor);
 
-                foreach (var advantage in character.Advantages) { AddAdvantage(); }
-                Advantages.Zip(character.Advantages, (a, source) =>
+                foreach (var advantage in character.Advantages)
                 {
-                    (a as Advantage).CopyData(source);
-                    return a;
-                });
+                    var newAdvantage = (Advantage)AddAdvantage();
+                    newAdvantage.CopyData(advantage);
+                }
 
-                foreach (var disadvantage in character.Disadvantages) { AddDisadvantage(); }
-                Disadvantages.Zip(character.Disadvantages, (d, source) =>
+                foreach (var disadvantage in character.Disadvantages)
                 {
-                    (d as Disadvantage).CopyData(source);
-                    return d;
-                });
+                    var newDisadvantage = (Disadvantage)AddDisadvantage();
+                    newDisadvantage.CopyData(disadvantage);
+                }
 
-                foreach (var weapon in character.FavoredWeapons) { AddFavoredWeapon(); }
-                FavoredWeapons.Zip(character.FavoredWeapons, (f, source) =>
+                foreach (var weapon in character.FavoredWeapons)
                 {
-                    (f as Gear).CopyData(source);
-                    return f;
-                });
+                    var newWeapon = (Gear)AddFavoredWeapon();
+                    newWeapon.CopyData(weapon);
+                }
 
-                foreach (var gear in character.EquippedGear) { AddEquipedGear(); }
-                EquippedGear.Zip(character.EquippedGear, (e, source) =>
+                foreach (var gear in character.EquippedGear)
                 {
-                    (e as Gear).CopyData(source);
-                    return e;
-                });
+                    var newGear = (Gear)AddEquipedGear();
+                    newGear.CopyData(gear);
+                }
 
-                foreach (var gear in character.OtherGear) { AddOtherGear(); }
-                OtherGear.Zip(character.OtherGear, (o, source) =>
+                foreach (var gear in character.OtherGear)
                 {
-                    (o as Gear).CopyData(source);
-                    return o;
-                });
+                    var newGear = (Gear)AddOtherGear();
+                    newGear.CopyData(gear);
+                }
 
-                foreach (var ability in character.Abilities) { AddAbility(); }
-                Abilities.Zip(character.Abilities, (a, source) =>
+                foreach (var ability in character.Abilities)
                 {
-                    (a as Ability).CopyData(source);
-                    return a;
-                });
+                    var newAbility = (Ability)AddAbility();
+                    newAbility.CopyData(ability);
+                }
             }
         }
 
