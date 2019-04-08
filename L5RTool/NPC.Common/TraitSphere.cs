@@ -5,6 +5,7 @@
         Interpersonal,
         Mental,
         Physical,
-        Spiritual
+        Spiritual,
+        Material
     }
 }

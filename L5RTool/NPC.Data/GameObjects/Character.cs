@@ -393,7 +393,12 @@ namespace NPC.Data.GameObjects
             LoadSocietalXml(characterData);
             LoadPersonalXml(characterData);
 
+            if (_demeanor != null)
+            {
+                _demeanor.PropertyChanged -= OnPropertyChanged;
+            }
             _demeanor = GameObjects.Demeanor.FromXml(characterData.Element("Demeanor").Elements().First());
+            _demeanor.PropertyChanged += OnPropertyChanged;
 
             LoadCollection(characterData, "Advantages", _advantages, x => Advantage.FromXml(x));
             LoadCollection(characterData, "Disadvantages", _disadvantages, x => Disadvantage.FromXml(x));

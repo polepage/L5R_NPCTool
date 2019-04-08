@@ -70,10 +70,10 @@
     </Button>
     <Button Command="{Binding InsertSymbolCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type c:ScriptFormatingToolbar}}}"
             CommandParameter="{x:Static common:DiceIcons.RingDice}" ToolTip="Ring Dice (Ctrl+5)">
-        <Image Source="pack://application:,,,/NPC.Presenter.Windows;component/Icons/Toolbar/RingDie.png" Width="16" Height="16"/>
+        <Image Source="pack://application:,,,/NPC.Presenter.Windows;component/Icons/Toolbar/RingDice.png" Width="16" Height="16"/>
     </Button>
     <Button Command="{Binding InsertSymbolCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type c:ScriptFormatingToolbar}}}"
             CommandParameter="{x:Static common:DiceIcons.SkillDice}" ToolTip="Skill Dice (Ctrl+6)">
-        <Image Source="pack://application:,,,/NPC.Presenter.Windows;component/Icons/Toolbar/SkillDie.png" Width="16" Height="16"/>
+        <Image Source="pack://application:,,,/NPC.Presenter.Windows;component/Icons/Toolbar/SkillDice.png" Width="16" Height="16"/>
     </Button>
 </c:ScriptFormatingToolbar>

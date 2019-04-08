@@ -414,8 +414,11 @@ namespace NPC.Presenter.Windows.Print
                 }));
                 modifiers.Inlines.Add(new Run(" " + FormatModifier(mod) + ",") { FontWeight = FontWeights.Bold, FontSize = 12 });
             }
-            string lastString = (modifiers.Inlines.LastInline as Run).Text;
-            (modifiers.Inlines.LastInline as Run).Text = lastString.Substring(0, lastString.Length - 1);
+            if (modifiers.Inlines.Count > 0)
+            {
+                string lastString = (modifiers.Inlines.LastInline as Run).Text;
+                (modifiers.Inlines.LastInline as Run).Text = lastString.Substring(0, lastString.Length - 1);
+            }
             grid.Children.Add(modifiers);
 
             var title = new TextBlock
