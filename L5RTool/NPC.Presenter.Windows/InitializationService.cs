@@ -37,7 +37,7 @@ namespace NPC.Presenter.Windows
             ViewModelLocationProvider.Register<SaveDialog>(() => provider.Resolve<SaveDialogViewModel>());
             ViewModelLocationProvider.Register<ConfirmationDialog>(() => provider.Resolve<ConfirmationDialogViewModel>());
             ViewModelLocationProvider.Register<PrintDialog>(() => provider.Resolve<PrintDialogViewModel>());
-            ViewModelLocationProvider.Register<AboutDialog>(() => provider.Resolve<AboutDialog>());
+            ViewModelLocationProvider.Register<AboutDialog>(() => provider.Resolve<AboutDialogViewModel>());
             ViewModelLocationProvider.Register<CharacterElementDialog>(() => provider.Resolve<CharacterElementDialogViewModel>());
             ViewModelLocationProvider.Register<ApplyTemplateDialog>(() => provider.Resolve<ApplyTemplateDialogViewModel>());
 

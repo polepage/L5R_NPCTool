@@ -34,6 +34,10 @@ If you encounter any issues or have any feature suggestions, please look at the 
 
 ### Change Log
 
+#### 1.3
+
+* Fixed crash when opening About dialog.
+
 #### 1.2
 
 * Removed virtualization in TabControl. It fixes the issue where Skills and Spheres for advantages and disadvantages disapear when you open a new tab.
