@@ -34,10 +34,14 @@ If you encounter any issues or have any feature suggestions, please look at the 
 
 ### Change Log
 
-#### 1.1
+#### 1.2
 
 * Removed virtualization in TabControl. It fixes the issue where Skills and Spheres for advantages and disadvantages disapear when you open a new tab.
 * General code clean up.
+
+#### 1.1
+
+* General bug fixes.
 
 #### 1.0
 
