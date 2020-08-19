@@ -58,6 +58,7 @@
     <Compile Include="Behaviors\GameObjectPrintPreview.cs" />
     <Compile Include="Behaviors\GridTools.cs" />
     <Compile Include="Behaviors\OpenHyperlink.cs" />
+    <Compile Include="Behaviors\PersistentTabControl.cs" />
     <Compile Include="Behaviors\PropagateInputBindings.cs" />
     <Compile Include="Binding\BindingLink.cs" />
     <Compile Include="Binding\ProxyDataLocator.cs" />

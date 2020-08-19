@@ -32,6 +32,17 @@ The abilities utilize a small wiki-like language to add rich formatting to abili
 
 If you encounter any issues or have any feature suggestions, please look at the Issue tracker before submiting anything new. Also note that I have a game to prep (and my players are waiting because i nerd-snipped myself with that little project) so there may not be a lot of support for new features in the short term. However, I will be using this tool extensively in the coming weeks, I will fix issues mostly as I encounter them.
 
+### Change Log
+
+#### 1.1
+
+* Removed virtualization in TabControl. It fixes the issue where Skills and Spheres for advantages and disadvantages disapear when you open a new tab.
+* General code clean up.
+
+#### 1.0
+
+* Initial Release.
+
 ## For Contributors
 
 If you are fluent in C# and want to contribute, feel free to send a Pull Request.
