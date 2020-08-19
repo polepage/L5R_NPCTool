@@ -1,7 +1,6 @@
 ﻿using NPC.Presenter.GameObjects;
 using NPC.Presenter.Windows.Dialogs;
 using NPC.Presenter.Windows.Events;
-using NPC.Presenter.Windows.Extensions;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -16,10 +15,10 @@ namespace NPC.Presenter.Windows.ViewModels
 {
     class GameObjectEditorViewModel: BindableBase
     {
-        IEventAggregator _eventAggregator;
-        IDialogService _dialogService;
-        IStorage _storage;
-        IFactory _factory;
+        readonly IEventAggregator _eventAggregator;
+        readonly IDialogService _dialogService;
+        readonly IStorage _storage;
+        readonly IFactory _factory;
 
         public GameObjectEditorViewModel(IEventAggregator eventAggregator, IDialogService dialogService, IStorage storage, IFactory factory)
         {
@@ -50,19 +49,19 @@ namespace NPC.Presenter.Windows.ViewModels
         }
 
         private DelegateCommand _closeCommand;
-        public ICommand CloseCommand => _closeCommand ?? (_closeCommand = new DelegateCommand(Close));
+        public ICommand CloseCommand => _closeCommand ??= new DelegateCommand(Close);
 
         private DelegateCommand _closeAllCommand;
-        public ICommand CloseAllCommand => _closeAllCommand ?? (_closeAllCommand = new DelegateCommand(CloseAll));
+        public ICommand CloseAllCommand => _closeAllCommand ??= new DelegateCommand(CloseAll);
 
         private DelegateCommand _closeOthersCommand;
-        public ICommand CloseOthersCommand => _closeOthersCommand ?? (_closeOthersCommand = new DelegateCommand(CloseOthers));
+        public ICommand CloseOthersCommand => _closeOthersCommand ??= new DelegateCommand(CloseOthers);
 
         private DelegateCommand _saveCommand;
-        public ICommand SaveCommand => _saveCommand ?? (_saveCommand = new DelegateCommand(Save));
+        public ICommand SaveCommand => _saveCommand ??= new DelegateCommand(Save);
 
         private DelegateCommand _duplicateCommand;
-        public ICommand DuplicateCommand => _duplicateCommand ?? (_duplicateCommand = new DelegateCommand(Duplicate));
+        public ICommand DuplicateCommand => _duplicateCommand ??= new DelegateCommand(Duplicate);
 
         private void GameObjectOpened(IGameObject gameObject)
         {
